@@ -7,36 +7,45 @@ ACE_VERSION = 6.0.7
 ACE_SOURCE = ACE-$(ACE_VERSION).tar.gz
 ACE_SITE = ftp://download.dre.vanderbilt.edu/previous_versions
 ACE_INSTALL_STAGING = YES
-ACE_DEPENDENCIES = openssl
+
+ifeq ($(BR2_PACKAGE_ACE_SSL),y)
+	ACE_DEPENDENCIES = openssl
+	ACE_SSL = 1
+else
+	ACE_SSL = 0
+endif
 
 define ACE_BUILD_CMDS
 	cp package/ACE/config.h $(@D)/ace/config.h
 	cp package/ACE/platform_macros.GNU $(@D)/include/makeinclude/platform_macros.GNU
-	$(MAKE) ACE_ROOT=$(@D) CC=$(TARGET_CC) CXX=$(TARGET_CXX) LD=$(TARGET_CC) -C $(@D)
-	#$(MAKE) ACE_ROOT=$(@D) CC=$(TARGET_CC) CXX=$(TARGET_CXX) LD=$(TARGET_LD) -C $(@D)
+	$(MAKE) ACE_ROOT=$(@D) ACE_SSL=$(ACE_SSL) CC=$(TARGET_CC) CXX=$(TARGET_CXX) LD=$(TARGET_CC) -C $(@D)
 endef
 
 define ACE_INSTALL_STAGING_CMDS
 	mkdir -p $(STAGING_DIR)/usr/include/ace
 	mkdir -p $(STAGING_DIR)/usr/share/ace
-	$(MAKE) INSTALL_PREFIX=$(STAGING_DIR)/usr ACE_ROOT=$(@D) CC=$(TARGET_CC) CXX=$(TARGET_CXX) LD=$(TARGET_CC) -C $(@D) install
-	#$(MAKE) INSTALL_PREFIX=$(STAGING_DIR) ACE_ROOT=$(@D) CC=$(TARGET_CC) CXX=$(TARGET_CXX) LD=$(TARGET_LD) -C $(@D) install
+	$(MAKE) INSTALL_PREFIX=$(STAGING_DIR)/usr ACE_ROOT=$(@D) ACE_SSL=$(ACE_SSL) CC=$(TARGET_CC) CXX=$(TARGET_CXX) LD=$(TARGET_CC) -C $(@D) install
 endef
 
+INSTALL_TARGETS_y := libACE.so
+
+INSTALL_TARGETS_$(BR2_PACKAGE_ACE_ETCL) += libACE_ETCL_Parser.so
+INSTALL_TARGETS_$(BR2_PACKAGE_ACE_ETCL) += libACE_ETCL.so
+INSTALL_TARGETS_$(BR2_PACKAGE_ACE_HTBP) += libACE_HTBP.so
+INSTALL_TARGETS_$(BR2_PACKAGE_ACE_INET) += libACE_INet.so
+INSTALL_TARGETS_$(BR2_PACKAGE_ACE_INET_SSL) += libACE_INet_SSL.so
+INSTALL_TARGETS_$(BR2_PACKAGE_ACE_MONITOR_CONTROL) += libACE_Monitor_Control.so
+INSTALL_TARGETS_$(BR2_PACKAGE_ACE_RMCAST) += libACE_RMCast.so
+INSTALL_TARGETS_$(BR2_PACKAGE_ACE_SSL) += libACE_SSL.so
+INSTALL_TARGETS_$(BR2_PACKAGE_ACE_TMCAST) += libACE_TMCast.so
+INSTALL_TARGETS_$(BR2_PACKAGE_ACE_XML) += libACEXML_Parser.so
+INSTALL_TARGETS_$(BR2_PACKAGE_ACE_XML) += libACEXML.so
+INSTALL_TARGETS_$(BR2_PACKAGE_ACE_XML) += libACEXML_XML_Svc_Conf_Parser.so
+
 define ACE_INSTALL_TARGET_CMDS
-        $(INSTALL) -D -m 0755 $(@D)/lib/libACE_ETCL_Parser.so $(TARGET_DIR)/usr/lib
-        $(INSTALL) -D -m 0755 $(@D)/lib/libACE_ETCL.so $(TARGET_DIR)/usr/lib
-        $(INSTALL) -D -m 0755 $(@D)/lib/libACE_HTBP.so $(TARGET_DIR)/usr/lib
-        $(INSTALL) -D -m 0755 $(@D)/lib/libACE_INet.so $(TARGET_DIR)/usr/lib
-        $(INSTALL) -D -m 0755 $(@D)/lib/libACE_INet_SSL.so $(TARGET_DIR)/usr/lib
-        $(INSTALL) -D -m 0755 $(@D)/lib/libACE_Monitor_Control.so $(TARGET_DIR)/usr/lib
-        $(INSTALL) -D -m 0755 $(@D)/lib/libACE_RMCast.so $(TARGET_DIR)/usr/lib
-        $(INSTALL) -D -m 0755 $(@D)/lib/libACE.so $(TARGET_DIR)/usr/lib
-        $(INSTALL) -D -m 0755 $(@D)/lib/libACE_SSL.so $(TARGET_DIR)/usr/lib
-        $(INSTALL) -D -m 0755 $(@D)/lib/libACE_TMCast.so $(TARGET_DIR)/usr/lib
-        $(INSTALL) -D -m 0755 $(@D)/lib/libACEXML_Parser.so $(TARGET_DIR)/usr/lib
-        $(INSTALL) -D -m 0755 $(@D)/lib/libACEXML.so $(TARGET_DIR)/usr/lib
-        $(INSTALL) -D -m 0755 $(@D)/lib/libACEXML_XML_Svc_Conf_Parser.so $(TARGET_DIR)/usr/lib
+	for t in $(INSTALL_TARGETS_y) ; do \
+		$(INSTALL) -D -m 0755 $(@D)/lib/$$t $(TARGET_DIR)/usr/lib ; \
+	done
 endef
 
 $(eval $(call GENTARGETS))

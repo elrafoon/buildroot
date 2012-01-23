@@ -5,7 +5,7 @@
 debug = 0
 no_hidden_visibility = 1
 
-ssl = 1
+ssl = $(ACE_SSL)
 include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
 
 CROSS_COMPILE=arm-unknown-linux-uclibcgnueabi-

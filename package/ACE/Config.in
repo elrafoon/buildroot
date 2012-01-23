@@ -1,10 +1,40 @@
 config BR2_PACKAGE_ACE
 	bool "ACE"
+	select BR2_INSTALL_LIBSTDCPP
 	help
 		This package contains Adaptive Commnication Environment.
 
 		http://www.dre.vanderbilt.edu/~schmidt/ACE.html
 
-comment "ACE requires a toolchain with C++ support enabled"
-       	depends on BR2_INSTALL_LIBSTDCPP
+if BR2_PACKAGE_ACE
+config BR2_PACKAGE_ACE_ETCL
+	bool "ETCL"
+	default n
+config BR2_PACKAGE_ACE_HTBP
+	bool "HTBP"
+	default n
+config BR2_PACKAGE_ACE_INET
+	bool "INet"
+	default n
+config BR2_PACKAGE_ACE_INET_SSL
+	bool "INet_SSL"
+	select BR2_PACKAGE_ACE_SSL
+	default n
+config BR2_PACKAGE_ACE_MONITOR_CONTROL
+	bool "Monitor_Control"
+	default n
+config BR2_PACKAGE_ACE_RMCAST
+	bool "RMCast"
+	default n
+config BR2_PACKAGE_ACE_SSL
+	bool "SSL"
+	select BR2_PACKAGE_OPENSSL
+	default n
+config BR2_PACKAGE_ACE_TMCAST
+	bool "TMCast"
+	default n
+config BR2_PACKAGE_ACE_XML
+	bool "XML"
+	default n
+endif
 
