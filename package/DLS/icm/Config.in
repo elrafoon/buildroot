@@ -1,0 +1,7 @@
+config BR2_PACKAGE_ICM
+	bool "icm"
+	help
+		This package contains Integrated-Communication-Module.
+
+	select BR2_PACKAGE_ACE
+

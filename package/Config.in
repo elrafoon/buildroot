@@ -1205,9 +1205,7 @@ if BR2_PACKAGE_BUSYBOX_SHOW_OTHERS
 endif
 endmenu
 
-menu "SUZI"
-source "package/scl/Config.in"
-source "package/suquation/Config.in"
-endmenu
+source "package/SUZI/Config.in"
+source "package/DLS/Config.in"
 
 endmenu

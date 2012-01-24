@@ -1,0 +1,6 @@
+menu "DLS"
+source "package/DLS/icm/Config.in"
+source "package/DLS/ddg/Config.in"
+source "package/DLS/ddgd/Config.in"
+endmenu
+
