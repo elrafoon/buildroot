@@ -6,7 +6,7 @@
 DDG_VERSION = HEAD
 DDG_SITE = svn://merlin.swind.sk/svn/oms/dls/trunk/dls-device-gui/dls-device-gui
 DDG_SITE_METHOD = svn
-DDG_DEPENDENCIES = ACE boost qt ddgd
+DDG_DEPENDENCIES = ACE boost qt ddgd icm
 #DDG_CONF_ENV += QTDIR=`$(QT_QMAKE) -query QT_INSTALL_PREFIX`
 DDG_CONF_ENV += QTDIR=$(HOST_DIR)/usr/bin
 DDG_CONF_OPT += -DCMAKE_CXX_FLAGS="-DQ_WS_QWS -DNO_BORDERS"
