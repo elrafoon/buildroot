@@ -1,0 +1,6 @@
+config BR2_PACKAGE_SIMPLEDB
+	bool "SimpleDB"
+	select BR2_PACKAGE_UNIXODBC
+	help
+	  Simple C++ ODBC wrapper.
+

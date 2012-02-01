@@ -1,0 +1,45 @@
+diff -rupN simpledb-1.14-orig/Makefile simpledb-1.14/Makefile
+--- simpledb-1.14-orig/Makefile	2012-02-01 14:45:19.000000000 +0100
++++ simpledb-1.14/Makefile	2012-02-01 14:56:02.000000000 +0100
+@@ -31,8 +31,8 @@ LIB_NAME=libSimpleDB
+ include version
+ LIB_VERSION=$(SO_VER).$(MAJ_VER).$(MIN_VER)
+ 
+-GXX=gcc
+-CXXFLAGS=-ggdb -Wall -Weffc++ -Wold-style-cast -Woverloaded-virtual
++GXX=$(CXX)
++CXXFLAGS=-O2 -Wall -Weffc++ -Wold-style-cast -Woverloaded-virtual
+ 
+ .PHONY : all clean copyright_notice
+ 
+@@ -64,8 +64,8 @@ date_temp :
+ install : $(LIB_NAME).so.$(LIB_VERSION)
+ 	install -d $(includedir)/SimpleDB $(libdir)
+ 	cp $< $(libdir)/
+-	cd $(libdir); ln -s $(LIB_NAME).so.$(LIB_VERSION) $(LIB_NAME).so.$(SO_VER); \
+-		ln -s $(LIB_NAME).so.$(SO_VER) $(LIB_NAME).so
++	cd $(libdir); ln -sf $(LIB_NAME).so.$(LIB_VERSION) $(LIB_NAME).so.$(SO_VER); \
++		ln -sf $(LIB_NAME).so.$(SO_VER) $(LIB_NAME).so
+ 	cp $(filter-out $(wildcard SimpleDB/*_i.h),$(wildcard SimpleDB/*.h)) \
+ 		$(includedir)/SimpleDB/
+ 	cp SimpleDB.h $(includedir)
+@@ -84,7 +84,7 @@ dist : maintainer-clean version_temp dat
+ 		simpledb-$(VER_STR)/*
+ 
+ $(LIB_NAME).so.$(LIB_VERSION) : $(OBJ_FILES)
+-	$(CXX) -shared -Wl,-soname,$(LIB_NAME).so.$(SO_VER) -lstdc++ -liodbc -o $@ $(OBJ_FILES)
++	$(CXX) -shared -Wl,-soname,$(LIB_NAME).so.$(SO_VER) -lstdc++ -lodbc -o $@ $(OBJ_FILES)
+ 
+ %.o : %.cpp
+ 	$(CXX) -fPIC $(CXXFLAGS) -c $< -o $@
+diff -rupN simpledb-1.14-orig/SimpleDB/Column.h simpledb-1.14/SimpleDB/Column.h
+--- simpledb-1.14-orig/SimpleDB/Column.h	2012-02-01 14:45:19.000000000 +0100
++++ simpledb-1.14/SimpleDB/Column.h	2012-02-01 14:46:44.000000000 +0100
+@@ -31,6 +31,7 @@
+ #include <iostream>
+ #include <string>
+ #include <vector>
++#include <stdint.h>
+ #include "Exception.h" // for Database::Exception
+ 
+ namespace SimpleDB {

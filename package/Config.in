@@ -591,6 +591,7 @@ menu "Database"
 	source "package/sqlcipher/Config.in"
 	source "package/sqlite/Config.in"
 	source "package/unixodbc/Config.in"
+	source "package/simpledb/Config.in"
 endmenu
 
 menu "Filesystem"

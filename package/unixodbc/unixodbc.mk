@@ -17,12 +17,12 @@ UNIXODBC_INSTALL_TARGET = YES
 #else
 #UNIXODBC_CONF_OPT += --disable-readline
 #endif
-INSTALL_TARGETS_y := libodbc.so
-INSTALL_TARGETS_y += libodbcinst.so
-#INSTALL_TARGETS_$(BR2_PACKAGE_ACE_ETCL) += libACE_ETCL_Parser.so
+UNIXODBC_INSTALL_TARGETS_y := libodbc.so
+UNIXODBC_INSTALL_TARGETS_y += libodbcinst.so
+#UNIXODBC_INSTALL_TARGETS_$(BR2_PACKAGE_ACE_ETCL) += libACE_ETCL_Parser.so
 
 define UNIXODBC_INSTALL_TARGET_CMDS
-	for t in $(INSTALL_TARGETS_y) ; do \
+	for t in $(UNIXODBC_INSTALL_TARGETS_y) ; do \
                 $(INSTALL) -D -m 0755 $(STAGING_DIR)/usr/lib/$$t $(TARGET_DIR)/usr/lib ; \
         done
 endef
