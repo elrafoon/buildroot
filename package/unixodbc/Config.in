@@ -1,0 +1,6 @@
+config BR2_PACKAGE_UNIXODBC
+	bool "unixODBC"
+	help
+	  ODBC for UNIX systems.
+
+
