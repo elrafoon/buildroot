@@ -4,6 +4,8 @@ config BR2_PACKAGE_DDG
 		This package contains DLS GUI.
 
 	select BR2_PACKAGE_BOOST
+	select BR2_PACKAGE_BOOST_SYSTEM
+	select BR2_PACKAGE_BOOST_DATE_TIME
 	select BR2_PACKAGE_ACE
 	select BR2_PACKAGE_ICM
 	select BR2_PACKAGE_DDGD
