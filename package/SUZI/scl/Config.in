@@ -6,4 +6,5 @@ config BR2_PACKAGE_SCL
 		http://www.tind.sk/suzi
 
 	select BR2_PACKAGE_ACE
-
+        select BR2_PACKAGE_BOOST
+	select BR2_PACKAGE_BOOST_SYSTEM
