@@ -1,0 +1,14 @@
+config BR2_PACKAGE_SUHMICPP
+	bool "suhmi-cpp"
+	help
+		This package contains SuHmiCpp runtime.
+
+		http://www.tind.sk/suzi
+
+	select BR2_PACKAGE_QT
+	select BR2_PACKAGE_ACE
+	select BR2_PACKAGE_SCL
+	select BR2_PACKAGE_PYTHON
+	select BR2_PACKAGE_SIMPLEDB
+	select BR2_PACKAGE_LIBCONFIG
+

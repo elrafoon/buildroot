@@ -1,0 +1,120 @@
+diff -rupN libtar-1.2.11-orig//compat/snprintf.c libtar-1.2.11/compat/snprintf.c
+--- libtar-1.2.11-orig//compat/snprintf.c	2000-10-27 18:16:34.000000000 +0200
++++ libtar-1.2.11/compat/snprintf.c	2012-02-01 10:48:54.000000000 +0100
+@@ -50,7 +50,8 @@
+ 
+ /* Define this as a fall through, HAVE_STDARG_H is probably already set */
+ 
+-#define HAVE_VARARGS_H
++#define HAVE_STDARG_H
++
+ 
+ /* varargs declarations: */
+ 
+diff -rupN libtar-1.2.11-orig//configure libtar-1.2.11/configure
+--- libtar-1.2.11-orig//configure	2003-03-03 03:47:36.000000000 +0100
++++ libtar-1.2.11/configure	2012-02-01 11:00:35.000000000 +0100
+@@ -6225,90 +6225,11 @@ done
+ cat >>confdefs.h <<\_ACEOF
+ #define NEED_MAKEDEV 1
+ _ACEOF
+-
+-  echo "$as_me:$LINENO: checking whether makedev expects three arguments" >&5
+-echo $ECHO_N "checking whether makedev expects three arguments... $ECHO_C" >&6
+-if test "${compat_cv_func_makedev_three_args+set}" = set; then
+-  echo $ECHO_N "(cached) $ECHO_C" >&6
+-else
+-  if test "$cross_compiling" = yes; then
+-  { { echo "$as_me:$LINENO: error: cannot run test program while cross compiling
+-See \`config.log' for more details." >&5
+-echo "$as_me: error: cannot run test program while cross compiling
+-See \`config.log' for more details." >&2;}
+-   { (exit 1); exit 1; }; }
+-else
+-  cat >conftest.$ac_ext <<_ACEOF
+-
+-      #line $LINENO "configure"
+-/* confdefs.h.  */
+-_ACEOF
+-cat confdefs.h >>conftest.$ac_ext
+-cat >>conftest.$ac_ext <<_ACEOF
+-/* end confdefs.h.  */
+-
+-#include <sys/types.h>
+-#ifdef MAJOR_IN_MKDEV
+-# include <sys/mkdev.h>
+-#else
+-# ifdef MAJOR_IN_SYSMACROS
+-#  include <sys/sysmacros.h>
+-# endif
+-#endif
+-
+-int
+-main ()
+-{
+-
+-dev_t dev;
+-major_t maj = 5;
+-minor_t min = 7;
+-
+-dev = makedev(0, maj, min);
+-if (major(dev) != maj
+-    || minor(dev) != min)
+-  exit(1);
+-exit(0);
+-
+-  ;
+-  return 0;
+-}
+-_ACEOF
+-rm -f conftest$ac_exeext
+-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+-  (eval $ac_link) 2>&5
+-  ac_status=$?
+-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+-  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
+-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+-  (eval $ac_try) 2>&5
+-  ac_status=$?
+-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+-  (exit $ac_status); }; }; then
+-  compat_cv_func_makedev_three_args=yes
+-else
+-  echo "$as_me: program exited with status $ac_status" >&5
+-echo "$as_me: failed program was:" >&5
+-sed 's/^/| /' conftest.$ac_ext >&5
+-
+-( exit $ac_status )
+ compat_cv_func_makedev_three_args=no
+-
+-fi
+-rm -f core core.* *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
+-fi
+-
+-fi
+-echo "$as_me:$LINENO: result: $compat_cv_func_makedev_three_args" >&5
+-echo "${ECHO_T}$compat_cv_func_makedev_three_args" >&6
+-  if test "$compat_cv_func_makedev_three_args" = "yes"; then
+-
+ cat >>confdefs.h <<\_ACEOF
+-#define MAKEDEV_THREE_ARGS 1
++#undef MAKEDEV_THREE_ARGS
+ _ACEOF
+ 
+-  fi
+-
+ 
+ 
+ cat >>confdefs.h <<\_ACEOF
+diff -rupN libtar-1.2.11-orig//libtar/Makefile.in libtar-1.2.11/libtar/Makefile.in
+--- libtar-1.2.11-orig//libtar/Makefile.in	2002-12-15 19:02:30.000000000 +0100
++++ libtar-1.2.11/libtar/Makefile.in	2012-02-17 14:55:57.000000000 +0100
+@@ -16,7 +16,7 @@ PACKAGE_VERSION	= @PACKAGE_VERSION@
+ 
+ ### Installation programs and flags
+ INSTALL		= @INSTALL@
+-INSTALL_PROGRAM	= @INSTALL_PROGRAM@ -s
++INSTALL_PROGRAM	= @INSTALL_PROGRAM@
+ INSTALL_DATA	= @INSTALL_DATA@
+ LN_S		= @LN_S@
+ MKDIR		= @MKDIR@

@@ -1,5 +1,6 @@
 menu "SUZI"
 source "package/SUZI/scl/Config.in"
 source "package/SUZI/suquation/Config.in"
+source "package/SUZI/suhmicpp/Config.in"
 endmenu
 
