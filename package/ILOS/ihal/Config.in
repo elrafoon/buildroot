@@ -1,0 +1,19 @@
+config BR2_PACKAGE_IHAL
+	bool "ihal"
+	help
+		This package contains ihal.
+
+		http://www.tind.sk/ilos
+
+	select BR2_PACKAGE_ACE
+        depends on BR2_PACKAGE_PCRE
+
+comment "ihal depends on pcre"
+    depends on !BR2_PACKAGE_PCRE
+
+if BR2_PACKAGE_IHAL
+
+config BR2_PACKAGE_IHAL_BUILD_TESTS
+    bool "build tests"
+    select BR2_PACKAGE_GMOCK
+endif # BR2_PACKAGE_IHAL

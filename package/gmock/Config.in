@@ -1,0 +1,5 @@
+config BR2_PACKAGE_GMOCK
+	bool "gmock"
+	help
+	  google-mock.
+          http://code.google.com/p/googlemock

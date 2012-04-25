@@ -558,6 +558,7 @@ menu "Compression and decompression"
 	source "package/lzo/Config.in"
 	source "package/snappy/Config.in"
 	source "package/zlib/Config.in"
+	source "package/libtar/Config.in"
 endmenu
 
 menu "Crypto"
@@ -883,6 +884,7 @@ menu "Other"
 	source "package/startup-notification/Config.in"
 	source "package/tz/Config.in"
 	source "package/tzdata/Config.in"
+	source "package/gmock/Config.in"
 endmenu
 
 menu "Security"
@@ -1207,6 +1209,7 @@ if BR2_PACKAGE_BUSYBOX_SHOW_OTHERS
 endif
 endmenu
 
+source "package/ILOS/Config.in"
 source "package/SUZI/Config.in"
 source "package/DLS/Config.in"
 

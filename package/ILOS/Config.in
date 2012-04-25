@@ -1,0 +1,4 @@
+menu "ILOS"
+source "package/ILOS/ihal/Config.in"
+endmenu
+
