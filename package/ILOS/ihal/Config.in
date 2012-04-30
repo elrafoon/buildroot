@@ -5,15 +5,17 @@ config BR2_PACKAGE_IHAL
 
 		http://www.tind.sk/ilos
 
-	select BR2_PACKAGE_ACE
-        depends on BR2_PACKAGE_PCRE
+	depends on (BR2_PACKAGE_ACE && BR2_PACKAGE_PCRE)
 
-comment "ihal depends on pcre"
-    depends on !BR2_PACKAGE_PCRE
+	comment "ihal depends on ACE and pcre"
+		depends on !(BR2_PACKAGE_ACE && BR2_PACKAGE_PCRE)
 
 if BR2_PACKAGE_IHAL
+	config BR2_PACKAGE_IHAL_INSTANCE
+		string "Instance name"
+		default "instance"
 
-config BR2_PACKAGE_IHAL_BUILD_TESTS
-    bool "build tests"
-    select BR2_PACKAGE_GMOCK
+	config BR2_PACKAGE_IHAL_BUILD_TESTS
+		bool "build tests"
+		select BR2_PACKAGE_GMOCK
 endif # BR2_PACKAGE_IHAL
