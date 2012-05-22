@@ -5,6 +5,8 @@ config BR2_PACKAGE_SCL
 
 		http://www.tind.sk/suzi
 
-	select BR2_PACKAGE_ACE
-        select BR2_PACKAGE_BOOST
-	select BR2_PACKAGE_BOOST_SYSTEM
+	depends on (BR2_PACKAGE_ACE && BR2_PACKAGE_BOOST && BR2_PACKAGE_BOOST_SYSTEM)
+
+	comment "scl depends on ACE, Boost and Boost_System"
+		depends on !(BR2_PACKAGE_ACE && BR2_PACKAGE_BOOST && BR2_PACKAGE_BOOST_SYSTEM)
+
