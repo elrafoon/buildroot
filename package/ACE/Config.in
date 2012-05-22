@@ -1,11 +1,15 @@
 config BR2_PACKAGE_ACE
 	bool "ACE"
-	select BR2_INSTALL_LIBSTDCPP
-	depends on BR2_TOOLCHAIN_BUILDROOT_LARGEFILE && BR2_TOOLCHAIN_BUILDROOT_WCHAR
 	help
 		This package contains Adaptive Commnication Environment.
 
 		http://www.dre.vanderbilt.edu/~schmidt/ACE.html
+	
+	depends on (BR2_INSTALL_LIBSTDCPP && BR2_TOOLCHAIN_BUILDROOT_LARGEFILE && BR2_TOOLCHAIN_BUILDROOT_WCHAR)
+
+	comment "ACE requires toolchain with C++, largefile and wchar support"
+		depends on !(BR2_INSTALL_LIBSTDCPP && BR2_TOOLCHAIN_BUILDROOT_LARGEFILE && BR2_TOOLCHAIN_BUILDROOT_WCHAR)
+
 
 if BR2_PACKAGE_ACE
 config BR2_PACKAGE_ACE_ETCL
@@ -19,8 +23,10 @@ config BR2_PACKAGE_ACE_INET
 	default n
 config BR2_PACKAGE_ACE_INET_SSL
 	bool "INet_SSL"
-	select BR2_PACKAGE_ACE_SSL
 	default n
+	depends on BR2_PACKAGE_ACE_SSL
+	comment "INet_SSL depends on SSL"
+		depends on !BR2_PACKAGE_ACE_SSL
 config BR2_PACKAGE_ACE_MONITOR_CONTROL
 	bool "Monitor_Control"
 	default n
@@ -29,8 +35,10 @@ config BR2_PACKAGE_ACE_RMCAST
 	default n
 config BR2_PACKAGE_ACE_SSL
 	bool "SSL"
-	select BR2_PACKAGE_OPENSSL
 	default n
+	depends on BR2_PACKAGE_OPENSSL
+	comment "SSL depends on OpenSSL"	
+		depends on !BR2_PACKAGE_OPENSSL
 config BR2_PACKAGE_ACE_TMCAST
 	bool "TMCast"
 	default n
