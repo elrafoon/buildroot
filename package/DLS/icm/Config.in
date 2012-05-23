@@ -3,5 +3,8 @@ config BR2_PACKAGE_ICM
 	help
 		This package contains Integrated-Communication-Module.
 
-	select BR2_PACKAGE_ACE
+	depends on BR2_PACKAGE_ACE
+
+	comment "icm depends on ACE"
+		depends on !BR2_PACKAGE_ACE
 
