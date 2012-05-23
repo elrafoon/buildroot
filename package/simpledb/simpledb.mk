@@ -5,6 +5,7 @@
 #############################################################
 SIMPLEDB_VERSION = 1.14
 SIMPLEDB_SOURCE = simpledb-$(SIMPLEDB_VERSION).tar.gz
+SIMPLEDB_SITE = http://merlin.swind.sk/packages/s
 SIMPLEDB_INSTALL_STAGING = YES
 SIMPLEDB_INSTALL_TARGET = YES
 SIMPLEDB_DEPENDENCIES = unixodbc
