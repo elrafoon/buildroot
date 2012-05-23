@@ -7,6 +7,6 @@ config BR2_PACKAGE_SCL
 
 	depends on (BR2_PACKAGE_ACE && BR2_PACKAGE_BOOST && BR2_PACKAGE_BOOST_SYSTEM)
 
-	comment "scl depends on ACE, Boost and Boost_System"
+	comment "scl depends on ACE, BOOST(System)"
 		depends on !(BR2_PACKAGE_ACE && BR2_PACKAGE_BOOST && BR2_PACKAGE_BOOST_SYSTEM)
 
