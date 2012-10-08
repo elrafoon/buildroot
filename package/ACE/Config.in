@@ -1,0 +1,10 @@
+config BR2_PACKAGE_ACE
+	bool "ACE"
+	help
+		This package contains Adaptive Commnication Environment.
+
+		http://www.dre.vanderbilt.edu/~schmidt/ACE.html
+
+comment "ACE requires a toolchain with C++ support enabled"
+       	depends on BR2_INSTALL_LIBSTDCPP
+

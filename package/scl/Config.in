@@ -1,0 +1,9 @@
+config BR2_PACKAGE_SCL
+	bool "scl"
+	help
+		This package contains Suhub-Connector-Light.
+
+		http://www.tind.sk/suzi
+
+	select BR2_PACKAGE_ACE
+

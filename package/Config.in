@@ -812,6 +812,7 @@ menu "Networking"
 	source "package/zeromq/Config.in"
 	source "package/zmqpp/Config.in"
 	source "package/zyre/Config.in"
+	source "package/ACE/Config.in"
 endmenu
 
 menu "Other"
@@ -1202,6 +1203,11 @@ endif
 if BR2_PACKAGE_BUSYBOX_SHOW_OTHERS
 	source "package/vim/Config.in"
 endif
+endmenu
+
+menu "SUZI"
+source "package/scl/Config.in"
+source "package/suquation/Config.in"
 endmenu
 
 endmenu
