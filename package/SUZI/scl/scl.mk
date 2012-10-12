@@ -18,5 +18,5 @@ define SCL_INSTALL_TARGET_CMDS
 	$(INSTALL) -D -m 0755 $(STAGING_DIR)/usr/lib/libscl.so $(TARGET_DIR)/usr/lib
 endef
 
-$(eval $(call CMAKETARGETS))
+$(eval $(call cmake-package))
 

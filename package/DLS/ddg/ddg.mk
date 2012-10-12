@@ -20,5 +20,5 @@ endef
 
 DDG_POST_INSTALL_TARGET_HOOKS += DDG_PI_INSTALL_DB
 
-$(eval $(call CMAKETARGETS))
+$(eval $(call cmake-package))
 

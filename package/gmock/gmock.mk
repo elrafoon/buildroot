@@ -37,4 +37,4 @@ define GMOCK_INSTALL_TARGET_CMDS
 endef
 
 
-$(eval $(call CMAKETARGETS))
+$(eval $(call cmake-package))

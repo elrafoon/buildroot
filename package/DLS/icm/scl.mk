@@ -17,5 +17,5 @@ define ICM_INSTALL_TARGET_CMDS
 	$(INSTALL) -D -m 0755 $(STAGING_DIR)/usr/lib/libicm.so $(TARGET_DIR)/usr/lib
 endef
 
-$(eval $(call CMAKETARGETS))
+$(eval $(call cmake-package))
 

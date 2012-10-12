@@ -50,5 +50,5 @@ define SUHMICPP_INSTALL_TARGET_CMDS
 		$(INSTALL) -D -m 0644 $(STAGING_DIR)/usr/share/suhmicpp/schemas/window.xsd $(TARGET_DIR)/usr/share/suhmicpp/schemas/window.xsd
 endef
 
-$(eval $(call CMAKETARGETS))
+$(eval $(call cmake-package))
 

@@ -17,5 +17,5 @@ endef
 
 SUQUATION_POST_INSTALL_TARGET_HOOKS += SUQUATION_PI_ADD_LD_SO
 
-$(eval $(call CMAKETARGETS))
+$(eval $(call cmake-package))
 
