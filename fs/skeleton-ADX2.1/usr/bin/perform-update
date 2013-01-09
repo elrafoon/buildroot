@@ -1,0 +1,11 @@
+#!/bin/sh
+
+echo "Performing system update..."
+
+cd /
+tar -xvf /tmp/new-firmware.tar
+
+echo "Restarting system..."
+
+reboot
+

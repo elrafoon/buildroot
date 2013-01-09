@@ -1,0 +1,10 @@
+#!/bin/sh
+
+. /etc/profile
+
+/usr/bin/monitor -f /etc/monitor/svc.conf
+
+RETVAL=$?
+
+[ $RETVAL -eq 66 ] && /usr/bin/perform-update
+
