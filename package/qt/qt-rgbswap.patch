@@ -1,0 +1,15 @@
+diff -ruN qt-everywhere-opensource-src-4.8.2.orig/src/3rdparty/phonon/gstreamer/widgetrenderer.cpp qt-everywhere-opensource-src-4.8.2/src/3rdparty/phonon/gstreamer/widgetrenderer.cpp
+--- qt-everywhere-opensource-src-4.8.2.orig/src/3rdparty/phonon/gstreamer/widgetrenderer.cpp	2012-04-26 21:46:24.000000000 +0200
++++ qt-everywhere-opensource-src-4.8.2/src/3rdparty/phonon/gstreamer/widgetrenderer.cpp	2012-11-13 06:57:59.082325105 +0100
+@@ -91,7 +91,11 @@
+ 
+     m_frame = QImage(); 
+     {
++#ifdef PHONON_SWAP_RGB
++        m_frame = QImage((uchar *)array.constData(), w, h, QImage::Format_RGB32).rgbSwapped();
++#else
+         m_frame = QImage((uchar *)array.constData(), w, h, QImage::Format_RGB32);
++#endif
+     }
+ 
+     m_array = array;

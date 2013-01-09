@@ -292,6 +292,14 @@ config BR2_PACKAGE_QT_PHONON
 comment "Phonon module needs gstreamer"
 	depends on !BR2_PACKAGE_GSTREAMER
 
+config BR2_PACKAGE_QT_PHONON_SWAP_RGB
+	bool "Swap Red <=> Blue channel"
+	depends on BR2_PACKAGE_QT_PHONON
+	default n
+	help
+	  Swap red color channel with blue. This should sidestep
+	  error in Qt/Phonon integration.
+
 config BR2_PACKAGE_QT_PHONON_BACKEND
 	bool "Phonon Module Backend"
 	depends on BR2_PACKAGE_QT_PHONON

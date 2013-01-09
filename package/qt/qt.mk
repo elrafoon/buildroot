@@ -390,6 +390,11 @@ else
 QT_CONFIGURE_OPTS += -no-phonon
 endif
 
+ifeq ($(BR2_PACKAGE_QT_PHONON_SWAP_RGB),y)
+QT_CFLAGS += -DPHONON_SWAP_RGB
+QT_CXXFLAGS += -DPHONON_SWAP_RGB
+endif
+
 ifeq ($(BR2_PACKAGE_QT_PHONON_BACKEND),y)
 QT_CONFIGURE_OPTS += -phonon-backend
 else
