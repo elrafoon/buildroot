@@ -1,0 +1,10 @@
+config BR2_PACKAGE_JT
+	bool "jt"
+	help
+		This package contains jpeg test
+
+	depends on BR2_PACKAGE_JPEG
+
+	comment "jpeg-test depends on jpeg"
+		depends on !BR2_PACKAGE_JPEG
+

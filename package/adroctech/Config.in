@@ -1,0 +1,5 @@
+menu "ADROCTECH"
+source "package/adroctech/jt/Config.in"
+source "package/adroctech/monitor/Config.in"
+endmenu
+

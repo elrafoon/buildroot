@@ -1213,4 +1213,6 @@ source "package/ILOS/Config.in"
 source "package/SUZI/Config.in"
 source "package/DLS/Config.in"
 
+source "package/adroctech/Config.in"
+
 endmenu

@@ -1,0 +1,11 @@
+config BR2_PACKAGE_MONITOR
+	bool "monitor"
+	help
+		This package contains monitor
+
+	depends on (BR2_PACKAGE_ACE && BR2_PACKAGE_QT && BR2_PACKAGE_PCRE && BR2_PACKAGE_JPEG && BR2_PACKAGE_OPENCV_LIB_CORE && BR2_PACKAGE_OPENCV_LIB_IMGPROC && BR2_PACKAGE_OPENCV_LIB_HIGHGUI)
+
+	comment "monitor depends on ACE and QT and pcre and jpeg and opencv-core and opencv-imgproc and opencv-highgui"
+		depends on !(BR2_PACKAGE_ACE && BR2_PACKAGE_QT && BR2_PACKAGE_PCRE && BR2_PACKAGE_JPEG && BR2_PACKAGE_OPENCV_LIB_CORE && BR2_PACKAGE_OPENCV_LIB_IMGPROC && BR2_PACKAGE_OPENCV_LIB_HIGHGUI)
+
+
