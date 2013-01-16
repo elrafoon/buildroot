@@ -1,0 +1,27 @@
+#! /bin/sh
+#
+# hotplug       This script configures busybox mdev to act as hotplug.
+#
+
+[ -e /sbin/mdev ] || exit 0
+
+case "$1" in
+        start|"")
+                if [ "$VERBOSE" != no ]
+                then
+                        echo -n "Configuring mdev as hotplug replacement... "
+                fi
+
+		echo /sbin/mdev >/proc/sys/kernel/hotplug
+
+                [ "$VERBOSE" != no ] && echo "done."
+                ;;
+        stop)
+                [ "$VERBOSE" != no ] && echo "done."
+                ;;
+        *)
+                echo "Usage: urandom {start|stop}" >&2
+                exit 1
+                ;;
+esac
+
