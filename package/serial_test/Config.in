@@ -1,0 +1,23 @@
+config BR2_PACKAGE_SERIAL_TEST
+	bool "serial_test"
+	help
+		This package contains simple serial port testing utility
+
+	depends on BR2_PACKAGE_PYTHON_SERIAL
+
+	comment "serial_test depends on python-serial"
+		depends on !BR2_PACKAGE_PYTHON_SERIAL
+
+choice
+	prompt "serial_test configuration"
+	default BR2_PACKAGE_SERIAL_TEST_CFG_NONE
+	depends on BR2_PACKAGE_SERIAL_TEST
+
+config BR2_PACKAGE_SERIAL_TEST_CFG_NONE
+	bool "No configuration"
+
+config BR2_PACKAGE_SERIAL_TEST_CFG_IMX28
+	bool "Freescale i.mx28 ttyAPP0-4 configuration"
+
+endchoice
+
