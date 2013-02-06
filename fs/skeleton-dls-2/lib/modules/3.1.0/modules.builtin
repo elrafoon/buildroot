@@ -133,6 +133,7 @@ kernel/drivers/video/da8xx-fb.ko
 kernel/drivers/video/backlight/lcd.ko
 kernel/drivers/video/backlight/platform_lcd.ko
 kernel/drivers/video/backlight/backlight.ko
+kernel/drivers/video/backlight/mcp4018.ko
 kernel/drivers/video/console/fbcon.ko
 kernel/drivers/video/console/bitblit.ko
 kernel/drivers/video/console/font.ko
