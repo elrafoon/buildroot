@@ -3,7 +3,7 @@
 # monitor
 #
 #############################################################
-MONITOR_VERSION = 8aa23f0
+MONITOR_VERSION = 4c5f088
 MONITOR_SITE = /home/stano/adroctech/monitor
 MONITOR_SITE_METHOD = git
 MONITOR_DEPENDENCIES = ACE pcre jpeg opencv qt
