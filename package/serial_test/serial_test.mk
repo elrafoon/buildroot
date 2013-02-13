@@ -15,6 +15,7 @@ define SERIAL_TEST_INSTALL_TARGET_CMDS
 	for i in $(SERIAL_TEST_CFGS_y); do \
 		$(INSTALL) -D -m 0644 $(@D)/serial_test/$$i $(TARGET_DIR)/etc/serial_test.conf; \
 	done
+	$(INSTALL) $(@D)/serial_test/serial_test.py $(TARGET_DIR)/usr/bin/serial_test.py
 endef
 
 $(eval $(generic-package))
