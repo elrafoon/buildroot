@@ -54,4 +54,10 @@ BLUEZ_UTILS_CONF_OPT +=	\
 	--disable-usb
 endif
 
+# bccmd utility
+ifeq ($(BR2_PACKAGE_BLUEZ_UTILS_BCCMD),y)
+BLUEZ_UTILS_CONF_OPT += \
+	--enable-bccmd
+endif
+
 $(eval $(autotools-package))
