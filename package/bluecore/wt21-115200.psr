@@ -1,0 +1,15 @@
+// PSKEY_UART_BAUDRATE (UART Baud rate)
+&01be = 01d8		// 115.2 kbaud
+
+// PSKEY_ANA_FREQ (Crystal frquency trim)
+&01fe = 6590		// 26MHz
+
+// PSKEY_VM_DISABLE (VM disable)
+&025d = 0001		// True
+
+// PSKEY_HOST_INTERFACE (Host interface)
+&01f9 = 0001		// UART link running BCSP
+
+// PSKEY_BDADDR (Bluetooth address)
+&0001 = 00ff ffff 0080 0007
+

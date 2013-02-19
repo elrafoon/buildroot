@@ -1,0 +1,62 @@
+config BR2_PACKAGE_BLUECORE
+	bool "BlueCore"
+	default n
+	depends on BR2_PACKAGE_BLUEZ_UTILS_BCCMD
+	help
+	  Bootstrap & attach BlueCore-compatible bluetooth device
+
+comment "BlueCore depends on bluez-utils bccmd"
+	depends on !BR2_PACKAGE_BLUEZ_UTILS_BCCMD
+
+if BR2_PACKAGE_BLUECORE
+
+config BR2_PACKAGE_BLUECORE_KEYFILE
+	string "BlueCore keyfile to use?"
+	default "package/bluecore/wt21-460800.psr"
+	help
+	  Keyfile used to bootstrap the BlueCore device.
+
+config BR2_PACKAGE_BLUECORE_RESET_GPIO
+	string "Reset signal GPIO number"
+	help
+	  GPIO reset signal port number, leave empty to not use reset.
+
+config BR2_PACKAGE_BLUECORE_RESET_ACT
+	int "Reset signal active state"
+	default 0
+	help
+	  BlueCore reset active state, 0=low, 1=high.
+
+config BR2_PACKAGE_BLUECORE_RESET_HOLD_TIME
+	int "Reset signal hold time [us]"
+	default 100000
+	help
+	  Reset signal hold time in microseconds
+
+config BR2_PACKAGE_BLUECORE_TTY
+	string "Attached to serial device"
+	help
+	  Serial (TTY) device, to which bluecore device is attached
+
+config BR2_PACKAGE_BLUECORE_BAUDRATE
+	int "Serial link baudrate (must match keyfile)"
+	default 460800
+	help
+	  Baudrate of serial communication link, must match value configured in keyfile
+
+choice
+	prompt "Flow contol"
+	default BR2_PACKAGE_BLUECORE_FLOW_NONE
+	help
+	  Select flow control method
+
+	config BR2_PACKAGE_BLUECORE_FLOW_NONE
+		bool "no flow control"
+
+	config BR2_PACKAGE_BLUECORE_FLOW_RTSCTS
+		bool "RTS/CTS flow control"
+
+endchoice
+
+endif
+
