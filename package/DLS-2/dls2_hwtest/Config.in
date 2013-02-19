@@ -1,0 +1,10 @@
+config BR2_PACKAGE_DLS2_HWTEST
+	bool "dls2_hwtest"
+	help
+		This package contains DLS2 board level testing utility
+
+	depends on BR2_PACKAGE_QT_GUI_MODULE && BR2_PACKAGE_BLUEZ_UTILS && BR2_PACKAGE_WIRELESS_TOOLS_LIB
+
+	comment "serial_test depends on Qt-GUI, Bluez-Utils and Wireless Tools"
+		depends on !(BR2_PACKAGE_QT_GUI_MODULE && BR2_PACKAGE_BLUEZ_UTILS && BR2_PACKAGE_WIRELESS_TOOLS_LIB)
+

@@ -1,0 +1,4 @@
+menu "DLS-2"
+source "package/DLS-2/dls2_hwtest/Config.in"
+endmenu
+
