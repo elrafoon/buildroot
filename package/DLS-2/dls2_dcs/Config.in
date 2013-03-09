@@ -1,0 +1,10 @@
+config BR2_PACKAGE_DLS2_DCS
+	bool "dls2_dcs"
+	help
+		This package contains DLS2 DCS. 
+
+	depends on BR2_PACKAGE_ACE
+
+	comment "dcs depends on ACE"
+		depends on !(BR2_PACKAGE_ACE)
+
