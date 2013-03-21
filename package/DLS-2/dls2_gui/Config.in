@@ -1,0 +1,10 @@
+config BR2_PACKAGE_DLS2_GUI
+	bool "dls2_gui"
+	help
+		This package contains DLS2 GUI
+
+	depends on BR2_PACKAGE_QT_GUI_MODULE && BR2_PACKAGE_DLS2_DCS
+
+	comment "dls2 gui depends on Qt-GUI, dls2_dcs"
+		depends on !(BR2_PACKAGE_QT_GUI_MODULE && BR2_PACKAGE_DLS2_DCS)
+
