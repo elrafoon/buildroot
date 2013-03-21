@@ -1,5 +1,6 @@
 menu "DLS-2"
 source "package/DLS-2/dls2_hwtest/Config.in"
 source "package/DLS-2/dls2_dcs/Config.in"
+source "package/DLS-2/dls2_gui/Config.in"
 endmenu
 
