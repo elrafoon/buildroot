@@ -3,6 +3,12 @@ BR2_cortex_a8=y
 BR2_JLEVEL=10
 BR2_KERNEL_HEADERS_3_1=y
 BR2_UCLIBC_CONFIG="toolchain/uClibc/uClibc-0.9.33-dls2.config"
+BR2_GCC_VERSION_4_7_X=y
+BR2_EXTRA_GCC_CONFIG_OPTIONS="--with-fpu=neon"
+BR2_PACKAGE_GDB=y
+BR2_PACKAGE_GDB_SERVER=y
+# BR2_SOFT_FLOAT is not set
+BR2_TARGET_OPTIMIZATION="-pipe -march=armv7-a -mfloat-abi=softfp -mfpu=neon -ftree-vectorize -mtune=cortex-a8 -O3"
 BR2_TOOLCHAIN_BUILDROOT_LARGEFILE=y
 BR2_TOOLCHAIN_BUILDROOT_WCHAR=y
 BR2_TOOLCHAIN_BUILDROOT_CXX=y
