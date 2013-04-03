@@ -1,0 +1,5 @@
+config BR2_PACKAGE_REMSERIAL
+	bool "remserial"
+	help
+		This package contains remote serial port access
+
