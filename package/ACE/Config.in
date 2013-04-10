@@ -1,9 +1,9 @@
 config BR2_PACKAGE_ACE
 	bool "ACE"
 	help
-		This package contains Adaptive Commnication Environment.
+	  This package contains Adaptive Commnication Environment.
 
-		http://www.dre.vanderbilt.edu/~schmidt/ACE.html
+	  http://www.dre.vanderbilt.edu/~schmidt/ACE.html
 	
 	depends on (BR2_INSTALL_LIBSTDCPP && BR2_TOOLCHAIN_BUILDROOT_LARGEFILE && BR2_TOOLCHAIN_BUILDROOT_WCHAR)
 
@@ -12,38 +12,57 @@ config BR2_PACKAGE_ACE
 
 
 if BR2_PACKAGE_ACE
+
 config BR2_PACKAGE_ACE_ETCL
 	bool "ETCL"
+	depends on BR2_PACKAGE_ACE
 	default n
+
 config BR2_PACKAGE_ACE_HTBP
 	bool "HTBP"
+	depends on BR2_PACKAGE_ACE
 	default n
+
 config BR2_PACKAGE_ACE_INET
 	bool "INet"
+	depends on BR2_PACKAGE_ACE
 	default n
+
 config BR2_PACKAGE_ACE_INET_SSL
 	bool "INet_SSL"
 	default n
+	depends on BR2_PACKAGE_ACE
 	depends on BR2_PACKAGE_ACE_SSL
 	comment "INet_SSL depends on SSL"
 		depends on !BR2_PACKAGE_ACE_SSL
+
 config BR2_PACKAGE_ACE_MONITOR_CONTROL
 	bool "Monitor_Control"
+	depends on BR2_PACKAGE_ACE
 	default n
+
 config BR2_PACKAGE_ACE_RMCAST
 	bool "RMCast"
+	depends on BR2_PACKAGE_ACE
 	default n
+
 config BR2_PACKAGE_ACE_SSL
 	bool "SSL"
 	default n
+	depends on BR2_PACKAGE_ACE
 	depends on BR2_PACKAGE_OPENSSL
 	comment "SSL depends on OpenSSL"	
 		depends on !BR2_PACKAGE_OPENSSL
+
 config BR2_PACKAGE_ACE_TMCAST
 	bool "TMCast"
+	depends on BR2_PACKAGE_ACE
 	default n
+
 config BR2_PACKAGE_ACE_XML
 	bool "XML"
+	depends on BR2_PACKAGE_ACE
 	default n
+
 endif
 
