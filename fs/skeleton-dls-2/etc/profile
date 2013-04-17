@@ -54,6 +54,14 @@ for i in /etc/profile.d/*.sh ; do
     fi
 done
 
+TOUCH=`cat /sys/class/input/event0/device/name`
+
+if [ "$TOUCH" == "EP0700M06" ]; then
+	export TSLIB_CALIBFILE=/etc/pointercal-capacitive
+else
+	export TSLIB_CALIBFILE=/etc/pointercal-resistive
+fi
+
 export TSLIB_FBDEVICE=/dev/fb0
 export TSLIB_TSDEVICE=/dev/input/event0
 export TSLIB_CONSOLEDEVICE=none
