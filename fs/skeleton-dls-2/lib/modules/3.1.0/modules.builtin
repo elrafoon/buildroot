@@ -66,6 +66,7 @@ kernel/drivers/input/evdev.ko
 kernel/drivers/input/keyboard/gpio_keys.ko
 kernel/drivers/input/keyboard/matrix_keypad.ko
 kernel/drivers/input/mouse/psmouse.ko
+kernel/drivers/input/touchscreen/edt-ft5x06.ko
 kernel/drivers/input/touchscreen/ti_tscadc.ko
 kernel/drivers/input/touchscreen/tsc2007.ko
 kernel/drivers/input/serio/serio.ko
