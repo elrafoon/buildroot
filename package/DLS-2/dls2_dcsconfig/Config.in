@@ -1,0 +1,15 @@
+config BR2_PACKAGE_DLS2_DCSCONFIG
+	bool "dls2_dcsconfig"
+	select BR2_PACKAGE_PYTHON_SETUPTOOLS
+	select BR2_PACKAGE_PYTHON_ZLIB
+	select BR2_PACKAGE_PYTHON_MARKUPSAFE
+	help
+	  Download, build, install, upgrade, and uninstall Python packages.
+
+	  http://www.makotemplates.org/downloads
+
+	depends on BR2_PACKAGE_PYTHON
+
+	comment "dls2_dcsconfig depends on python"
+		depends on !BR2_PACKAGE_PYTHON
+
