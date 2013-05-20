@@ -1,0 +1,10 @@
+config BR2_PACKAGE_PYTHON_MARKUPSAFE
+	bool "python-markupsafe"
+	select BR2_PACKAGE_PYTHON_SETUPTOOLS
+	select BR2_PACKAGE_PYTHON_ZLIB
+	select BR2_PACKAGE_PYTHON_MARKUP_SAFE
+	help
+	  Download, build, install, upgrade, and uninstall Python packages.
+
+	  http://www.pocoo.org/projects/markupsafe/
+
