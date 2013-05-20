@@ -1,0 +1,10 @@
+config BR2_PACKAGE_PYTHON_MAKO
+	bool "python-mako"
+	select BR2_PACKAGE_PYTHON_SETUPTOOLS
+	select BR2_PACKAGE_PYTHON_ZLIB
+	select BR2_PACKAGE_PYTHON_MARKUPSAFE
+	help
+	  Download, build, install, upgrade, and uninstall Python packages.
+
+	  http://www.makotemplates.org/downloads
+
