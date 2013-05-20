@@ -3,8 +3,8 @@ config BR2_PACKAGE_DLS2_DCS
 	help
 		This package contains DLS2 DCS. 
 
-	depends on BR2_PACKAGE_ACE && BR2_PACKAGE_BOOST_SYSTEM
+	depends on BR2_PACKAGE_ACE && BR2_PACKAGE_BOOST_SYSTEM && BR2_PACKAGE_PYTHON_MAKO && BR2_PACKAGE_DLS2_DCSCONFIG
 
-	comment "dcs depends on ACE and boost-system"
-		depends on !(BR2_PACKAGE_ACE && BR2_PACKAGE_BOOST_SYSTEM)
+	comment "dcs depends on ACE, boost-system, python-mako and dls2_dcsconfig"
+		depends on !(BR2_PACKAGE_ACE && BR2_PACKAGE_BOOST_SYSTEM && BR2_PACKAGE_PYTHON_MAKO && BR2_PACKAGE_DLS2_DCSCONFIG)
 
