@@ -1,0 +1,12 @@
+config BR2_PACKAGE_SURPC
+	bool "SuRPC"
+	help
+		This package contains SuRPC communication library
+
+		http://www.tind.sk/suzi
+
+	depends on (BR2_PACKAGE_ACE && BR2_PACKAGE_PROTOBUF)
+
+	comment "SuRPC depends on ACE, protobuf"
+		depends on !(BR2_PACKAGE_ACE && BR2_PACKAGE_PROTOBUF)
+
