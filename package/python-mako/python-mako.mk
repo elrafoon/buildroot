@@ -18,7 +18,8 @@ endef
 
 define PYTHON_MAKO_INSTALL_TARGET_CMDS
         (cd $(@D); PYTHONPATH="$(TARGET_DIR)/usr/lib/python$(PYTHON_VERSION_MAJOR)/site-packages"\
-        $(HOST_DIR)/usr/bin/python setup.py install --prefix=$(TARGET_DIR)/usr)
+        $(HOST_DIR)/usr/bin/python setup.py install --prefix=$(TARGET_DIR)/usr;\
+	sed -i s/#!.*/"\#!\/usr\/bin\/python"/ $(TARGET_DIR)/usr/bin/mako-render)
 endef
 
 $(eval $(generic-package))
