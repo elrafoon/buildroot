@@ -1,0 +1,8 @@
+config BR2_PACKAGE_PYTHON_CHERRYPY
+	bool "python-cherrypy"
+	depends on BR2_PACKAGE_PYTHON
+	help
+	  CherryPy is a Minimalist Python Web Framework
+
+	  http://www.cherrypy.org/
+
