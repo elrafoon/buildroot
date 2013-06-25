@@ -10,3 +10,15 @@ config BR2_PACKAGE_SURPC
 	comment "SuRPC depends on ACE, protobuf"
 		depends on !(BR2_PACKAGE_ACE && BR2_PACKAGE_PROTOBUF)
 
+
+if BR2_PACKAGE_SURPC
+
+config BR2_PACKAGE_SURPC_PYTHON
+	bool "Build python module"
+	depends on (BR2_PACKAGE_PYTHON && BR2_PACKAGE_PYTHON_PROTOBUF)
+	default n
+	comment "SuRPC python module depends on python and python-protobuf"
+		depends on !(BR2_PACKAGE_PYTHON && BR2_PACKAGE_PYTHON_PROTOBUF)
+
+
+endif
