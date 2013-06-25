@@ -1,0 +1,11 @@
+config BR2_PACKAGE_DLS2_WEB
+	bool "dls2_web"
+	select BR2_PACKAGE_PYTHON_SETUPTOOLS
+	help
+	  DLS-2 web engine
+
+	depends on BR2_PACKAGE_PYTHON && BR2_PACKAGE_PYTHON_CHERRYPY && BR2_PACKAGE_SURPC_PYTHON
+
+	comment "dls2_web depends on python, python-cherrypy and surpc-python module"
+		depends on ! BR2_PACKAGE_PROTOBUF || !BR2_PACKAGE_PYTHON || !BR2_PACKAGE_PYTHON_CHERRYPY || !BR2_PACKAGE_SURPC_PYTHON
+
