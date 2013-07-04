@@ -15,5 +15,11 @@ define DLS2_WEB_INSTALL_TARGET_CMDS
         $(HOST_DIR)/usr/bin/python setup.py install --prefix=$(TARGET_DIR)/usr)
 endef
 
+define DLS2_WEB_INITSCRIPT
+        $(INSTALL) -D -m 0755 $(DLS2_WEB_SRCDIR)/etc/initscript-dls2 $(TARGET_DIR)/etc/init.d/S95dls2_web
+endef
+
+DLS2_WEB_POST_INSTALL_TARGET_HOOKS += DLS2_WEB_INITSCRIPT
+
 $(eval $(generic-package))
 
