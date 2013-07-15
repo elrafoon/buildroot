@@ -5,7 +5,7 @@
 #############################################################
 DLS2_DCS_VERSION = master
 DLS2_DCS_SITE_METHOD = git
-DLS2_DCS_SITE = git://merlin.swind.sk/oms/dls-2.git
+DLS2_DCS_SITE = ssh://merlin.swind.sk:29418/oms/dls-2.git
 DLS2_DCS_SUBDIR = dcs
 DLS2_DCS_INSTALL_STAGING = YES
 DLS2_DCS_INSTALL_TARGET = YES

@@ -1,5 +1,5 @@
 DLS2_WEB_VERSION = master
-DLS2_WEB_SITE = git://merlin.swind.sk/oms/dls-2.git
+DLS2_WEB_SITE = ssh://merlin.swind.sk:29418/oms/dls-2.git
 DLS2_WEB_SITE_METHOD = git
 DLS2_WEB_SUBDIR = web
 DLS2_WEB_SRCDIR = $(@D)/$(DLS2_DCS_SUBDIR)

@@ -1,5 +1,6 @@
 DLS2_DCSCONFIG_VERSION = master
-DLS2_DCSCONFIG_SITE = git://merlin.swind.sk/oms/dls-2.git
+DLS2_DCSCONFIG_SITE_METHOD = git
+DLS2_DCSCONFIG_SITE = ssh://merlin.swind.sk:29418/oms/dls-2.git
 DLS2_DCSCONFIG_SUBDIR = dcsconfig
 DLS2_DCSCONFIG_SRCDIR = $(@D)/$(DLS2_DCS_SUBDIR)
 DLS2_DCSCONFIG_DEPENDENCIES = host-python

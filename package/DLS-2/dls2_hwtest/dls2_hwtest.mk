@@ -4,9 +4,8 @@
 #
 #############################################################
 DLS2_HWTEST_VERSION = master
-#DLS2_HWTEST_SITE = /home/stano/embedded-tools
 DLS2_HWTEST_SITE_METHOD = git
-DLS2_HWTEST_SITE = git://merlin.swind.sk/embedded-tools.git
+DLS2_HWTEST_SITE = ssh://merlin.swind.sk:29418/embedded-tools.git
 DLS2_HWTEST_SUBDIR = dls2_hwtest
 DLS2_HWTEST_INSTALL_STAGING = NO
 DLS2_HWTEST_INSTALL_TARGET = YES
