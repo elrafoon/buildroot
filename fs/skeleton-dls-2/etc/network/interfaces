@@ -2,3 +2,7 @@
 auto lo
 iface lo inet loopback
 
+auto eth0
+## eth0 {
+## }
+ 
