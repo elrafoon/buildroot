@@ -1,0 +1,6 @@
+if BR2_LINUX_KERNEL
+menu "Kernel modules"
+source "package/kernel-modules/csr-wifi/Config.in"
+endmenu
+endif
+

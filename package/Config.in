@@ -525,6 +525,8 @@ endmenu
 endif
 endmenu
 
+source "package/kernel-modules/Config.in"
+
 menu "Libraries"
 
 menu "Audio/Sound"

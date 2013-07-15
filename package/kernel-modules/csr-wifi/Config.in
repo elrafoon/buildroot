@@ -1,0 +1,14 @@
+config BR2_PACKAGE_CSR_WIFI_KMOD
+	bool "CSR wifi kernel module"
+	depends on BR2_LINUX_KERNEL
+	help
+	  CSR wifi driver kernel module.
+
+
+if BR2_arm
+config BR2_PACKAGE_CSR_WIFI_USERSPACE
+	bool "CSR wifi binary userspace components"
+	help
+	  CSR wifi driver userspace binaries & scripts.
+endif
+
