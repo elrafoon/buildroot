@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+# Update firmware in the embedded controller
+#
+
+set -e
+
+DLS2_DCS=/usr/bin/dcs
+TIMESTAMP_FILE=/var/lib/dcs/firmware-updated
+
+. /etc/profile
+
+export DCS_INSTALL_PREFIX=/usr
+export DCS_FIRMWARE=/usr/share/dcs/firmware.hex
+
+case $1 in
+  start)
+        echo -n "Updating embedded controller firmware ... "
+	if [ ! -f /var/lib/dcs/firmware-updated -o $DCS_FIRMWARE -nt $TIMESTAMP_FILE ]; then
+		echo "Update needed"
+		if $DLS2_DCS -f /etc/dcs/svc-fw-update.conf; then
+			echo "Update successful"
+			touch $TIMESTAMP_FILE
+		else
+			echo "Update failed!"
+		fi
+	else
+		echo "Up-to-date"
+	fi
+        ;;
+  stop)
+        ;;
+  restart|reload)
+        "$0" stop
+        "$0" start
+        ;;
+  *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+esac
+
+exit $?
+

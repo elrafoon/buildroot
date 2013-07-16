@@ -17,7 +17,15 @@ define DLS2_DCS_REMOVE_DEVEL
 	rm -rf $(TARGET_DIR)/usr/include/dcs
 endef
 
+define DLS2_DCS_FW_UPDATE_INITSCRIPT
+	$(INSTALL) -D -m 0755 package/DLS-2/dls2_dcs/initscript-fwupdate $(TARGET_DIR)/etc/init.d/S80dls2_dcs_fwupdate
+endef
+
 DLS2_DCS_POST_INSTALL_TARGET_HOOKS += DLS2_DCS_REMOVE_DEVEL
+
+ifeq ($(BR2_PACKAGE_DLS2_DCS_FW_UPDATE),y)
+	DLS2_DCS_POST_INSTALL_TARGET_HOOKS += DLS2_DCS_FW_UPDATE_INITSCRIPT
+endif
 
 $(eval $(cmake-package))
 
