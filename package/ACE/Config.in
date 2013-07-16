@@ -7,10 +7,6 @@ config BR2_PACKAGE_ACE
 	
 	depends on (BR2_INSTALL_LIBSTDCPP && BR2_TOOLCHAIN_BUILDROOT_LARGEFILE && BR2_TOOLCHAIN_BUILDROOT_WCHAR)
 
-	comment "ACE requires toolchain with C++, largefile and wchar support"
-		depends on !(BR2_INSTALL_LIBSTDCPP && BR2_TOOLCHAIN_BUILDROOT_LARGEFILE && BR2_TOOLCHAIN_BUILDROOT_WCHAR)
-
-
 if BR2_PACKAGE_ACE
 
 config BR2_PACKAGE_ACE_ETCL
@@ -66,3 +62,5 @@ config BR2_PACKAGE_ACE_XML
 
 endif
 
+comment "ACE requires toolchain with C++, largefile and wchar support"
+	depends on !(BR2_INSTALL_LIBSTDCPP && BR2_TOOLCHAIN_BUILDROOT_LARGEFILE && BR2_TOOLCHAIN_BUILDROOT_WCHAR)
