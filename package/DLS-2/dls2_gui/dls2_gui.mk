@@ -3,7 +3,7 @@
 # DLS2_GUI
 #
 #############################################################
-DLS2_GUI_VERSION = master
+DLS2_GUI_VERSION = $(BR2_PACKAGE_DLS2_VERSION)
 DLS2_GUI_SITE_METHOD = git
 DLS2_GUI_SITE = ssh://merlin.swind.sk:29418/oms/dls-2.git
 DLS2_GUI_SUBDIR = gui

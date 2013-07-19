@@ -1,4 +1,14 @@
 menu "DLS-2"
+config BR2_PACKAGE_DLS2_VERSION
+	string "Product version"
+	default "master"
+	help
+	  DLS-2 product version to use. It can be:
+	  - git hash
+	  - git branch
+	  - git tag
+
+
 source "package/DLS-2/dls2_hwtest/Config.in"
 source "package/DLS-2/dls2_dcs/Config.in"
 source "package/DLS-2/dls2_dcsconfig/Config.in"

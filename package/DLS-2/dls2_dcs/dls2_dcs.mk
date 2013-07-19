@@ -3,7 +3,7 @@
 # DLS2_DCS
 #
 #############################################################
-DLS2_DCS_VERSION = master
+DLS2_DCS_VERSION = $(BR2_PACKAGE_DLS2_VERSION)
 DLS2_DCS_SITE_METHOD = git
 DLS2_DCS_SITE = ssh://merlin.swind.sk:29418/oms/dls-2.git
 DLS2_DCS_SUBDIR = dcs
