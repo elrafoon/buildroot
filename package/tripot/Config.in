@@ -1,0 +1,26 @@
+config BR2_PACKAGE_TRIPOT
+	bool "tripot"
+	help
+		Sample 3x potentiometer 1x progressbar serial port application
+
+	depends on BR2_PACKAGE_QT_GUI_MODULE
+
+	comment "tripot depends on QT gui module"
+		depends on !BR2_PACKAGE_QT_GUI_MODULE
+
+if BR2_PACKAGE_TRIPOT
+
+config BR2_PACKAGE_TRIPOT_DEVICE1
+        string "serial device to use?"
+        default "ttyAPP0"
+        help
+          Serial device file name to be used, without /dev prefix.
+
+config BR2_PACKAGE_TRIPOT_DEVICE2
+        string "serial device to use?"
+        default "ttyAPP3"
+        help
+          Serial device file name to be used, without /dev prefix.
+
+endif
+
