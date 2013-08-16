@@ -26,5 +26,5 @@ define SIMPLEDB_INSTALL_TARGET_CMDS
 	done
 endef
 
-$(eval $(call GENTARGETS))
+$(eval $(generic-package))
 

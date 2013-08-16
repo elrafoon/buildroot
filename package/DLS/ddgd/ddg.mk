@@ -14,5 +14,5 @@ define DDGD_INSTALL_TARGET_CMDS
 	cp -r $(@D)/* $(TARGET_DIR)/opt/dls/design-qml
 endef
 
-$(eval $(call GENTARGETS))
+$(eval $(generic-package))
 
