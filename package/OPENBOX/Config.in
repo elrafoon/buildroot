@@ -1,0 +1,14 @@
+menu "OPENBOX"
+config BR2_PACKAGE_OPENBOX_WEBADMIN_VERSION
+	string "Product version"
+	default "master"
+	help
+	  OPENBOX product version to use. It can be:
+	  - git hash
+	  - git branch
+	  - git tag
+
+
+source "package/OPENBOX/openbox_webadmin/Config.in"
+endmenu
+

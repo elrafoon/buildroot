@@ -1223,7 +1223,7 @@ source "package/ILOS/Config.in"
 source "package/SUZI/Config.in"
 source "package/DLS/Config.in"
 source "package/DLS-2/Config.in"
-
+source "package/OPENBOX/Config.in"
 source "package/adroctech/Config.in"
 
 endmenu
