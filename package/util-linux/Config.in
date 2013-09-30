@@ -74,6 +74,12 @@ config BR2_PACKAGE_UTIL_LINUX_CRAMFS
 	help
 	  Build fsck.cramfs and mkfs.cramfs
 
+config BR2_PACKAGE_UTIL_LINUX_CHFN_CHSH
+	bool "chfn chsh"
+	help
+            Change real user name and information
+            Change login shell
+
 config BR2_PACKAGE_UTIL_LINUX_DDATE
 	bool "ddate"
 	help
