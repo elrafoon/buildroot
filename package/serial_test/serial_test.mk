@@ -4,12 +4,14 @@
 #
 #############################################################
 SERIAL_TEST_VERSION = master
-SERIAL_TEST_SITE = git://merlin.swind.sk/embedded-tools.git
+SERIAL_TEST_SITE = ssh://merlin.swind.sk:29418/embedded-tools.git
+SERIAL_TEST_SITE_METHOD = git
 SERIAL_TEST_INSTALL_STAGING = NO
 SERIAL_TEST_INSTALL_TARGET = YES
 SERIAL_TEST_DEPENDENCIES = python-serial
 
 SERIAL_TEST_CFGS_$(BR2_PACKAGE_SERIAL_TEST_CFG_IMX28) += serial_test-imx28.conf
+SERIAL_TEST_CFGS_$(BR2_PACKAGE_SERIAL_TEST_CFG_IMX28_RTSCTS) += serial_test-imx28-rtscts.conf
 SERIAL_TEST_CFGS_$(BR2_PACKAGE_SERIAL_TEST_CFG_AM3354) += serial_test-am3354.conf
 
 define SERIAL_TEST_INSTALL_TARGET_CMDS

@@ -17,10 +17,13 @@ config BR2_PACKAGE_SERIAL_TEST_CFG_NONE
 	bool "No configuration"
 
 config BR2_PACKAGE_SERIAL_TEST_CFG_IMX28
-	bool "Freescale i.mx28 ttyAPP0-4 configuration"
+	bool "Freescale i.mx28 ttyAPP0-4"
+
+config BR2_PACKAGE_SERIAL_TEST_CFG_IMX28_RTSCTS
+	bool "Freescale i.mx28 ttyAPP0-4 with RTS/CTS"
 
 config BR2_PACKAGE_SERIAL_TEST_CFG_AM3354
-	bool "Texas Instruments AM3354 ttyO0-5 configuration"
+	bool "Texas Instruments AM3354 ttyO0-5"
 
 endchoice
 
