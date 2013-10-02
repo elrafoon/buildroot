@@ -1,0 +1,17 @@
+config BR2_PACKAGE_OPENDAF
+	bool "OpenDAF"
+	depends on BR2_PACKAGE_ACE && BR2_PACKAGE_BOOST_SIGNALS
+	help
+		This package contains Open Data-Acquisition Framework.
+
+if BR2_PACKAGE_OPENDAF
+
+config BR2_PACKAGE_OPENDAF_DEVEL
+        bool "Install development configuration"
+        default n
+        depends on BR2_PACKAGE_OPENDAF
+
+endif
+
+comment "OpenDAF depends on ACE and boost-signals"
+	depends on !(BR2_PACKAGE_ACE && BR2_PACKAGE_BOOST_SIGNALS)

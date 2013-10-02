@@ -1,0 +1,31 @@
+#!/bin/sh
+#
+# System-V init script for the opendaf daemon
+#
+
+set -e
+
+OPENDAF=/usr/bin/opendaf
+
+. /etc/profile
+
+case $1 in
+  start)
+        echo "Starting OpenDAF..."
+        start-stop-daemon -m -p /var/run/opendaf.pid -x $OPENDAF -b -S -- -f $OPENDAF_CFGROOT/svc.conf >/dev/null
+        ;;
+  stop)
+        echo "Stopping OpenDAF..."
+        start-stop-daemon -p /var/run/opendaf.pid -K
+        ;;
+  restart|reload)
+        "$0" stop
+        "$0" start
+        ;;
+  *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+esac
+
+exit $?
+
