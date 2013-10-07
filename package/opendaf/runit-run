@@ -1,0 +1,6 @@
+#!/bin/sh
+
+. /etc/profile
+
+exec /usr/bin/opendaf -f $OPENDAF_CFGROOT/svc.conf
+
