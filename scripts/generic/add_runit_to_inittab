@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+INITTAB=$TARGET_DIR/etc/inittab
+
+grep runsvdir $INITTAB && exit 0
+
+echo "# RUnit service management" >> $INITTAB
+echo "null::respawn:/usr/sbin/runsvdir-start" >> $INITTAB
+
+echo "RUnit added to inittab"
+
