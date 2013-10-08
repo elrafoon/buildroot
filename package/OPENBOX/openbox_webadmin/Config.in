@@ -1,11 +1,31 @@
 config BR2_PACKAGE_OPENBOX_WEBADMIN
 	bool "openbox_webadmin"
 	select BR2_PACKAGE_PYTHON_SETUPTOOLS
+	select BR2_PACKAGE_PYTHON_SQLITE
+	depends on BR2_PACKAGE_PYTHON && BR2_PACKAGE_PYTHON_CHERRYPY && BR2_PACKAGE_PYTHON_MAKO && BR2_PACKAGE_UTIL_LINUX && BR2_PACKAGE_UTIL_LINUX_CHFN_CHSH
 	help
 	  OpenBox web admin
 
-	depends on BR2_PACKAGE_PYTHON && BR2_PACKAGE_PYTHON_CHERRYPY && BR2_PACKAGE_PYTHON_MAKO && BR2_PACKAGE_UTIL_LINUX && BR2_PACKAGE_UTIL_LINUX_CHFN_CHSH
+if BR2_PACKAGE_OPENBOX_WEBADMIN
 
-	comment "openbox_webadmin depends on python, python-cherrypy, python-mako and util-linux with chfn"
-		depends on !BR2_PACKAGE_PYTHON || !BR2_PACKAGE_PYTHON_CHERRYPY || !BR2_PACKAGE_PYTHON_MAKO || !BR2_PACKAGE_UTIL_LINUX || !BR2_PACKAGE_UTIL_LINUX_CHFN_CHSH
+choice
+        prompt "Start-up method"
+        default BR2_PACKAGE_OPENBOX_WEBADMIN_STARTUP_INITSCRIPT
+        depends on BR2_PACKAGE_OPENBOX_WEBADMIN
+
+config BR2_PACKAGE_OPENBOX_WEBADMIN_STARTUP_NONE
+        bool "none"
+
+config BR2_PACKAGE_OPENBOX_WEBADMIN_STARTUP_INITSCRIPT
+        bool "initscript"
+
+config BR2_PACKAGE_OPENBOX_WEBADMIN_STARTUP_RUNIT
+        bool "RUnit (requires RUnit support in busybox)"
+
+endchoice
+
+endif
+
+comment "openbox_webadmin depends on python, python-cherrypy, python-mako and util-linux with chfn"
+	depends on !BR2_PACKAGE_PYTHON || !BR2_PACKAGE_PYTHON_CHERRYPY || !BR2_PACKAGE_PYTHON_MAKO || !BR2_PACKAGE_UTIL_LINUX || !BR2_PACKAGE_UTIL_LINUX_CHFN_CHSH
 

@@ -1,0 +1,31 @@
+#!/bin/sh
+#
+# System-V init script for the openbox_webadmin daemon
+#
+
+set -e
+
+OPENBOX_WEBADMIN=/usr/bin/openbox_web.py
+
+. /etc/profile
+
+case $1 in
+  start)
+        echo "Starting OpenBox WebAdmin..."
+        start-stop-daemon -m -p /var/run/openbox_webadmin.pid -x $OPENBOX_WEBADMIN -b -S -- >/dev/null
+        ;;
+  stop)
+        echo "Stopping OpenBox WebAdmin..."
+        start-stop-daemon -p /var/run/openbox_webadmin.pid -K
+        ;;
+  restart|reload)
+        "$0" stop
+        "$0" start
+        ;;
+  *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+esac
+
+exit $?
+
