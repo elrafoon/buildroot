@@ -6,34 +6,29 @@ OPENBOX_WEBADMIN_RENDERER_SUBDIR = renderer
 OPENBOX_WEBADMIN_WEB_SUBDIR = web
 OPENBOX_WEBADMIN_SRCDIR = $(@D)/$(OPENBOX_WEBADMIN_WEB_SUBDIR)
 OPENBOX_WEBADMIN_DEPENDENCIES = python host-python python-cherrypy
+OPENBOX_WEBADMIN_OPTIONS = ROOTFS=$(TARGET_DIR) PREFIX=/usr PYTHON=$(HOST_DIR)/usr/bin/python TARGET_PYTHON=/usr/bin/python CONFIGURATION=release
 
 define OPENBOX_WEBADMIN_BUILD_CMDS
         (cd $(@D)/$(OPENBOX_WEBADMIN_MODEL_SUBDIR); PYTHONPATH="$(TARGET_DIR)/usr/lib/python$(PYTHON_VERSION_MAJOR)/site-packages"\
-        make ROOTFS=$(TARGET_DIR) PREFIX=/usr PYTHON=$(HOST_DIR)/usr/bin/python TARGET_PYTHON=/usr/bin/python build)
+        make $(OPENBOX_WEBADMIN_OPTIONS) build)
 
 	(cd $(@D)/$(OPENBOX_WEBADMIN_RENDERER_SUBDIR); PYTHONPATH="$(TARGET_DIR)/usr/lib/python$(PYTHON_VERSION_MAJOR)/site-packages"\
-        make ROOTFS=$(TARGET_DIR) PREFIX=/usr PYTHON=$(HOST_DIR)/usr/bin/python TARGET_PYTHON=/usr/bin/python build)
+        make $(OPENBOX_WEBADMIN_OPTIONS) build)
 
 	(cd $(@D)/$(OPENBOX_WEBADMIN_WEB_SUBDIR); PYTHONPATH="$(TARGET_DIR)/usr/lib/python$(PYTHON_VERSION_MAJOR)/site-packages"\
-        $(HOST_DIR)/usr/bin/python setup.py build --executable=/usr/bin/python)
+        make $(OPENBOX_WEBADMIN_OPTIONS) build)
 endef
 
 define OPENBOX_WEBADMIN_INSTALL_TARGET_CMDS
         (cd $(@D)/$(OPENBOX_WEBADMIN_MODEL_SUBDIR); PYTHONPATH="$(TARGET_DIR)/usr/lib/python$(PYTHON_VERSION_MAJOR)/site-packages"\
-        make ROOTFS=$(TARGET_DIR) PREFIX=/usr PYTHON=$(HOST_DIR)/usr/bin/python TARGET_PYTHON=/usr/bin/python install)
+        make $(OPENBOX_WEBADMIN_OPTIONS) install)
 
 	(cd $(@D)/$(OPENBOX_WEBADMIN_RENDERER_SUBDIR); PYTHONPATH="$(TARGET_DIR)/usr/lib/python$(PYTHON_VERSION_MAJOR)/site-packages"\
-        make ROOTFS=$(TARGET_DIR) PREFIX=/usr PYTHON=$(HOST_DIR)/usr/bin/python TARGET_PYTHON=/usr/bin/python install)
+        make $(OPENBOX_WEBADMIN_OPTIONS) install)
 
 	(cd $(@D)/$(OPENBOX_WEBADMIN_WEB_SUBDIR); PYTHONPATH="$(TARGET_DIR)/usr/lib/python$(PYTHON_VERSION_MAJOR)/site-packages"\
-        $(HOST_DIR)/usr/bin/python setup.py install --prefix=/usr --root=$(TARGET_DIR))
+        make $(OPENBOX_WEBADMIN_OPTIONS) install)
 endef
-
-define OPENBOX_WEBADMIN_CONFIGURATION
-	$(INSTALL) -D -m 0644 package/OPENBOX/openbox_webadmin/web.conf $(TARGET_DIR)/etc/dcs/web.conf
-endef
-
-#OPENBOX_WEBADMIN_POST_INSTALL_TARGET_HOOKS += OPENBOX_WEBADMIN_CONFIGURATION
 
 define OPENBOX_WEBADMIN_INSTALL_INITSCRIPT
         $(INSTALL) -D -m 0755 package/OPENBOX/openbox_webadmin/S95openbox_webadmin $(TARGET_DIR)/etc/init.d/S95openbox_webadmin

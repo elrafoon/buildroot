@@ -12,7 +12,7 @@ OPENBOX_WEBADMIN=/usr/bin/openbox_web.py
 case $1 in
   start)
         echo "Starting OpenBox WebAdmin..."
-        start-stop-daemon -m -p /var/run/openbox_webadmin.pid -x $OPENBOX_WEBADMIN -b -S -- >/dev/null
+        start-stop-daemon -m -p /var/run/openbox_webadmin.pid -x $OPENBOX_WEBADMIN -b -S -- /etc/openbox/web.ini >/dev/null
         ;;
   stop)
         echo "Stopping OpenBox WebAdmin..."
