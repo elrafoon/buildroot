@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+PASSWD=$TARGET_DIR/etc/passwd
+SHADOW=$TARGET_DIR/etc/shadow
+PASSWD_METHOD=`cat $HOST_DIR/passwd-method`
+PASSWD_HASH=`mkpasswd -m $PASSWD_METHOD "openbox"`
+
+grep setup $PASSWD && exit 0
+
+# remove default user
+sed -i '/1000:1000/d' $PASSWD
+sed -i '/default/d' $SHADOW
+
+# create setup user
+echo "setup:x:1000:1000:Configuration Management:/home/setup:/bin/sh" >> $PASSWD
+echo "setup:$PASSWD_HASH:10933:0:99999:7:::" >> $SHADOW
+
