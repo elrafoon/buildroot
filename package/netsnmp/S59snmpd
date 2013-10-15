@@ -22,7 +22,7 @@ test -x /usr/sbin/snmptrapd || exit 0
 export MIBDIRS=/usr/share/snmp/mibs
 SNMPDRUN=yes
 SNMPDOPTS='-Lsd -Lf /dev/null -p /var/run/snmpd.pid 127.0.0.1'
-TRAPDRUN=no
+TRAPDRUN=yes
 TRAPDOPTS='-Lsd -p /var/run/snmptrapd.pid'
 
 # Reads config file (will override defaults above)
