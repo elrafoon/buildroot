@@ -1,0 +1,5 @@
+config BR2_PACKAGE_OPENBOX_TEMPLATES
+	bool "openbox_templates"
+	help
+	  OpenBox system templates
+

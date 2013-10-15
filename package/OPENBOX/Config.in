@@ -10,5 +10,6 @@ config BR2_PACKAGE_OPENBOX_WEBADMIN_VERSION
 
 
 source "package/OPENBOX/openbox_webadmin/Config.in"
+source "package/OPENBOX/openbox_templates/Config.in"
 endmenu
 
