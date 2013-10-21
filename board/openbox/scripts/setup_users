@@ -14,6 +14,6 @@ sed -i '/1000:1000/d' $PASSWD
 sed -i '/default/d' $SHADOW
 
 # create setup user
-echo "setup:x:1000:1000:Configuration Management:/home/setup:/bin/sh" >> $PASSWD
+echo "setup:x:900:900:Configuration Management:/home/setup:/bin/sh" >> $PASSWD
 echo "setup:$PASSWD_HASH:10933:0:99999:7:::" >> $SHADOW
 

@@ -18,4 +18,4 @@ ftp:x:83
 nobody:x:99:
 nogroup:x:99:
 users:x:100:
-setup:x:1000:
+setup:x:900:
