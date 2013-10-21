@@ -1,0 +1,10 @@
+#!/bin/sh
+
+. /etc/profile
+
+# if diagnostics is requested, run with diagnostics configuration file
+grep DIAG /proc/cmdline >/dev/null && exec /usr/bin/opensmc -f /etc/opensmc/svc-diag.conf
+
+# else run with default configuration
+exec /usr/bin/opensmc -f /etc/opensmc/svc.conf
+

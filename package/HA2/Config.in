@@ -1,0 +1,4 @@
+menu "HA2"
+source "package/HA2/ha2_opensmc/Config.in"
+endmenu
+

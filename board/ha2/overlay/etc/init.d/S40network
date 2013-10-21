@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# Start the network....
+#
+
+case "$1" in
+  start)
+	echo "Starting network..."
+	# don't touch network settings when booting from NFS
+	grep nfsroot /proc/cmdline >/dev/null 2>&1 || /sbin/ifup -a
+	;;
+  stop)
+	echo -n "Stopping network..."
+	# don't touch network settings when booting from NFS
+	grep nfsroot /proc/cmdline >/dev/null 2>&1 || /sbin/ifdown -a
+	;;
+  restart|reload)
+	"$0" stop
+	"$0" start
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?
+
