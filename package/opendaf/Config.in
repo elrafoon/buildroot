@@ -1,6 +1,6 @@
 config BR2_PACKAGE_OPENDAF
 	bool "OpenDAF"
-	depends on BR2_PACKAGE_ACE && BR2_PACKAGE_BOOST_SYSTEM && BR2_PACKAGE_BOOST_SIGNALS && BR2_PACKAGE_NETSNMP
+	depends on BR2_PACKAGE_ACE && BR2_PACKAGE_BOOST_SYSTEM && BR2_PACKAGE_BOOST_SIGNALS && BR2_PACKAGE_BOOST_REGEX && BR2_PACKAGE_NETSNMP
 	help
 		This package contains Open Data-Acquisition Framework.
 
@@ -35,6 +35,6 @@ if BR2_PACKAGE_OPENDAF
 
 endif
 
-comment "OpenDAF depends on ACE, boost-system, boost-signals and NetSNMP"
-	depends on !(BR2_PACKAGE_ACE && BR2_PACKAGE_BOOST_SYSTEM && BR2_PACKAGE_BOOST_SIGNALS && BR2_PACKAGE_NETSNMP)
+comment "OpenDAF depends on ACE, boost-system, boost-signals, boost-regex and NetSNMP"
+	depends on !(BR2_PACKAGE_ACE && BR2_PACKAGE_BOOST_SYSTEM && BR2_PACKAGE_BOOST_SIGNALS && BR2_PACKAGE_BOOST_REGEX && BR2_PACKAGE_NETSNMP)
 
