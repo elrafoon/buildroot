@@ -5,29 +5,35 @@ config BR2_PACKAGE_OPENDAF
 		This package contains Open Data-Acquisition Framework.
 
 if BR2_PACKAGE_OPENDAF
-
-config BR2_PACKAGE_OPENDAF_DEVEL
-        bool "Install development configuration"
-        default n
-        depends on BR2_PACKAGE_OPENDAF
-
-choice
-	prompt "Start-up method"
-	default BR2_PACKAGE_OPENDAF_STARTUP_INITSCRIPT
+	config BR2_PACKAGE_OPENDAF_PLATFORM
+	string "Target Platform"
+	default generic
 	depends on BR2_PACKAGE_OPENDAF
+	help
+		Platform-specific configuration to use
 
-config BR2_PACKAGE_OPENDAF_STARTUP_NONE
-	bool "none"
+	config BR2_PACKAGE_OPENDAF_DEVEL
+    	bool "Install development configuration"
+        default n
+		depends on BR2_PACKAGE_OPENDAF
 
-config BR2_PACKAGE_OPENDAF_STARTUP_INITSCRIPT
-	bool "initscript"
+	choice
+		prompt "Start-up method"
+		default BR2_PACKAGE_OPENDAF_STARTUP_INITSCRIPT
+		depends on BR2_PACKAGE_OPENDAF
 
-config BR2_PACKAGE_OPENDAF_STARTUP_RUNIT
-	bool "RUnit (requires RUnit support in busybox)"
+		config BR2_PACKAGE_OPENDAF_STARTUP_NONE
+			bool "none"
 
-endchoice
+		config BR2_PACKAGE_OPENDAF_STARTUP_INITSCRIPT
+			bool "initscript"
+
+		config BR2_PACKAGE_OPENDAF_STARTUP_RUNIT
+			bool "RUnit (requires RUnit support in busybox)"
+
+	endchoice
+
 endif
-
 
 comment "OpenDAF depends on ACE, boost-system, boost-signals and NetSNMP"
 	depends on !(BR2_PACKAGE_ACE && BR2_PACKAGE_BOOST_SYSTEM && BR2_PACKAGE_BOOST_SIGNALS && BR2_PACKAGE_NETSNMP)
