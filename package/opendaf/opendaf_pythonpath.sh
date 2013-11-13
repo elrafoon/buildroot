@@ -1,2 +1,2 @@
-export PYTHONPATH='/usr/share/opendaf/templates/modules/'
+export PYTHONPATH='/usr/share/opendaf/templates/modules/':$PYTHONPATH
 
