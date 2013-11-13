@@ -1,7 +1,7 @@
-#include <ace/config-linux.h>
-
 #define _LARGEFILE_SOURCE 1
 #define _FILE_OFFSET_BITS 64
+
+#include <ace/config-linux.h>
 
 #ifndef ACE_LACKS_STROPTS_H
 #define ACE_LACKS_STROPTS_H 1
