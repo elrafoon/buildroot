@@ -1,10 +1,30 @@
 config BR2_PACKAGE_RQWB
 	bool "rqwb"
+	depends on BR2_PACKAGE_QT_GUI_MODULE && BR2_PACKAGE_QT_WEBKIT && BR2_PACKAGE_QT_SCRIPT
 	help
 		Restricted Qt Web Browser
 
-	depends on BR2_PACKAGE_QT_GUI_MODULE && BR2_PACKAGE_QT_WEBKIT && BR2_PACKAGE_QT_SCRIPT
 
-	comment "rqwb depends on Qt gui, script and webkit"
-		depends on !(BR2_PACKAGE_QT_GUI_MODULE && BR2_PACKAGE_QT_WEBKIT && BR2_PACKAGE_QT_SCRIPT)
+if BR2_PACKAGE_RQWB
+	choice
+		prompt "Start-up method"
+		default BR2_PACKAGE_RQWB_STARTUP_NONE
+		depends on BR2_PACKAGE_RQWB
+
+		config BR2_PACKAGE_RQWB_STARTUP_NONE
+			bool "none"
+
+		config BR2_PACKAGE_RQWB_STARTUP_INITSCRIPT
+			bool "initscript"
+
+		config BR2_PACKAGE_RQWB_STARTUP_RUNIT
+			bool "RUnit (requires RUnit support in busybox)"
+
+	endchoice
+
+endif
+
+
+comment "rqwb depends on Qt gui, script and webkit"
+	depends on !(BR2_PACKAGE_QT_GUI_MODULE && BR2_PACKAGE_QT_WEBKIT && BR2_PACKAGE_QT_SCRIPT)
 

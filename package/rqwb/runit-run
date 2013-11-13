@@ -1,0 +1,14 @@
+#!/bin/sh
+
+. /etc/profile
+
+if [ -r /etc/default/rqwb ]; then
+	. /etc/default/rqwb
+fi
+
+if [ $RQWB_ENABLED -eq 1 ]; then
+	exec /usr/bin/rqwb $RQWB_OPTIONS
+else
+	sv down rqwb
+fi
+
