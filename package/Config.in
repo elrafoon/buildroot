@@ -382,6 +382,7 @@ endmenu
 
 menu "Industrial applications"
 	source "package/opendaf/Config.in"
+	source "package/uHMI/Config.in"
 endmenu
 
 menu "Interpreter languages and scripting"

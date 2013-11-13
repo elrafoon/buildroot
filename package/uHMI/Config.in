@@ -1,0 +1,9 @@
+config BR2_PACKAGE_UHMI
+	bool "uHMI"
+	depends on BR2_PACKAGE_OPENDAF
+	help
+	  Micro Human Machine Interface
+
+comment "uHMI depends on OpenDAF"
+	depends on !BR2_PACKAGE_OPENDAF
+
