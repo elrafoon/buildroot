@@ -380,6 +380,10 @@ endif
 	source "package/wipe/Config.in"
 endmenu
 
+menu "Industrial applications"
+	source "package/opendaf/Config.in"
+endmenu
+
 menu "Interpreter languages and scripting"
 	source "package/enscript/Config.in"
 	source "package/erlang/Config.in"
@@ -1046,7 +1050,6 @@ endif
 	source "package/ntp/Config.in"
 	source "package/nuttcp/Config.in"
 	source "package/olsr/Config.in"
-	source "package/opendaf/Config.in"
 	source "package/openntpd/Config.in"
 	source "package/openobex/Config.in"
 	source "package/openssh/Config.in"
