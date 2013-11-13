@@ -1,0 +1,19 @@
+config BR2_PACKAGE_UHMI_DEMOS
+	bool "uHMI demos"
+	depends on BR2_PACKAGE_UHMI
+	help
+	  Micro Human Machine Interface demos
+
+if BR2_PACKAGE_UHMI_DEMOS
+	config BR2_PACKAGE_UHMI_DEMOS_DEMO
+	string "Demo to build"
+	default koyo
+	depends on BR2_PACKAGE_UHMI_DEMOS
+	help
+		Which uHMI demo to build & install
+
+endif
+
+comment "uHMI depends on uHMI"
+	depends on !BR2_PACKAGE_UHMI
+

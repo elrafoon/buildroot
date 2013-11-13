@@ -1,0 +1,8 @@
+UHMI_DEMOS_VERSION = master
+UHMI_DEMOS_SITE = ssh://merlin.swind.sk:29418/uHMI-demos
+UHMI_DEMOS_SITE_METHOD = git
+UHMI_DEMOS_DEPENDENCIES = uHMI
+UHMI_DEMOS_SUBDIR = $(BR2_PACKAGE_UHMI_DEMOS_DEMO)
+
+$(eval $(cmake-package))
+
