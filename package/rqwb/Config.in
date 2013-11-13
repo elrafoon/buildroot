@@ -1,0 +1,10 @@
+config BR2_PACKAGE_RQWB
+	bool "rqwb"
+	help
+		Restricted Qt Web Browser
+
+	depends on BR2_PACKAGE_QT_GUI_MODULE && BR2_PACKAGE_QT_WEBKIT && BR2_PACKAGE_QT_SCRIPT
+
+	comment "rqwb depends on Qt gui, script and webkit"
+		depends on !(BR2_PACKAGE_QT_GUI_MODULE && BR2_PACKAGE_QT_WEBKIT && BR2_PACKAGE_QT_SCRIPT)
+

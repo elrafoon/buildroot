@@ -1069,6 +1069,7 @@ endif
 	source "package/radvd/Config.in"
 	source "package/rp-pppoe/Config.in"
 	source "package/rpcbind/Config.in"
+	source "package/rqwb/Config.in"
 	source "package/rsh-redone/Config.in"
 	source "package/rsync/Config.in"
 	source "package/rtorrent/Config.in"
