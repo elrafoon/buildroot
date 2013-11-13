@@ -4,7 +4,7 @@
 #
 #############################################################
 TRIPOT_VERSION = master
-TRIPOT_SITE = git://merlin.swind.sk/embedded-tools
+TRIPOT_SITE = ssh://merlin.swind.sk:29418/embedded-tools
 TRIPOT_SITE_METHOD = git
 TRIPOT_SUBDIR = tripot
 TRIPOT_DEPENDENCIES = qt
