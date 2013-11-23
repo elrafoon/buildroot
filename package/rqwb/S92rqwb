@@ -16,13 +16,13 @@ fi
 case $1 in
   start)
         echo "Starting RQWB ..."
-		if [ $RQWB_ENABLED -eq 1]; then
+		if [ $RQWB_ENABLED -eq 1 ]; then
 	        start-stop-daemon -m -p /var/run/rqwb.pid -x $RQWB -b -S -- $RQWB_OPTIONS >/dev/null
 		fi
         ;;
   stop)
         echo "Stopping RQWB ..."
-		if [ $RQWB_ENABLED -eq 1]; then
+		if [ $RQWB_ENABLED -eq 1 ]; then
         	start-stop-daemon -p /var/run/rqwb.pid -K
 		fi
         ;;
