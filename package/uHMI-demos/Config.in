@@ -12,6 +12,12 @@ if BR2_PACKAGE_UHMI_DEMOS
 	help
 		Which uHMI demo to build & install
 
+	config BR2_PACKAGE_UHMI_DEMOS_INDEX
+	string "Where to point the index.html"
+	depends on BR2_PACKAGE_UHMI_DEMOS
+	help
+		Path where to point the index.html.
+
 endif
 
 comment "uHMI depends on uHMI"
