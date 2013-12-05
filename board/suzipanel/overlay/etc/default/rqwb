@@ -1,0 +1,8 @@
+if [ -e /dev/fb0 ]; then
+	RQWB_ENABLED=1
+	RQWB_RES=`cat /sys/class/graphics/fb0/virtual_size | sed s/,/x/`
+	RQWB_OPTIONS="-qws -geometry $RQWB_RES -u http://localhost:8080 -n -s"
+else
+	RQWB_ENABLED=0
+fi
+
