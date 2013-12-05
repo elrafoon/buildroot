@@ -1,0 +1,9 @@
+config BR2_PACKAGE_WAVEGEN
+	bool "Wavegen"
+	depends on BR2_PACKAGE_PYTHON
+	help
+	  Waveform generator tool
+
+comment "Wavegen depends on pthon"
+	depends on !BR2_PACKAGE_PYTHON
+
