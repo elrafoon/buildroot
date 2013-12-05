@@ -3,7 +3,7 @@
 # ace
 #
 #############################################################
-ACE_VERSION = 6.1.7
+ACE_VERSION = 6.2.3
 ACE_SOURCE = ACE-$(ACE_VERSION).tar.gz
 ACE_SITE = ftp://download.dre.vanderbilt.edu/previous_versions
 ACE_INSTALL_STAGING = YES
