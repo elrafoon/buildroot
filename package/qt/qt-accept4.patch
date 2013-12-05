@@ -1,0 +1,20 @@
+--- a/src/network/socket/qnet_unix_p.h	2013-11-15 14:13:56.965943056 +0100
++++ b/src/network/socket/qnet_unix_p.h	2013-11-15 14:28:19.846020884 +0100
+@@ -72,6 +72,8 @@
+ #  include <resolv.h>
+ #endif
+ 
++#include <features.h>
++
+ QT_BEGIN_NAMESPACE
+ 
+ // Almost always the same. If not, specify in qplatformdefs.h.
+@@ -113,7 +115,7 @@ static inline int qt_safe_accept(int s,
+     Q_ASSERT((flags & ~O_NONBLOCK) == 0);
+ 
+     register int fd;
+-#if QT_UNIX_SUPPORTS_THREADSAFE_CLOEXEC && defined(SOCK_CLOEXEC) && defined(SOCK_NONBLOCK)
++#if QT_UNIX_SUPPORTS_THREADSAFE_CLOEXEC && defined(SOCK_CLOEXEC) && defined(SOCK_NONBLOCK) && !(defined(__UCLIBC__) && !__ASSUME_ACCEPT4)
+     // use accept4
+     int sockflags = SOCK_CLOEXEC;
+     if (flags & O_NONBLOCK)
