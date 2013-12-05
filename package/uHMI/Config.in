@@ -4,6 +4,16 @@ config BR2_PACKAGE_UHMI
 	help
 	  Micro Human Machine Interface
 
+if BR2_PACKAGE_UHMI
+	config BR2_PACKAGE_UHMI_SCAN_PERIOD
+	int "Scan period [ms]"
+	default 200
+	depends on BR2_PACKAGE_UHMI
+	help
+		uHMI scan period in milliseconds. Use 1000 ms on slower hardware.
+
+endif
+
 comment "uHMI depends on OpenDAF"
 	depends on !BR2_PACKAGE_OPENDAF
 
