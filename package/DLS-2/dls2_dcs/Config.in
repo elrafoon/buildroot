@@ -13,6 +13,22 @@ config BR2_PACKAGE_DLS2_DCS_FW_UPDATE
 	default y
 	depends on BR2_PACKAGE_DLS2_DCS
 
+choice
+	prompt "Target platform"
+	default BR2_PACKAGE_DLS2_DCS_TARGET_PLATFORM_TX48
+	depends on BR2_PACKAGE_DLS2_DCS
+
+	config BR2_PACKAGE_DLS2_DCS_TARGET_PLATFORM_DESKTOP
+		bool "DESKTOP"
+
+	config BR2_PACKAGE_DLS2_DCS_TARGET_PLATFORM_TX48
+		bool "TX48"
+
+	config BR2_PACKAGE_DLS2_DCS_TARGET_PLATFORM_FTT_TX
+		bool "FTT_TX"
+
+endchoice
+
 endif
 	
 comment "dcs depends on ACE, boost-system, python-mako, dls2_dcsconfig, SuRPC and protobuf"
