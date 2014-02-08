@@ -34,6 +34,7 @@ endef
 
 define OPENDAF_INSTALL_PROFILE
 	$(INSTALL) -D -m 0644 package/opendaf/opendaf_pythonpath.sh $(TARGET_DIR)/etc/profile.d/opendaf_pythonpath.sh
+	$(INSTALL) -D -m 0644 package/opendaf/opendaf_vars.sh $(TARGET_DIR)/etc/profile.d/opendaf_vars.sh
 endef
 
 define OPENDAF_INSTALL_RUNIT_SERVICE
