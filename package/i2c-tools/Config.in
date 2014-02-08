@@ -8,3 +8,14 @@ config BR2_PACKAGE_I2C_TOOLS
 	  EEPROM decoding scripts, and more.
 
 	  http://www.lm-sensors.org
+
+if BR2_PACKAGE_I2C_TOOLS
+	config BR2_PACKAGE_I2C_TOOLS_DEV
+		bool "Install headers"
+		default n
+		depends on BR2_PACKAGE_I2C_TOOLS
+		help
+			Install development headers
+
+endif
+
