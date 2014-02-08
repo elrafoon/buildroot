@@ -9,21 +9,30 @@ config BR2_PACKAGE_OPENBOX_WEBADMIN
 
 if BR2_PACKAGE_OPENBOX_WEBADMIN
 
-choice
-        prompt "Start-up method"
-        default BR2_PACKAGE_OPENBOX_WEBADMIN_STARTUP_INITSCRIPT
-        depends on BR2_PACKAGE_OPENBOX_WEBADMIN
+	config BR2_PACKAGE_OPENBOX_WEBADMIN_VERSION
+		string "Product version"
+		default "master"
+		help
+		  OPENBOX product version to use. It can be:
+		  - git hash
+		  - git branch
+		  - git tag
 
-config BR2_PACKAGE_OPENBOX_WEBADMIN_STARTUP_NONE
-        bool "none"
+	choice
+		prompt "Start-up method"
+		default BR2_PACKAGE_OPENBOX_WEBADMIN_STARTUP_INITSCRIPT
+		depends on BR2_PACKAGE_OPENBOX_WEBADMIN
 
-config BR2_PACKAGE_OPENBOX_WEBADMIN_STARTUP_INITSCRIPT
-        bool "initscript"
+		config BR2_PACKAGE_OPENBOX_WEBADMIN_STARTUP_NONE
+			bool "none"
 
-config BR2_PACKAGE_OPENBOX_WEBADMIN_STARTUP_RUNIT
-        bool "RUnit (requires RUnit support in busybox)"
+		config BR2_PACKAGE_OPENBOX_WEBADMIN_STARTUP_INITSCRIPT
+			bool "initscript"
 
-endchoice
+		config BR2_PACKAGE_OPENBOX_WEBADMIN_STARTUP_RUNIT
+			bool "RUnit (requires RUnit support in busybox)"
+
+	endchoice
 
 endif
 
