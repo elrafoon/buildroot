@@ -5,17 +5,28 @@ config BR2_PACKAGE_OPENDAF
 		This package contains Open Data-Acquisition Framework.
 
 if BR2_PACKAGE_OPENDAF
-	config BR2_PACKAGE_OPENDAF_PLATFORM
-	string "Target Platform"
-	default generic
-	depends on BR2_PACKAGE_OPENDAF
-	help
-		Platform-specific configuration to use
-
 	config BR2_PACKAGE_OPENDAF_DEVEL
     	bool "Install development configuration"
         default n
 		depends on BR2_PACKAGE_OPENDAF
+
+	choice
+		prompt "Target platform"
+		default BR2_PACKAGE_OPENDAF_PLATFORM_GENERIC
+		depends on BR2_PACKAGE_OPENDAF
+
+		config BR2_PACKAGE_OPENDAF_PLATFORM_GENERIC
+			bool "generic"
+
+		config BR2_PACKAGE_OPENDAF_PLATFORM_OPENBOX
+			bool "openbox"
+
+		config BR2_PACKAGE_OPENDAF_PLATFORM_RTU
+			bool "rtu"
+			select BR2_PACKAGE_I2C_TOOLS
+			select BR2_PACKAGE_I2C_TOOLS_DEV
+
+	endchoice
 
 	choice
 		prompt "Start-up method"
