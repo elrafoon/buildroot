@@ -18,13 +18,13 @@ endif
 define ACE_BUILD_CMDS
 	cp package/ACE/config.h $(@D)/ace/config.h
 	cp package/ACE/platform_macros.GNU $(@D)/include/makeinclude/platform_macros.GNU
-	$(MAKE) ACE_ROOT=$(@D) ACE_SSL=$(ACE_SSL) CC=$(TARGET_CC) CXX=$(TARGET_CXX) LD=$(TARGET_CC) -C $(@D)
+	$(MAKE) ACE_ROOT=$(@D) ACE_SSL=$(ACE_SSL) CC=$(TARGET_CC) CXX=$(TARGET_CXX) LD=$(TARGET_CXX) -C $(@D)
 endef
 
 define ACE_INSTALL_STAGING_CMDS
 	mkdir -p $(STAGING_DIR)/usr/include/ace
 	mkdir -p $(STAGING_DIR)/usr/share/ace
-	$(MAKE) INSTALL_PREFIX=$(STAGING_DIR)/usr ACE_ROOT=$(@D) ACE_SSL=$(ACE_SSL) CC=$(TARGET_CC) CXX=$(TARGET_CXX) LD=$(TARGET_CC) -C $(@D) install
+	$(MAKE) INSTALL_PREFIX=$(STAGING_DIR)/usr ACE_ROOT=$(@D) ACE_SSL=$(ACE_SSL) CC=$(TARGET_CC) CXX=$(TARGET_CXX) LD=$(TARGET_CXX) -C $(@D) install
 endef
 
 ACE_INSTALL_TARGETS_y := libACE.so
