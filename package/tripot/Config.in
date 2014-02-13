@@ -10,17 +10,30 @@ config BR2_PACKAGE_TRIPOT
 
 if BR2_PACKAGE_TRIPOT
 
-config BR2_PACKAGE_TRIPOT_DEVICE1
+    config BR2_PACKAGE_TRIPOT_DEVICE1
         string "serial device to use?"
         default "ttyAPP0"
         help
           Serial device file name to be used, without /dev prefix.
 
-config BR2_PACKAGE_TRIPOT_DEVICE2
+    config BR2_PACKAGE_TRIPOT_DEVICE2
         string "serial device to use?"
         default "ttyAPP3"
         help
           Serial device file name to be used, without /dev prefix.
+
+	choice
+		prompt "Display resolution"
+		depends on BR2_PACKAGE_TRIPOT
+		default BR2_PACKAGE_TRIPOT_RESOLUTION_480x272
+		
+		config BR2_PACKAGE_TRIPOT_RESOLUTION_480x272
+			bool "480x272"
+		
+		config BR2_PACKAGE_TRIPOT_RESOLUTION_800x480
+			bool "800x480"
+
+	endchoice
 
 endif
 
