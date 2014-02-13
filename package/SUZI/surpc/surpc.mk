@@ -4,7 +4,7 @@
 #
 #############################################################
 SURPC_VERSION = master
-SURPC_SITE = git://merlin.swind.sk/suzi/SuRPC.git
+SURPC_SITE = ssh://merlin.swind.sk:29418/suzi/SuRPC.git
 SURPC_SITE_METHOD = git
 SURPC_DEPENDENCIES = ACE protobuf
 SURPC_INSTALL_STAGING = YES
