@@ -1,0 +1,8 @@
+config BR2_PACKAGE_LINUXPTP
+	bool "linuxptp"
+	help
+	  This software is an implementation of the Precision Time Protocol (PTP)
+	  according to IEEE standard 1588 for Linux
+
+	  http://linuxptp.sourceforge.net/
+
