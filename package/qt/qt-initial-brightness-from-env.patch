@@ -1,0 +1,12 @@
+diff -rupN qt-4.8.5/src/gui/embedded/qscreenvfb_qws.cpp qt-4.8.5-br/src/gui/embedded/qscreenvfb_qws.cpp
+--- qt-4.8.5/src/gui/embedded/qscreenvfb_qws.cpp	2013-06-07 07:16:59.000000000 +0200
++++ qt-4.8.5-br/src/gui/embedded/qscreenvfb_qws.cpp	2014-03-05 22:17:35.737391775 +0100
+@@ -90,7 +90,7 @@ QVFbScreenPrivate::QVFbScreenPrivate()
+ #ifndef QT_NO_QWS_KEYBOARD
+     keyboard = 0;
+ #endif
+-    brightness = 255;
++    brightness = getenv("QWS_INITIAL_BRIGHTNESS") ? atoi(getent("QWS_INITIAL_BRIGHTNESS")) : 255;
+     blank = false;
+ }
+ 
