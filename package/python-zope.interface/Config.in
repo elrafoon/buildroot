@@ -1,0 +1,8 @@
+config BR2_PACKAGE_PYTHON_ZOPE_INTERFACE
+	bool "python-zope.interface"
+	depends on BR2_PACKAGE_PYTHON
+	help
+	  python-zope.interface is a part of Zope3 framework
+ 
+	  http://www.zope.org
+
