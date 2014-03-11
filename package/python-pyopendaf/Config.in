@@ -1,0 +1,7 @@
+config BR2_PACKAGE_PYTHON_PYOPENDAF
+	bool "python-pyopendaf"
+	depends on BR2_PACKAGE_PYTHON
+	select BR2_PACKAGE_PYTHON_ZOPE_INTERFACE
+	help
+	  python-pyopendaf is an OpenDAF python wrapper.
+ 
