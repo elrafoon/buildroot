@@ -34,6 +34,12 @@ if BR2_PACKAGE_OPENBOX_WEBADMIN
 
 	endchoice
 
+    config BR2_PACKAGE_OPENBOX_WEBADMIN_TITLE
+    string "Webadmin Title"
+    default "OpenBox"
+    help
+      Webadmin title.
+
 endif
 
 comment "openbox_webadmin depends on python, python-cherrypy, python-mako and util-linux with chfn"

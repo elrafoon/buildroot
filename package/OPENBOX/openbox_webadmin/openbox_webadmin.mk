@@ -28,6 +28,7 @@ define OPENBOX_WEBADMIN_INSTALL_TARGET_CMDS
 
 	(cd $(@D)/$(OPENBOX_WEBADMIN_WEB_SUBDIR); PYTHONPATH="$(TARGET_DIR)/usr/lib/python$(PYTHON_VERSION_MAJOR)/site-packages"\
         make $(OPENBOX_WEBADMIN_OPTIONS) install)
+	sed -i s/@PRODUCT_NAME@/$(BR2_PACKAGE_OPENBOX_WEBADMIN_TITLE)/ $(TARGET_DIR)/usr/share/openbox/web/html/base.html
 endef
 
 define OPENBOX_WEBADMIN_INSTALL_INITSCRIPT
