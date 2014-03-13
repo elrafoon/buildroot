@@ -5,7 +5,7 @@
 
 set -e
 
-OPENBOX_WEBADMIN=/usr/bin/openbox_web.py
+OPENBOX_WEBADMIN=/usr/bin/openbox_web
 
 . /etc/profile
 
