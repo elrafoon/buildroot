@@ -5,10 +5,21 @@ config BR2_PACKAGE_OPENDAF
 		This package contains Open Data-Acquisition Framework.
 
 if BR2_PACKAGE_OPENDAF
-	config BR2_PACKAGE_OPENDAF_DEVEL
-    	bool "Install development configuration"
-        default n
+	choice
+		prompt "Configuration"
+		default BR2_PACKAGE_OPENDAF_CFG_PROD
 		depends on BR2_PACKAGE_OPENDAF
+
+		config BR2_PACKAGE_OPENDAF_CFG_PROD
+			bool "production"
+
+		config BR2_PACKAGE_OPENDAF_CFG_DEVEL
+			bool "development"
+
+		config BR2_PACKAGE_OPENDAF_CFG_SOLARWOLF
+			bool "solarwolf"
+
+	endchoice
 
 	choice
 		prompt "Target platform"
