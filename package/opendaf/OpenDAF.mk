@@ -8,7 +8,7 @@ OPENDAF_SITE_METHOD = git
 OPENDAF_SITE = ssh://merlin.swind.sk:29418/OpenDAF.git
 OPENDAF_INSTALL_STAGING = NO
 OPENDAF_INSTALL_TARGET = YES
-OPENDAF_DEPENDENCIES = ACE boost netsnmp
+OPENDAF_DEPENDENCIES = ACE boost netsnmp host-protobuf protobuf
 
 # setup per-platform settings
 # generic
