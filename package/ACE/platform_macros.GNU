@@ -8,7 +8,7 @@ no_hidden_visibility = 1
 ssl = $(ACE_SSL)
 include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
 
-CROSS_COMPILE=arm-unknown-linux-uclibcgnueabi-
+CROSS_COMPILE=arm-linux-
 
 FLAGS_C_CC += -Wno-psabi
 ifeq ($(threads),1)
