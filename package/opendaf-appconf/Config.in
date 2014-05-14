@@ -1,0 +1,18 @@
+config BR2_PACKAGE_OPENDAF_APPCONF
+	bool "OpenDAF-AppConf"
+	depends on BR2_PACKAGE_OPENDAF
+	help
+		This package provides application-specific OpenDAF configurations
+
+if BR2_PACKAGE_OPENDAF_APPCONF
+	config BR2_PACKAGE_OPENDAF_APPCONF_NAME
+		string "Configuration name"
+		depends on BR2_PACKAGE_OPENDAF_APPCONF
+		help
+		  Branch or tag name in configuration repository
+
+endif
+
+comment "OpenDAF-AppConf depends on OpenDAF"
+	depends on !BR2_PACKAGE_OPENDAF
+
