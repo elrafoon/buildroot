@@ -1,0 +1,9 @@
+config BR2_PACKAGE_SIMPLEMAIL
+	bool "simplemail"
+	depends on BR2_PACKAGE_HEIRLOOM_MAILX
+	help
+	  Simple heirloom-mailx wrapper
+
+comment "simplemail depends on heirloom-mailx"
+	depends on !BR2_PACKAGE_HEIRLOOM_MAILX
+

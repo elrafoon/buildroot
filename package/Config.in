@@ -1162,6 +1162,7 @@ comment "Utilities"
 	source "package/logsurfer/Config.in"
 	source "package/pinentry/Config.in"
 	source "package/screen/Config.in"
+	source "package/simplemail/Config.in"
 	source "package/sudo/Config.in"
 if BR2_PACKAGE_BUSYBOX_SHOW_OTHERS
 	source "package/time/Config.in"
