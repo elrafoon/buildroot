@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+INITTAB=$TARGET_DIR/etc/inittab
+
+grep ttyAPP4 $INITTAB && exit 0
+
+echo "# management console" >> $INITTAB
+echo "ttyAPP4::respawn:/sbin/getty -L ttyAPP4 115200 vt100" >> $INITTAB
+
