@@ -1,0 +1,14 @@
+config BR2_PACKAGE_NULLMAILER
+	bool "nullmailer"
+	help
+	  Simple relay-only mail transport agent
+
+	  http://untroubled.org/nullmailer/
+
+if BR2_PACKAGE_NULLMAILER
+	comment "Nullmailer will be built without TLS support, because gnutls library is not enabled!"
+		depends on !BR2_PACKAGE_GNUTLS
+
+
+endif
+

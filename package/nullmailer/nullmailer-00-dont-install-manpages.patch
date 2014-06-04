@@ -1,0 +1,12 @@
+diff -rupN nullmailer-1.13/Makefile.in nullmailer-1.13-b/Makefile.in
+--- nullmailer-1.13/Makefile.in	2013-04-15 16:48:25.000000000 +0200
++++ nullmailer-1.13-b/Makefile.in	2014-06-03 20:47:33.891066070 +0200
+@@ -164,7 +164,7 @@ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+ EXTRA_DIST = BUGS HOWTO INSTALL TODO scripts/*
+-SUBDIRS = doc lib protocols src test
++SUBDIRS = lib protocols src test
+ all: config.h
+ 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
+ 

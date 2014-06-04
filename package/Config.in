@@ -1055,6 +1055,7 @@ endif
 	source "package/nmap/Config.in"
 	source "package/noip/Config.in"
 	source "package/ntp/Config.in"
+	source "package/nullmailer/Config.in"
 	source "package/nuttcp/Config.in"
 	source "package/olsr/Config.in"
 	source "package/openntpd/Config.in"

@@ -1,0 +1,35 @@
+#!/bin/sh
+#
+# System-V init script for the nullmailer daemon
+#
+
+set -e
+
+NULLMAILER_SEND=/usr/sbin/nullmailer-send-syslog
+
+. /etc/profile
+
+if [ -r /etc/default/nullmailer ]; then
+	. /etc/default/nullmailer
+fi
+
+case $1 in
+  start)
+        echo "Starting nullmailer MTA ..."
+	    start-stop-daemon -m -p /var/run/nullmailer.pid -x $NULLMAILER_SEND -b -S -- $NULLMAILER_OPTIONS >/dev/null
+        ;;
+  stop)
+        echo "Stopping nullmailer MTA ..."
+       	start-stop-daemon -p /var/run/nullmailer.pid -K
+        ;;
+  restart|reload)
+        "$0" stop
+        "$0" start
+        ;;
+  *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+esac
+
+exit $?
+
