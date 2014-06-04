@@ -11,6 +11,7 @@ BR2_TARGET_GENERIC_ROOT_PASSWD="gandalf"
 BR2_TARGET_GENERIC_GETTY_PORT="ttyAMA0"
 BR2_ROOTFS_OVERLAY="board/tind/compact-rtu/overlay"
 BR2_ROOTFS_POST_BUILD_SCRIPT="board/tind/compact-rtu/scripts/add_runit_to_inittab board/tind/compact-rtu/scripts/setup_users"
+BR2_ROOTFS_POST_IMAGE_SCRIPT="board/tind/compact-rtu/scripts/pi_mkvar"
 BR2_LINUX_KERNEL=y
 BR2_LINUX_KERNEL_CUSTOM_GIT=y
 BR2_LINUX_KERNEL_CUSTOM_REPO_URL="gitolite@merlin.swind.sk:tx28/linux"
