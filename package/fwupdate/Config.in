@@ -1,0 +1,14 @@
+config BR2_PACKAGE_FWUPDATE
+	bool "fwupdate"
+	help
+	  Safe firmware update / recovery tool
+
+if BR2_PACKAGE_FWUPDATE
+	config BR2_PACKAGE_FWUPDATE_INSTALL_MARKREADY_INITSCRIPT
+		bool "Install mark-ready initscript"
+		help
+		  Whether to install an initscript that would mark the target
+		  filesystem as ready when boot completes.
+
+endif
+

@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# System-V init script for the fwupdate tool in role "target"
+#
+
+set -e
+
+FWUPDATE=/sbin/fwupdate
+
+case $1 in
+  start)
+        echo "Starting fwupdate ..."
+		$FWUPDATE mark-ready
+        ;;
+  stop)
+        ;;
+  restart|reload)
+        "$0" stop
+        "$0" start
+        ;;
+  *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+esac
+
+exit $?
+
