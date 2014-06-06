@@ -22,7 +22,7 @@ all: $(BINARIES_DIR)/rootfs-only.tar $(BINARIES_DIR)/rootfs-only.ubifs $(BINARIE
 $(BINARIES_DIR)/rootfs-only.tar:	$(BINARIES_DIR)/rootfs.tar
 									echo "Creating $@"
 									cp $< $@
-									tar --delete -f $@ ./var
+									tar --delete -f $@ --wildcards ./var/*
 
 $(BINARIES_DIR)/rootfs-only.ubifs:	$(BINARIES_DIR)/rootfs-only.tar
 									echo "Creating $@"
@@ -38,7 +38,7 @@ $(BINARIES_DIR)/var.tar:	$(BINARIES_DIR)/rootfs.tar
 $(BINARIES_DIR)/var.ubifs:	$(BINARIES_DIR)/var.tar
 							echo "Creating $@"
 							sudo tar -xf $< -C $(TMPDIR)
-							sudo $(MKFS.UBIFS) -d $(TMPDIR) $(UBIFS_OPTS) -c $(FS_VAR_SIZE_LEBS) -o $@
+							sudo $(MKFS.UBIFS) -d $(TMPDIR)/var/ $(UBIFS_OPTS) -c $(FS_VAR_SIZE_LEBS) -o $@
 							sudo rm -rf $(TMPDIR)/*
 
 .PHONY: all
