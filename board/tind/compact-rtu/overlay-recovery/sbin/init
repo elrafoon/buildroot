@@ -1,0 +1,13 @@
+#!/bin/sh
+
+mount -a
+
+export HOME=/root
+
+UPDATE_IMAGE=/target/var/lib/fwupdate/rootfs.ubifs.sign TARGET=/target/rootfs UMOUNT_LIST="/target/var /proc /sys" FALLBACK="busybox init" exec /sbin/fwupdate update-recover
+
+# fallback
+echo 1 > /sys/class/leds/error/brightness
+
+exec busybox init
+
