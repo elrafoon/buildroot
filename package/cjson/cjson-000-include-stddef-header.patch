@@ -1,0 +1,12 @@
+diff -rupN a/cJSON.h b/cJSON.h
+--- a/cJSON.h	2014-06-05 17:46:27.558582096 +0200
++++ b/cJSON.h	2014-06-05 17:46:52.546295236 +0200
+@@ -23,6 +23,8 @@
+ #ifndef cJSON__h
+ #define cJSON__h
+ 
++#include <stddef.h>
++
+ #ifdef __cplusplus
+ extern "C"
+ {
