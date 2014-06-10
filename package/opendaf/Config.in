@@ -16,6 +16,8 @@ if BR2_PACKAGE_OPENDAF
 		config BR2_PACKAGE_OPENDAF_CFG_DEVEL
 			bool "development"
 
+		config BR2_PACKAGE_OPENDAF_CFG_NONE
+			bool "none"
 
 	endchoice
 
