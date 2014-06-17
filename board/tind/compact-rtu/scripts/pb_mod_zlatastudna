@@ -5,6 +5,7 @@ set -e
 BR=$(pwd)
 
 mkdir -p $TARGET_DIR/usr/share/webapps/index
+mkdir -p $TARGET_DIR/var/lib/opendaf/function-modules
 
 install -D -m 0755 board/tind/compact-rtu/mod-zlatastudna/channel-monitor.exe $TARGET_DIR/usr/share/opendaf/function-modules/channel-monitor.exe
 cd $TARGET_DIR/var/lib/opendaf/function-modules && ln -sf ../../../../usr/share/opendaf/function-modules/channel-monitor.exe channel-monitor.exe
