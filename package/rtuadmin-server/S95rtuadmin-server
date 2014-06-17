@@ -1,0 +1,31 @@
+#!/bin/sh
+#
+# System-V init script for the rtuadmin-server daemon
+#
+
+set -e
+
+RTUADMIN_SERVER=/usr/bin/rtuadmin-server
+
+. /etc/profile
+
+case $1 in
+  start)
+        echo "Starting rtuadmin-server..."
+        start-stop-daemon -m -p /var/run/rtuadmin-server.pid -x $RTUADMIN_SERVER -b -S >/dev/null
+        ;;
+  stop)
+        echo "Stopping rtuadmin-server..."
+        start-stop-daemon -p /var/run/rtuadmin-server.pid -K
+        ;;
+  restart|reload)
+        "$0" stop
+        "$0" start
+        ;;
+  *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+esac
+
+exit $?
+
