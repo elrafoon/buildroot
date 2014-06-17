@@ -1,0 +1,15 @@
+#!/bin/sh
+
+set -e
+
+BR=$(pwd)
+
+mkdir -p $TARGET_DIR/usr/share/webapps/index
+
+install -D -m 0755 board/tind/compact-rtu/mod-zlatastudna/channel-monitor.exe $TARGET_DIR/usr/share/opendaf/function-modules/channel-monitor.exe
+cd $TARGET_DIR/var/lib/opendaf/function-modules && ln -sf ../../../../usr/share/opendaf/function-modules/channel-monitor.exe channel-monitor.exe
+tar -C $TARGET_DIR/usr/share/webapps -xf $BR/board/tind/compact-rtu/mod-zlatastudna/ui-channel-monitor.tgz
+cd $TARGET_DIR/var/www && ln -sf ../../usr/share/webapps/ui-channel-monitor ui-channel-monitor
+tar -C $TARGET_DIR/usr/share/webapps/index -xf $BR/board/tind/compact-rtu/mod-zlatastudna/index.tgz
+cd $TARGET_DIR/var/www && ln -sf ../../usr/share/webapps/index/index.html index.html && ln -sf ../../usr/share/webapps/index/css css
+
