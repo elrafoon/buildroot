@@ -1,0 +1,26 @@
+diff -rupN a/src/send.cc b/src/send.cc
+--- a/src/send.cc	2013-03-27 21:48:42.000000000 +0100
++++ b/src/send.cc	2014-06-18 10:33:08.885075112 +0200
+@@ -80,6 +80,9 @@ remote::~remote() { }
+ 
+ typedef list<remote> rlist;
+ 
++#define TAB 9
++#define istab(A) ((A) == TAB)
++
+ unsigned ws_split(const mystring& str, slist& lst)
+ {
+   lst.empty();
+@@ -87,10 +90,10 @@ unsigned ws_split(const mystring& str, s
+   const char* end = ptr + str.length();
+   unsigned count = 0;
+   for(;;) {
+-    while(ptr < end && isspace(*ptr))
++    while(ptr < end && istab(*ptr))
+       ++ptr;
+     const char* start = ptr;
+-    while(ptr < end && !isspace(*ptr))
++    while(ptr < end && !istab(*ptr))
+       ++ptr;
+     if(ptr == start)
+       break;
