@@ -12,6 +12,7 @@ RTUADMIN_SERVER_DEPENDENCIES = cjson lua luacosmo sqlite
 RTUADMIN_SERVER_CONF_OPT += -DHTTPD_VERSION_HASH=$(RTUADMIN_SERVER_VERSION) -DOPENDAF_TEMPLATES="/usr/share/opendaf/templates/"
 
 define RTUADMIN_SERVER_INSTALL_INITSCRIPT
+    $(INSTALL) -D -m 0755 package/rtuadmin-server/S00rtuadmin-renderer $(TARGET_DIR)/etc/init.d/S00rtuadmin-renderer
     $(INSTALL) -D -m 0755 package/rtuadmin-server/S95rtuadmin-server $(TARGET_DIR)/etc/init.d/S95rtuadmin-server
 endef
 
