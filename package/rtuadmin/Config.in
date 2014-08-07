@@ -1,0 +1,16 @@
+menu "RTUAdmin"
+config BR2_PACKAGE_RTUADMIN_VERSION
+    string "Product version"
+    default "master"
+    help
+      RTUAdmin product version to use. It can be:
+      - git hash
+      - git branch
+      - git tag
+  
+  
+source "package/rtuadmin/rtuadmin-server/Config.in"
+source "package/rtuadmin/rtuadmin-client/Config.in"
+source "package/rtuadmin/rtuadmin-templates/Config.in"
+endmenu
+

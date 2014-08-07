@@ -3,4 +3,3 @@ config BR2_PACKAGE_RTUADMIN_CLIENT
 	help
 		This package contains RTUAdmin client.
 
-comment "rtuadmin-client"
