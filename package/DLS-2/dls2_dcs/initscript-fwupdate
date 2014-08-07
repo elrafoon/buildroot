@@ -10,12 +10,32 @@ TIMESTAMP_FILE=/var/lib/dcs/firmware-updated
 
 . /etc/profile
 
-export DCS_INSTALL_PREFIX=/usr
-export DCS_FIRMWARE=/usr/share/dcs/firmware.hex
+DCS_INSTALL_PREFIX=/usr
+DCS_FIRMWARE=/usr/share/dcs/firmware.hex
+DCS_ECTRLR_RESET_GPIO=21
+
+# Read config file if it is present.
+if [ -r /etc/default/dls2_dcs ]
+then
+    . /etc/default/dls2_dcs
+fi
+
+export DCS_INSTALL_PREFIX
+export DCS_FIRMWARE
+export DCS_ECTRLR_RESET_GPIO
+
+deassert_reset() {
+	echo $DCS_ECTRLR_RESET_GPIO > /sys/class/gpio/export
+	echo out > /sys/class/gpio/gpio$DCS_ECTRLR_RESET_GPIO/direction	
+	echo 0 > /sys/class/gpio/gpio$DCS_ECTRLR_RESET_GPIO/value
+	echo $DCS_ECTRLR_RESET_GPIO > /sys/class/gpio/unexport
+}
 
 case $1 in
   start)
-        echo -n "Updating embedded controller firmware ... "
+	echo "Waking up embedded controller"
+	deassert_reset
+	echo -n "Updating embedded controller firmware ... "
 	if [ ! -f /var/lib/dcs/firmware-updated -o $DCS_FIRMWARE -nt $TIMESTAMP_FILE ]; then
 		echo "Update needed"
 		if $DLS2_DCS -f /etc/dcs/svc-fw-update.conf; then
