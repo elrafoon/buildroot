@@ -51,4 +51,13 @@ config BR2_PACKAGE_LIGHTTPD_LUA
 	help
 	  Enable Lua support. Needed to support mod_magnet
 
+config BR2_PACKAGE_LIGHTTPD_PAM
+	bool "PAM authentification support"
+	depends on BR2_PACKAGE_LIGHTTPD && BR2_PACKAGE_LINUX_PAM
+	help
+	  Enable PAM authentification support.
+
+comment "PAM authentification requires linux-pam"
+	depends on BR2_PACKAGE_LIGHTTPD && !BR2_PACKAGE_LINUX_PAM
+
 endif

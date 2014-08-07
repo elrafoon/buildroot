@@ -1,0 +1,277 @@
+From 1f93264972a7cb3070e86de5a476de1dec8b1456 Mon Sep 17 00:00:00 2001
+From: Stanislav Ravas <ravas@tind.sk>
+Date: Thu, 7 Aug 2014 14:08:26 +0200
+Subject: [PATCH] pam_auth: PAM authentification support
+
+---
+ configure.ac    |   23 ++++++++++++++++++
+ src/Makefile.am |    2 +-
+ src/http_auth.c |   70 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ src/http_auth.h |   17 +++++++++++++-
+ src/mod_auth.c  |   12 +++++++++-
+ 5 files changed, 120 insertions(+), 4 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 48e6b52..75062e8 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -212,6 +212,22 @@ if test "$WITH_LDAP" != "no"; then
+  AC_SUBST(LBER_LIB)
+ fi
+ 
++dnl Check for PAM
++AC_MSG_CHECKING(for PAM support)
++AC_ARG_WITH(pam, AC_HELP_STRING([--with-pam],[enable PAM support]),
++[WITH_PAM=$withval], [WITH_PAM=no])
++AC_MSG_RESULT([$withval])
++if test "$WITH_PAM" != "no"; then
++ AC_CHECK_LIB(pam, pam_start, [
++  AC_CHECK_HEADERS([security/pam_appl.h],[
++    PAM_LIB=-lpam
++    AC_DEFINE([HAVE_LIBPAM], [1], [libpam])
++    AC_DEFINE([HAVE_SECURITY_PAM_APPL_H], [1])
++  ])
++ ])
++ AC_SUBST(PAM_LIB)
++fi
++
+ dnl Check for xattr
+ AC_MSG_CHECKING(for extended attributes support)
+ AC_ARG_WITH(attr, AC_HELP_STRING([--with-attr],[enable extended attribute support]),
+@@ -723,6 +739,13 @@ else
+ 	disable_feature="$disable_feature $features"
+ fi
+ 
++features="auth-pam"
++if test ! "x$PAM_LIB" = x; then
++	enable_feature="$enable_feature $features"
++else
++	disable_feature="$disable_feature $features"
++fi
++
+ features="network-openssl"
+ if test ! "x$SSL_LIB" = x; then
+ 	enable_feature="$enable_feature $features"
+diff --git a/src/Makefile.am b/src/Makefile.am
+index 4afdcc6..b40c5ce 100644
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -243,7 +243,7 @@ mod_compress_la_LIBADD = $(Z_LIB) $(BZ_LIB) $(common_libadd)
+ lib_LTLIBRARIES += mod_auth.la
+ mod_auth_la_SOURCES = mod_auth.c http_auth.c
+ mod_auth_la_LDFLAGS = -module -export-dynamic -avoid-version
+-mod_auth_la_LIBADD = $(CRYPT_LIB) $(SSL_LIB) $(LDAP_LIB) $(LBER_LIB) $(common_libadd)
++mod_auth_la_LIBADD = $(CRYPT_LIB) $(SSL_LIB) $(LDAP_LIB) $(LBER_LIB) $(PAM_LIB) $(common_libadd)
+ 
+ lib_LTLIBRARIES += mod_rewrite.la
+ mod_rewrite_la_SOURCES = mod_rewrite.c
+diff --git a/src/http_auth.c b/src/http_auth.c
+index e1d15e0..3b169fc 100644
+--- a/src/http_auth.c
++++ b/src/http_auth.c
+@@ -315,6 +315,8 @@ static int http_auth_get_password(server *srv, mod_auth_plugin_data *p, buffer *
+ 		stream_close(&f);
+ 	} else if (p->conf.auth_backend == AUTH_BACKEND_LDAP) {
+ 		ret = 0;
++	} else if (p->conf.auth_backend == AUTH_BACKEND_PAM) {
++		ret = 0;
+ 	} else {
+ 		return -1;
+ 	}
+@@ -629,6 +631,35 @@ static void apr_sha_encode(const char *pw, char *result, size_t nbytes) {
+ }
+ #endif
+ 
++#ifdef USE_PAM
++// appdata_ptr shall point to mod_auth_pam_data structure
++static int pam_fn_conv(int num_msg, const struct pam_message **msg, struct pam_response **p_resp, void *appdata_ptr)  {
++    mod_auth_pam_data *p_pam = (mod_auth_pam_data *)appdata_ptr;
++    struct pam_response *resp = (struct pam_response *)malloc(num_msg * sizeof(struct pam_response));
++
++    for(int i = 0; i < num_msg; ++i) {
++        switch(msg[i]->msg_style) {
++            case PAM_PROMPT_ECHO_OFF:
++            case PAM_PROMPT_ECHO_ON:
++                resp[i].resp = strdup(p_pam->password);
++                resp[i].resp_retcode = 0;
++                break;
++            case PAM_ERROR_MSG:
++            case PAM_TEXT_INFO:
++            default:
++                // ignore
++                resp[i].resp_retcode = 0;
++                resp[i].resp = NULL;
++                continue;
++        }
++    }
++
++    *p_resp = resp;
++
++    return PAM_SUCCESS;
++}
++#endif
++
+ /**
+  *
+  *
+@@ -834,7 +865,44 @@ static int http_auth_basic_password_compare(server *srv, mod_auth_plugin_data *p
+ 
+ 		return 0;
+ #endif
+-	}
++	} else if (p->conf.auth_backend == AUTH_BACKEND_PAM) {
++#ifdef USE_PAM
++        pam_handle_t *pamh = NULL;
++        mod_auth_pam_data pam_data = {
++            &p->conf,
++            username->ptr,
++            realm->ptr,
++            pw
++        };
++        struct pam_conv conv = { pam_fn_conv, &pam_data };
++
++        int retval = pam_start(
++                !buffer_is_empty(p->conf.auth_pam_servicename) ? p->conf.auth_pam_servicename->ptr : "lighttpd",
++                username->ptr,
++                &conv,
++                &pamh);
++
++        if(retval != PAM_SUCCESS)
++            goto auth_pam_fail;
++
++        if((retval = pam_authenticate(pamh, PAM_SILENT | PAM_DISALLOW_NULL_AUTHTOK)) != PAM_SUCCESS)
++            goto auth_pam_fail;
++
++        if((retval = pam_acct_mgmt(pamh, PAM_SILENT | PAM_DISALLOW_NULL_AUTHTOK)) != PAM_SUCCESS)
++            goto auth_pam_fail;
++
++	    if (p->conf.auth_debug > 1)
++		    log_error_write(srv, __FILE__, __LINE__, "ss", "pam: authenticated as", username->ptr);
++
++        pam_end(pamh, retval);
++        return 0;
++
++auth_pam_fail:
++        log_error_write(srv, __FILE__, __LINE__, "ss", "pam:", pam_strerror(pamh, retval));
++        pam_end(pamh, retval);
++        return -1;
++#endif
++    }
+ 	return -1;
+ }
+ 
+diff --git a/src/http_auth.h b/src/http_auth.h
+index 081cef3..ad3143f 100644
+--- a/src/http_auth.h
++++ b/src/http_auth.h
+@@ -9,12 +9,18 @@
+ # include <ldap.h>
+ #endif
+ 
++#if defined(HAVE_SECURITY_PAM_APPL_H) && defined(HAVE_LIBPAM)
++# define USE_PAM
++# include <security/pam_appl.h>
++#endif
++
+ typedef enum {
+ 	AUTH_BACKEND_UNSET,
+ 	AUTH_BACKEND_PLAIN,
+ 	AUTH_BACKEND_LDAP,
+ 	AUTH_BACKEND_HTPASSWD,
+-	AUTH_BACKEND_HTDIGEST
++	AUTH_BACKEND_HTDIGEST,
++    AUTH_BACKEND_PAM
+ } auth_backend_t;
+ 
+ typedef struct {
+@@ -38,6 +44,8 @@ typedef struct {
+ 	unsigned short auth_ldap_starttls;
+ 	unsigned short auth_ldap_allow_empty_pw;
+ 
++    buffer *auth_pam_servicename;
++
+ 	unsigned short auth_debug;
+ 
+ 	/* generated */
+@@ -66,6 +74,13 @@ typedef struct {
+ 	mod_auth_plugin_config conf, *anon_conf; /* this is only used as long as no handler_ctx is setup */
+ } mod_auth_plugin_data;
+ 
++typedef struct {
++    mod_auth_plugin_config *conf;
++    const char *username;
++    const char *realm;
++    const char *password;
++} mod_auth_pam_data;
++
+ int http_auth_basic_check(server *srv, connection *con, mod_auth_plugin_data *p, array *req, const char *realm_str);
+ int http_auth_digest_check(server *srv, connection *con, mod_auth_plugin_data *p, array *req, const char *realm_str);
+ int http_auth_digest_generate_nonce(server *srv, mod_auth_plugin_data *p, buffer *fn, char hh[33]);
+diff --git a/src/mod_auth.c b/src/mod_auth.c
+index 31e1140..163fd95 100644
+--- a/src/mod_auth.c
++++ b/src/mod_auth.c
+@@ -76,6 +76,8 @@ FREE_FUNC(mod_auth_free) {
+ 			buffer_free(s->auth_ldap_filter);
+ 			buffer_free(s->auth_ldap_cafile);
+ 
++            buffer_free(s->auth_pam_servicename);
++
+ #ifdef USE_LDAP
+ 			buffer_free(s->ldap_filter_pre);
+ 			buffer_free(s->ldap_filter_post);
+@@ -114,6 +116,7 @@ static int mod_auth_patch_connection(server *srv, connection *con, mod_auth_plug
+ 	PATCH(auth_ldap_cafile);
+ 	PATCH(auth_ldap_starttls);
+ 	PATCH(auth_ldap_allow_empty_pw);
++    PATCH(auth_pam_servicename);
+ #ifdef USE_LDAP
+ 	p->anon_conf = s;
+ 	PATCH(ldap_filter_pre);
+@@ -169,7 +172,9 @@ static int mod_auth_patch_connection(server *srv, connection *con, mod_auth_plug
+ 				PATCH(auth_ldap_bindpw);
+ 			} else if (buffer_is_equal_string(du->key, CONST_STR_LEN("auth.backend.ldap.allow-empty-pw"))) {
+ 				PATCH(auth_ldap_allow_empty_pw);
+-			}
++			} else if (buffer_is_equal_string(du->key, CONST_STR_LEN("auth.backend.pam.service-name"))) {
++                PATCH(auth_pam_servicename);
++            }
+ 		}
+ 	}
+ 
+@@ -361,6 +366,7 @@ SETDEFAULTS_FUNC(mod_auth_set_defaults) {
+ 		{ "auth.backend.htdigest.userfile", NULL, T_CONFIG_STRING, T_CONFIG_SCOPE_CONNECTION }, /* 12 */
+ 		{ "auth.backend.htpasswd.userfile", NULL, T_CONFIG_STRING, T_CONFIG_SCOPE_CONNECTION }, /* 13 */
+ 		{ "auth.debug",                     NULL, T_CONFIG_SHORT, T_CONFIG_SCOPE_CONNECTION },  /* 14 */
++		{ "auth.backend.pam.service-name",  NULL, T_CONFIG_STRING, T_CONFIG_SCOPE_CONNECTION }, /* 15 */
+ 		{ NULL,                             NULL, T_CONFIG_UNSET, T_CONFIG_SCOPE_UNSET }
+ 	};
+ 
+@@ -386,6 +392,7 @@ SETDEFAULTS_FUNC(mod_auth_set_defaults) {
+ 		s->auth_ldap_filter = buffer_init();
+ 		s->auth_ldap_cafile = buffer_init();
+ 		s->auth_ldap_starttls = 0;
++        s->auth_pam_servicename = buffer_init();
+ 		s->auth_debug = 0;
+ 
+ 		s->auth_require = array_init();
+@@ -411,6 +418,7 @@ SETDEFAULTS_FUNC(mod_auth_set_defaults) {
+ 		cv[12].destination = s->auth_htdigest_userfile;
+ 		cv[13].destination = s->auth_htpasswd_userfile;
+ 		cv[14].destination = &(s->auth_debug);
++        cv[15].destination = s->auth_pam_servicename;
+ 
+ 		p->config_storage[i] = s;
+ 		ca = ((data_config *)srv->config_context->data[i])->value;
+@@ -428,6 +436,8 @@ SETDEFAULTS_FUNC(mod_auth_set_defaults) {
+ 				s->auth_backend = AUTH_BACKEND_PLAIN;
+ 			} else if (0 == strcmp(s->auth_backend_conf->ptr, "ldap")) {
+ 				s->auth_backend = AUTH_BACKEND_LDAP;
++			} else if (0 == strcmp(s->auth_backend_conf->ptr, "pam")) {
++				s->auth_backend = AUTH_BACKEND_PAM;
+ 			} else {
+ 				log_error_write(srv, __FILE__, __LINE__, "sb", "auth.backend not supported:", s->auth_backend_conf);
+ 
+-- 
+1.7.10.4
+

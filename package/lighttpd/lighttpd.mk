@@ -60,6 +60,13 @@ else
 LIGHTTPD_CONF_OPT += --without-lua
 endif
 
+ifeq ($(BR2_PACKAGE_LIGHTTPD_PAM),y)
+LIGHTTPD_DEPENDENCIES += linux-pam
+LIGHTTPD_CONF_OPT += --with-pam
+else
+LIGHTTPD_CONF_OPT += --without-pam
+endif
+
 define LIGHTTPD_INSTALL_CONFIG
 	$(INSTALL) -d -m 0755 $(TARGET_DIR)/etc/lighttpd/conf.d
 	$(INSTALL) -d -m 0755 $(TARGET_DIR)/var/www
