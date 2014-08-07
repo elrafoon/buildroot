@@ -34,6 +34,13 @@ choice
 
 	config BR2_PACKAGE_DLS2_DCS_TARGET_PLATFORM_FTT_TX
 		bool "FTT_TX"
+		help
+			"FTT_TX board <2.2"
+	
+	config BR2_PACKAGE_DLS2_DCS_TARGET_PLATFORM_FTT_TX_2_2
+		bool "FTT_TX_2_2"
+		help
+			"FTT_TX board rev >=2.2"
 
 endchoice
 
