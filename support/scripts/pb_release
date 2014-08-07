@@ -1,0 +1,28 @@
+#!/bin/sh
+
+set -e
+
+# these environment variables are already set:
+# BUILDROOT_CONFIG
+# TARGET_DIR
+# STAGING_DIR
+# HOST_DIR
+# BINARIES_DIR
+# BASE_DIR
+
+if [ -n "$RELEASE" ]; then
+	RELEASE_TAG=$(date +%Y%m%d)
+	RELEASE_DIR=$BASE_DIR/releases/$RELEASE_TAG
+
+	mkdir -p $RELEASE_DIR
+
+	echo $RELEASE_TAG >$TARGET_DIR/release
+	echo $RELEASE_TAG >$TARGET_DIR/var/release
+
+	make -C $BASE_DIR BR2_DEFCONFIG=$RELEASE_DIR/defconfig savedefconfig
+else
+	echo "NOT DOING RELEASE BUILD! (use make RELEASE=1 to make a release)"
+	rm -f $TARGET_DIR/release
+	rm -f $TARGET_DIR/var/release
+fi
+
