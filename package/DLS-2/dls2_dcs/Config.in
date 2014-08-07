@@ -2,11 +2,19 @@ config BR2_PACKAGE_DLS2_DCS
 	bool "dls2_dcs"
 	select BR2_PACKAGE_SQLITE
 	select BR2_PACKAGE_SWIG
-	depends on BR2_PACKAGE_ACE && BR2_PACKAGE_BOOST_SYSTEM && BR2_PACKAGE_PYTHON && BR2_PACKAGE_PYTHON_MAKO && BR2_PACKAGE_DLS2_DCSCONFIG && BR2_PACKAGE_SURPC && BR2_PACKAGE_PROTOBUF
+	depends on BR2_PACKAGE_ACE && BR2_PACKAGE_BOOST_SYSTEM && BR2_PACKAGE_PYTHON && BR2_PACKAGE_PYTHON_MAKO && BR2_PACKAGE_DLS2_DCSCONFIG
 	help
 		This package contains DLS2 DCS. 
 
 if BR2_PACKAGE_DLS2_DCS
+
+config BR2_PACKAGE_DLS2_DCS_BUILD_DCSLINK
+	bool "Build dcslink protocol suite"
+	default y
+	depends on BR2_PACKAGE_DLS2_DCS && BR2_PACKAGE_SURPC && BR2_PACKAGE_PROTOBUF
+
+comment "dcslink depends on SuRPC and protobuf"
+	depends on BR2_PACKAGE_DLS2_DCS && !(BR2_PACKAGE_SURPC && BR2_PACKAGE_PROTOBUF)
 
 config BR2_PACKAGE_DLS2_DCS_FW_UPDATE
 	bool "Update embedded controller firmware during boot"
@@ -31,5 +39,5 @@ endchoice
 
 endif
 	
-comment "dcs depends on ACE, boost-system, python-mako, dls2_dcsconfig, SuRPC and protobuf"
-	depends on !(BR2_PACKAGE_ACE && BR2_PACKAGE_BOOST_SYSTEM && BR2_PACKAGE_PYTHON && BR2_PACKAGE_PYTHON_MAKO && BR2_PACKAGE_DLS2_DCSCONFIG && BR2_PACKAGE_SURPC && BR2_PACKAGE_PROTOBUF)
+comment "dcs depends on ACE, boost-system, python-mako and dls2_dcsconfig"
+	depends on !(BR2_PACKAGE_ACE && BR2_PACKAGE_BOOST_SYSTEM && BR2_PACKAGE_PYTHON && BR2_PACKAGE_PYTHON_MAKO && BR2_PACKAGE_DLS2_DCSCONFIG)

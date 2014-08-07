@@ -9,7 +9,8 @@ DLS2_DCS_SITE = ssh://merlin.swind.sk:29418/oms/dls-2.git
 DLS2_DCS_SUBDIR = dcs
 DLS2_DCS_INSTALL_STAGING = YES
 DLS2_DCS_INSTALL_TARGET = YES
-DLS2_DCS_DEPENDENCIES = ACE boost python host-python-mako python-mako host-dls2_dcsconfig sqlite host-swig surpc protobuf
+DLS2_DCS_DEPENDENCIES_DCSLINK_$(BR2_PACKAGE_DLS2_DCS_BUILD_DCSLINK) = surpc protobuf
+DLS2_DCS_DEPENDENCIES = ACE boost python host-python-mako python-mako host-dls2_dcsconfig sqlite host-swig $(DLS2_DCS_DEPENDENCIES_DCSLINK_y)
 DLS2_DCS_SRCDIR = $(@D)/$(DLS2_DCS_SUBDIR)
 
 DLS2_DCS_TARGET_PLATFORM_$(BR2_PACKAGE_DLS2_DCS_TARGET_PLATFORM_DESKTOP) = DESKTOP
