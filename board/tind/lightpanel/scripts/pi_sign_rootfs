@@ -1,0 +1,27 @@
+#!/bin/sh
+
+set -e
+
+# these environment variables are already set:
+# BUILDROOT_CONFIG
+# TARGET_DIR
+# STAGING_DIR
+# HOST_DIR
+# BINARIES_DIR
+# BASE_DIR
+
+IMAGES=$1
+
+rm -f $IMAGES/*.sign
+
+# sign in parallel
+
+for image in $(ls $IMAGES/*.ubifs*); do
+	echo "Signing $image"
+	signed_image=$image.sign
+	rm -f $signed_image
+	gpg --homedir board/tind/lightpanel/gpg-keys -s -o $signed_image $image &
+done
+
+wait
+
