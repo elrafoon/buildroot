@@ -2,8 +2,8 @@
 
 set -e
 
-export FS_ROOT_SIZE_LEBS=480	# ~ 75 MB
-export FS_VAR_SIZE_LEBS=480		# ~ 40 MB
+export FS_ROOT_SIZE_LEBS=475	# ~ 75 MB
+export FS_VAR_SIZE_LEBS=475		# ~ 40 MB
 
 # these environment variables are already set:
 # BUILDROOT_CONFIG
