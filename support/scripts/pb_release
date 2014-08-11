@@ -16,7 +16,7 @@ if [ -n "$RELEASE" ]; then
 
 	mkdir -p $RELEASE_DIR
 
-	echo $RELEASE_TAG >$TARGET_DIR/release
+	echo $RELEASE_TAG >$TARGET_DIR/etc/release
 	echo $RELEASE_TAG >$TARGET_DIR/var/release
 
 	make -C $BASE_DIR BR2_DEFCONFIG=$RELEASE_DIR/defconfig savedefconfig
