@@ -6,7 +6,7 @@ export FS_ROOT_SIZE_LEBS=475	# ~ 75 MB
 export FS_VAR_SIZE_LEBS=475		# ~ 40 MB
 
 # these environment variables are already set:
-# BUILDROOT_CONFIG
+# BR2_CONFIG
 # TARGET_DIR
 # STAGING_DIR
 # HOST_DIR
