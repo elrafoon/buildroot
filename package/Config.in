@@ -323,6 +323,7 @@ endif
 	source "package/iostat/Config.in"
 	source "package/irda-utils/Config.in"
 	source "package/iucode-tool/Config.in"
+	source "package/json-dbus-bridge/Config.in"
 	source "package/kbd/Config.in"
 	source "package/lcdproc/Config.in"
 	source "package/lm-sensors/Config.in"
