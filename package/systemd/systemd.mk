@@ -92,6 +92,11 @@ endif
 
 ifeq ($(BR2_PACKAGE_SYSTEMD_JOURNAL_GATEWAY),y)
 SYSTEMD_DEPENDENCIES += libmicrohttpd
+define SYSTEMD_INSTALL_JOURNAL_GATEWAY
+	mkdir -p $(TARGET_DIR)/etc/systemd/system/sockets.target.wants/
+	ln -sf /lib/systemd/system/systemd-journal-gatewayd.socket \
+		$(TARGET_DIR)/etc/systemd/system/sockets.target.wants/systemd-journal-gatewayd.socket
+endef
 else
 SYSTEMD_CONF_OPT += --disable-microhttpd
 endif
@@ -163,7 +168,8 @@ SYSTEMD_POST_INSTALL_TARGET_HOOKS += \
 	SYSTEMD_INSTALL_MACHINEID_HOOK \
 	SYSTEMD_INSTALL_RESOLVCONF_HOOK \
 	SYSTEMD_DISABLE_LDCONFIG_SERVICE_HOOK \
-	SYSTEMD_SANITIZE_PATH_IN_UNITS
+	SYSTEMD_SANITIZE_PATH_IN_UNITS \
+	SYSTEMD_INSTALL_JOURNAL_GATEWAY
 
 define SYSTEMD_USERS
 	systemd-journal -1 systemd-journal -1 * /var/log/journal - - Journal
