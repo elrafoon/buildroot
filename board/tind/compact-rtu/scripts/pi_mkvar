@@ -2,11 +2,11 @@
 
 set -e
 
-export FS_ROOT_SIZE_LEBS=620	# ~ 75 MB
-export FS_VAR_SIZE_LEBS=330		# ~ 40 MB
+export FS_ROOT_SIZE_LEBS=473	# ~ 57 MB
+export FS_VAR_SIZE_LEBS=473		# ~ 57 MB
 
 # these environment variables are already set:
-# BUILDROOT_CONFIG
+# BR2_CONFIG
 # TARGET_DIR
 # STAGING_DIR
 # HOST_DIR

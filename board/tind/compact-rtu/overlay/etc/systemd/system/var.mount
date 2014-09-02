@@ -1,0 +1,11 @@
+[Unit]
+Description = /var on separate partition
+ConditionKernelCommandLine =|!root=/dev/nfs
+
+[Mount]
+What = ubi0:var
+Where = /var
+Type = ubifs
+
+[Install]
+WantedBy = local-fs.target

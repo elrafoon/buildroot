@@ -1,4 +1,4 @@
-include $(BUILDROOT_CONFIG)
+include $(BR2_CONFIG)
 
 MKFS.UBIFS = $(HOST_DIR)/usr/sbin/mkfs.ubifs
 
