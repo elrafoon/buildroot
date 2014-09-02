@@ -39,22 +39,6 @@ if BR2_PACKAGE_OPENDAF
 
 	endchoice
 
-	choice
-		prompt "Start-up method"
-		default BR2_PACKAGE_OPENDAF_STARTUP_INITSCRIPT
-		depends on BR2_PACKAGE_OPENDAF
-
-		config BR2_PACKAGE_OPENDAF_STARTUP_NONE
-			bool "none"
-
-		config BR2_PACKAGE_OPENDAF_STARTUP_INITSCRIPT
-			bool "initscript"
-
-		config BR2_PACKAGE_OPENDAF_STARTUP_RUNIT
-			bool "RUnit (requires RUnit support in busybox)"
-
-	endchoice
-
 endif
 
 comment "OpenDAF depends on ACE, boost-system, boost-signals, boost-regex, NetSNMP and Protobuf"

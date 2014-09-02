@@ -30,24 +30,21 @@ OPENDAF_DEPENDENCIES += $(OPENDAF_DEPENDENCIES_y)
 OPENDAF_CONF_OPT += $(OPENDAF_CONF_OPT_y)
 
 
-define OPENDAF_INSTALL_INITSCRIPT
+define OPENDAF_INSTALL_INIT_SYSV
 	$(INSTALL) -D -m 0755 package/opendaf/S90opendaf $(TARGET_DIR)/etc/init.d/S90opendaf
 endef
 
-define OPENDAF_INSTALL_PROFILE
-	$(INSTALL) -D -m 0644 package/opendaf/opendaf_pythonpath.sh $(TARGET_DIR)/etc/profile.d/opendaf_pythonpath.sh
-	$(INSTALL) -D -m 0644 package/opendaf/opendaf_vars.sh $(TARGET_DIR)/etc/profile.d/opendaf_vars.sh
+define OPENDAF_INSTALL_INIT_SYSTEMD
+    $(INSTALL) -D -m 644 package/opendaf/opendaf.service $(TARGET_DIR)/etc/systemd/system/opendaf.service
+    mkdir -p $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants
+    ln -fs ../dropbear.service $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/opendaf.service
 endef
 
-define OPENDAF_INSTALL_RUNIT_SERVICE
-	$(INSTALL) -D -m 0755 package/opendaf/runit-run $(TARGET_DIR)/etc/service/opendaf/run
+define OPENDAF_INSTALL_DEFAULT_CFG
+	$(INSTALL) -D -m 0644 package/opendaf/opendaf.default $(TARGET_DIR)/etc/default/opendaf
 endef
 
-# setup target installation hooks
-OPENDAF_POST_INSTALL_TARGET_HOOKS_$(BR2_PACKAGE_OPENDAF_STARTUP_INITSCRIPT) += OPENDAF_INSTALL_INITSCRIPT
-OPENDAF_POST_INSTALL_TARGET_HOOKS_$(BR2_PACKAGE_OPENDAF_STARTUP_RUNIT) += OPENDAF_INSTALL_RUNIT_SERVICE
-
-OPENDAF_POST_INSTALL_TARGET_HOOKS += OPENDAF_INSTALL_PROFILE $(OPENDAF_POST_INSTALL_TARGET_HOOKS_y)
+OPENDAF_POST_INSTALL_TARGET_HOOKS += OPENDAF_INSTALL_DEFAULT_CFG
 
 $(eval $(cmake-package))
 

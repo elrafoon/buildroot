@@ -1,0 +1,12 @@
+[Unit]
+Description=Open Data Acquisition Framework
+After=syslog.target network.target
+
+[Service]
+EnvironmentFile=/etc/default/opendaf
+ExecStart=/usr/bin/opendaf -f /etc/opendaf/svc.conf
+Restart=always
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,4 @@
+OPENDAF_CFGROOT=/etc/opendaf
+OPENDAF_PREFIX=/usr
+PYTHONPATH='/usr/share/opendaf/templates/modules/':$PYTHONPATH
+
