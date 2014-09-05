@@ -8,6 +8,15 @@ config BR2_PACKAGE_NTP
 
 if BR2_PACKAGE_NTP
 
+	if BR2_INIT_SYSTEMD
+		config BR2_PACKAGE_NTP_SYSTEMD_AUTOSTART
+			bool "Force startup during systemd bootup"
+			help
+			  Don't wait for activation by systemd-timedated,
+			  but start immediatelly during systemd bootup
+
+	endif
+
 config BR2_PACKAGE_NTP_SNTP
 	bool "sntp"
 	help

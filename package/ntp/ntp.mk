@@ -60,12 +60,22 @@ define NTP_INSTALL_INIT_SYSV
 	$(INSTALL) -D -m 755 package/ntp/S49ntp $(TARGET_DIR)/etc/init.d/S49ntp
 endef
 
-define NTP_INSTALL_INIT_SYSTEMD
-	$(INSTALL) -D -m 644 package/ntp/ntpd.service $(TARGET_DIR)/etc/systemd/system/ntpd.service
+ifeq ($(BR2_PACKAGE_NTP_SYSTEMD_AUTOSTART),y)
+define NTP_INSTALL_SYSTEMD_AUTOSTART
 	mkdir -p $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants
 	ln -fs ../ntpd.service $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/ntpd.service
 endef
 endif
+
+define NTP_INSTALL_SYSTEMD_UNITS
+	$(INSTALL) -D -m 644 package/ntp/ntpd.service $(TARGET_DIR)/etc/systemd/system/ntpd.service
+	mkdir -p $(TARGET_DIR)/etc/systemd/ntp-units.d
+	echo ntpd.service > $(TARGET_DIR)/etc/systemd/ntp-units.d/ntpd.list
+endef
+endif
+
+NTP_INSTALL_INIT_SYSTEMD += $(NTP_INSTALL_SYSTEMD_UNITS)
+NTP_INSTALL_INIT_SYSTEMD += $(NTP_INSTALL_SYSTEMD_AUTOSTART)
 
 NTP_POST_PATCH_HOOKS += NTP_PATCH_FIXUPS
 
