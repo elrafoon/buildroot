@@ -37,7 +37,7 @@ endef
 define OPENDAF_INSTALL_INIT_SYSTEMD
     $(INSTALL) -D -m 644 package/opendaf/opendaf.service $(TARGET_DIR)/etc/systemd/system/opendaf.service
     mkdir -p $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants
-    ln -fs ../dropbear.service $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/opendaf.service
+    ln -fs ../opendaf.service $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/opendaf.service
 endef
 
 define OPENDAF_INSTALL_DEFAULT_CFG
