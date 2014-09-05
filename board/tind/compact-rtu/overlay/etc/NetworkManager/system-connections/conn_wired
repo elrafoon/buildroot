@@ -1,0 +1,15 @@
+[ethernet]
+duplex=full
+
+[connection]
+id=conn_eth0
+uuid=29bb6a94-54f1-5dcc-8344-d74f79f491bb
+type=ethernet
+
+[ipv6]
+method=auto
+
+[ipv4]
+method=manual
+address1=192.168.0.254/24,192.168.0.1
+
