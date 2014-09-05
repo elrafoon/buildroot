@@ -1,8 +1,8 @@
 config BR2_PACKAGE_RTUADMIN_SERVER
 	bool "rtuadmin-server"
-	depends on BR2_PACKAGE_CJSON && BR2_PACKAGE_SQLITE && BR2_PACKAGE_LUA && BR2_PACKAGE_LUACOSMO
+	depends on BR2_PACKAGE_CJSON && BR2_PACKAGE_SQLITE && BR2_PACKAGE_LUA && BR2_PACKAGE_COSMO
 	help
 		This package contains RTU admin server.
 
 comment "rtuadmin-server depends on cJSON, sqlite, lua and lua-cosmo"
-	depends on !(BR2_PACKAGE_CJSON && BR2_PACKAGE_SQLITE && BR2_PACKAGE_LUA && BR2_PACKAGE_LUACOSMO)
+	depends on !(BR2_PACKAGE_CJSON && BR2_PACKAGE_SQLITE && BR2_PACKAGE_LUA && BR2_PACKAGE_COSMO)
