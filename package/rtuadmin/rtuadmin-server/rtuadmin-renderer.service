@@ -1,0 +1,11 @@
+[Unit]
+Description=RTUAdmin management interface (cfg renderer)
+After=remote-fs.target
+Before=ntpd.service opendaf.service
+
+[Service]
+ExecStart=/usr/bin/rtuadmin-renderer --no-restart
+
+[Install]
+WantedBy=multi-user.target
+

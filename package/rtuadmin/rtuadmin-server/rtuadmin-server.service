@@ -1,0 +1,12 @@
+[Unit]
+Description=RTUAdmin management interface (reset api server)
+After=syslog.target network.target
+
+[Service]
+ExecStart=/usr/bin/rtuadmin-server
+Restart=always
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target
+
