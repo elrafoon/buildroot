@@ -613,6 +613,7 @@ menu "Database"
 	source "package/sqlite/Config.in"
 	source "package/unixodbc/Config.in"
 	source "package/simpledb/Config.in"
+	source "package/soci/Config.in"
 endmenu
 
 menu "Filesystem"
