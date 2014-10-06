@@ -19,12 +19,19 @@ define FWUPDATE_UNINSTALL_TARGET_CMDS
 	rm -f $(TARGET_DIR)/etc/init.d/S99fwupdate
 endef
 
-define FWUPDATE_INSTALL_MARKREADY_INITSCRIPT
+define FWUPDATE_DO_INSTALL_INIT_SYSV
 	$(INSTALL) -D -m 0755 package/fwupdate/S99fwupdate_markready $(TARGET_DIR)/etc/init.d/S99fwupdate_markready
 endef
 
+define FWUPDATE_DO_INSTALL_INIT_SYSTEMD
+	$(INSTALL) -D -m 644 package/fwupdate/fwupdate.service $(TARGET_DIR)/etc/systemd/system/fwupdate.service
+	mkdir -p $(TARGET_DIR)/etc/systemd/system.multi-user.target.wants
+	ln -fs ../fwupdate.service $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/fwupdate.service
+endef
+
 ifeq ($(BR2_PACKAGE_FWUPDATE_INSTALL_MARKREADY_INITSCRIPT),y)
-	FWUPDATE_POST_INSTALL_TARGET_HOOKS += FWUPDATE_INSTALL_MARKREADY_INITSCRIPT
+	FWUPDATE_INSTALL_INIT_SYSV += $(FWUPDATE_DO_INSTALL_INIT_SYSV)
+	FWUPDATE_INSTALL_INIT_SYSTEMD += $(FWUPDATE_DO_INSTALL_INIT_SYSTEMD)
 endif
 
 $(eval $(generic-package))

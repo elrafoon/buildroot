@@ -1,0 +1,11 @@
+[Unit]
+Description=Firmware Update Tool
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/fwupdate mark-ready
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
