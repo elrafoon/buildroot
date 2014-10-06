@@ -1,6 +1,10 @@
 [Unit]
 Description = /var on separate partition
+# trigger mounting when not running with nfsroot
 ConditionKernelCommandLine =|!root=/dev/nfs
+# disable mount when booting from /dev/sda (qemu)
+ConditionKernelCommandLine =!root=/dev/sda
+
 
 [Mount]
 What = ubi0:var
