@@ -7,8 +7,11 @@ config BR2_PACKAGE_OPENDAF
 if BR2_PACKAGE_OPENDAF
 	choice
 		prompt "Configuration"
-		default BR2_PACKAGE_OPENDAF_CFG_PROD
+		default BR2_PACKAGE_OPENDAF_CFG_DEFAULT
 		depends on BR2_PACKAGE_OPENDAF
+
+		config BR2_PACKAGE_OPENDAF_CFG_DEFAULT
+			bool "default"
 
 		config BR2_PACKAGE_OPENDAF_CFG_PROD
 			bool "production"
@@ -39,6 +42,19 @@ if BR2_PACKAGE_OPENDAF
 
 	endchoice
 
+	config BR2_PACKAGE_OPENDAF_DAFMAN
+		bool "Build dafman management library"
+		depends on BR2_PACKAGE_OPENDAF && BR2_PACKAGE_SOCI && BR2_PACKAGE_SOCI_BOOST_INTEGRATION && BR2_PACKAGE_SOCI_BACKEND_SQLITE
+
+	comment "dafman depends on soci with boost intergration and SQLite backend"
+		depends on !(BR2_PACKAGE_SOCI && BR2_PACKAGE_SOCI_BOOST_INTEGRATION && BR2_PACKAGE_SOCI_BACKEND_SQLITE)
+
+	config BR2_PACKAGE_OPENDAF_DAFMAND
+		bool "Build dafmand DBUS management daemon"
+		depends on BR2_PACKAGE_OPENDAF && BR2_PACKAGE_OPENDAF_DAFMAN && BR2_PACKAGE_GLIBMM	
+
+	comment "dafmand depends on dafman and glibmm"
+		depends on !(BR2_PACKAGE_OPENDAF_DAFMAN && BR2_PACKAGE_GLIBMM)
 endif
 
 comment "OpenDAF depends on ACE, boost-system, boost-signals, boost-regex, NetSNMP and Protobuf"

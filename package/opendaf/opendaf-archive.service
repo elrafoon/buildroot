@@ -1,0 +1,14 @@
+[Unit]
+Description=Open Data Acquisition Framework - Archive
+After=syslog.target network.target opendaf.service
+RequiresMountsFor=/srv
+Requires=opendaf.service
+
+[Service]
+EnvironmentFile=/etc/default/opendaf
+ExecStart=/usr/bin/opendaf -f /etc/opendaf/svc-recorder.conf
+Restart=always
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target

@@ -24,6 +24,12 @@ OPENDAF_CONF_OPT_$(BR2_PACKAGE_OPENDAF_CFG_PROD) += -DCONFIGURATION=prod
 OPENDAF_CONF_OPT_$(BR2_PACKAGE_OPENDAF_CFG_DEVEL) += -DCONFIGURATION=devel
 OPENDAF_CONF_OPT_$(BR2_PACKAGE_OPENDAF_CFG_NONE) += -DCONFIGURATION=none
 
+# dafman[d]
+OPENDAF_CONF_OPT_$(BR2_PACKAGE_OPENDAF_DAFMAN) += -DBUILD_DAFMAN=ON
+OPENDAF_DEPENDENCIES_$(BR2_PACKAGE_OPENDAF_DAFMAN) += soci
+OPENDAF_CONF_OPT_$(BR2_PACKAGE_OPENDAF_DAFMAND) += -DBUILD_DAFMAND=ON
+OPENDAF_DEPENDENCIES_$(BR2_PACKAGE_OPENDAF_DAFMAND) += glibmm
+
 # append additional depndencies
 OPENDAF_DEPENDENCIES += $(OPENDAF_DEPENDENCIES_y)
 # setup configuration options
@@ -35,9 +41,13 @@ define OPENDAF_INSTALL_INIT_SYSV
 endef
 
 define OPENDAF_INSTALL_INIT_SYSTEMD
-    $(INSTALL) -D -m 644 package/opendaf/opendaf.service $(TARGET_DIR)/etc/systemd/system/opendaf.service
+    $(INSTALL) -D -m 0644 package/opendaf/opendaf.service $(TARGET_DIR)/etc/systemd/system/opendaf.service
+    $(INSTALL) -D -m 0644 package/opendaf/opendaf-archive.service $(TARGET_DIR)/etc/systemd/system/opendaf-archive.service
+    $(INSTALL) -D -m 0644 package/opendaf/opendaf-dafman.service $(TARGET_DIR)/etc/systemd/system/opendaf-dafman.service
     mkdir -p $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants
     ln -fs ../opendaf.service $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/opendaf.service
+    ln -fs ../opendaf-archive.service $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/opendaf-archive.service
+    ln -fs ../opendaf-dafman.service $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/opendaf-dafman.service
 endef
 
 define OPENDAF_INSTALL_DEFAULT_CFG

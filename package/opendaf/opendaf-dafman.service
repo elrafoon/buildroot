@@ -1,0 +1,13 @@
+[Unit]
+Description=Open Data Acquisition Framework - Configuration Tool
+After=syslog.target network.target
+Before=opendaf.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+EnvironmentFile=/etc/default/opendaf
+ExecStart=/usr/bin/dafman render
+
+[Install]
+WantedBy=multi-user.target
