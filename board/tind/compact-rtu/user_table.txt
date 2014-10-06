@@ -1,0 +1,3 @@
+setup 900 setup 900 =compact /home/setup /bin/sh - Configuration management
+op -1 op -1 =compact /home/op /bin/sh - RTU operator
+
