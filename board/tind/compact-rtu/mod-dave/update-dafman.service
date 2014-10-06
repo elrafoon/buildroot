@@ -1,0 +1,12 @@
+[Unit]
+Description=DAFMan Database Update Service
+After=syslog.target network.target
+Before=opendaf-dafman.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/sbin/update-dafman
+
+[Install]
+WantedBy=multi-user.target

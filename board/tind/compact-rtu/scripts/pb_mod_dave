@@ -1,0 +1,27 @@
+#!/bin/sh
+
+set -e
+
+BR=$(pwd)
+MOD=$BR/board/tind/compact-rtu/mod-dave
+
+mkdir -p $TARGET_DIR/usr/share/webapps
+
+# function modules
+install -D -m 0755 $MOD/controller.exe $TARGET_DIR/usr/share/opendaf/function-modules/controller.exe
+cd $TARGET_DIR/var/lib/opendaf/function-modules && ln -sf ../../../../usr/share/opendaf/function-modules/controller.exe controller.exe
+
+# index page
+install -D -m 0644 $MOD/index.html $TARGET_DIR/usr/share/webapps/index/index.html
+install -D -m 0644 $MOD/style.css $TARGET_DIR/usr/share/webapps/index/css/style.css
+
+# dave-ui
+tar -C $TARGET_DIR/usr/share/webapps -xf $MOD/dave-ui.tgz
+cd $TARGET_DIR/var/www && ln -sf ../../usr/share/webapps/dave-ui dave-ui
+
+# dafman database update
+install -D -m 0755 $MOD/update-dafman $TARGET_DIR/usr/sbin/update-dafman
+install -D -m 0644 $MOD/update-dafman.service $TARGET_DIR/etc/systemd/system/update-dafman.service
+mkdir -p $TARGET_DIR/etc/systemd/system/multi-user.target.wants
+ln -fs ../update-dafman.service $TARGET_DIR/etc/systemd/system/multi-user.target.wants/update-dafman.service
+
