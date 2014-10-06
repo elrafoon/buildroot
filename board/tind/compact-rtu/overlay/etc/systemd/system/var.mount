@@ -6,6 +6,7 @@ ConditionKernelCommandLine =|!root=/dev/nfs
 What = ubi0:var
 Where = /var
 Type = ubifs
+Options = noatime
 
 [Install]
 WantedBy = local-fs.target
