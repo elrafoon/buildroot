@@ -2,8 +2,8 @@
 
 set -e
 
-export FS_ROOT_SIZE_LEBS=473	# ~ 57 MB
-export FS_VAR_SIZE_LEBS=473		# ~ 57 MB
+export FS_ROOT_SIZE_LEBS=465	# 56.3 MB
+export FS_VAR_SIZE_LEBS=465		# 56.3 MB
 
 # these environment variables are already set:
 # BR2_CONFIG
