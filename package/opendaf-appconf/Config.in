@@ -11,6 +11,14 @@ if BR2_PACKAGE_OPENDAF_APPCONF
 		help
 		  Branch or tag name in configuration repository
 
+	config BR2_PACKAGE_OPENDAF_APPCONF_BUILTIN_FW
+		bool "Build configuration into firmware"
+		depends on BR2_PACKAGE_OPENDAF_APPCONF
+		default y
+		help
+		  Enable this option to additionally install configuration into
+		  /usr/share/opendaf-appconf/ directory.
+
 endif
 
 comment "OpenDAF-AppConf depends on OpenDAF"
