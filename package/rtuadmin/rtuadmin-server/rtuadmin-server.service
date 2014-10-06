@@ -1,5 +1,5 @@
 [Unit]
-Description=RTUAdmin management interface (reset api server)
+Description=RTUAdmin management interface (rest api server)
 After=syslog.target network.target
 
 [Service]
