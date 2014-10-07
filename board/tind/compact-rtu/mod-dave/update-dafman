@@ -7,3 +7,5 @@ FWDB=/usr/share/opendaf-appconf/$DB
 
 [ $FWDB -nt $DB ] && install -D -m 0644 $FWDB $DB
 
+exit 0
+
