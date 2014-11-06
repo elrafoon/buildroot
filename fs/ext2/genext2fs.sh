@@ -37,8 +37,9 @@ then
     # we add 1300 blocks (a bit more than 1 MiB, assuming 1KiB blocks) for
     # the journal if ext3/4
     # Note: I came to 1300 blocks after trial-and-error checks. YMMV.
+	# <ravas@tind.sk>: 1300 blocks didn't work for small fs, raised to 1500
     if [ ${GEN} -ge 3 ]; then
-        BLOCKS=$(expr 1300 + $BLOCKS )
+        BLOCKS=$(expr 1500 + $BLOCKS )
     fi
     set -- $@ -b $BLOCKS
 fi
