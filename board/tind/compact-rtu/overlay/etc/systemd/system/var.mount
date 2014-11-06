@@ -4,12 +4,13 @@ Description = /var on separate partition
 ConditionKernelCommandLine =|!root=/dev/nfs
 # disable mount when booting from /dev/sda (qemu)
 ConditionKernelCommandLine =!root=/dev/sda
-
+RequiresOverridable = systemd-fsck@dev-mtdblock7.service
+After = systemd-fsck@dev-mtdblock7.service
 
 [Mount]
-What = ubi0:var
+What = /dev/mtdblock7
 Where = /var
-Type = ubifs
+Type = ext4
 Options = noatime
 
 [Install]

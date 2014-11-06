@@ -13,7 +13,7 @@ export FS_VAR_SIZE_LEBS=465		# 56.3 MB
 # BINARIES_DIR
 # BASE_DIR
 
-TOPDIR=`pwd`
+export TOPDIR=`pwd`
 SCRIPTDIR=$TOPDIR/board/tind/compact-rtu/scripts
 IMAGES=$1
 export TMPDIR=$IMAGES/tmp-mkvar

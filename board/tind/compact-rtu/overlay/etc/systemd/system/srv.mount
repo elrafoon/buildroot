@@ -4,6 +4,8 @@ Description = /srv on SD card
 ConditionKernelCommandLine =|!root=/dev/nfs
 # disable mount when booting from /dev/sda (qemu)
 ConditionKernelCommandLine =!root=/dev/sda
+RequiresOverridable = systemd-fsck@dev-mmcblk0p1.service
+After = systemd-fsck@dev-mmcblk0p1.service
 
 [Mount]
 What = /dev/mmcblk0p1
