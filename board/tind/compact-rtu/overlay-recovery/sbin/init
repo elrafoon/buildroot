@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# /var could be ext4
+fsck /target/var
+
 mount -a
 
 export HOME=/root
