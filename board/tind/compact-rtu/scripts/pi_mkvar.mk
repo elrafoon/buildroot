@@ -1,7 +1,8 @@
 include $(BR2_CONFIG)
 
-MKFS.UBIFS = $(HOST_DIR)/usr/sbin/mkfs.ubifs
+FAKEROOT = $(HOST_DIR)/usr/bin/fakeroot
 
+MKFS.UBIFS = $(HOST_DIR)/usr/sbin/mkfs.ubifs
 UBIFS_OPTS := -e $(BR2_TARGET_ROOTFS_UBIFS_LEBSIZE) -m $(BR2_TARGET_ROOTFS_UBIFS_MINIOSIZE)
 
 ifeq ($(BR2_TARGET_ROOTFS_UBIFS_RT_ZLIB),y)
@@ -26,9 +27,10 @@ $(BINARIES_DIR)/rootfs-only.tar:	$(BINARIES_DIR)/rootfs.tar
 
 $(BINARIES_DIR)/rootfs-only.ubifs:	$(BINARIES_DIR)/rootfs-only.tar
 									echo "Creating $@"
-									sudo tar -xf $< -C $(TMPDIR)
-									sudo $(MKFS.UBIFS) -d $(TMPDIR) $(UBIFS_OPTS) -c $(FS_ROOT_SIZE_LEBS) -o $@
-									sudo rm -rf $(TMPDIR)/*
+									rm -rf $(TMPDIR)/*
+									$(FAKEROOT) tar -xf $< -C $(TMPDIR)
+									$(FAKEROOT) $(MKFS.UBIFS) -d $(TMPDIR) $(UBIFS_OPTS) -c $(FS_ROOT_SIZE_LEBS) -o $@
+									rm -rf $(TMPDIR)/*
 
 $(BINARIES_DIR)/var.tar:	$(BINARIES_DIR)/rootfs.tar
 							echo "Creating $@"
@@ -37,9 +39,12 @@ $(BINARIES_DIR)/var.tar:	$(BINARIES_DIR)/rootfs.tar
 
 $(BINARIES_DIR)/var.ubifs:	$(BINARIES_DIR)/var.tar
 							echo "Creating $@"
-							sudo tar -xf $< -C $(TMPDIR)
-							sudo $(MKFS.UBIFS) -d $(TMPDIR)/var/ $(UBIFS_OPTS) -c $(FS_VAR_SIZE_LEBS) -o $@
-							sudo rm -rf $(TMPDIR)/*
+							rm -rf $(TMPDIR)/*
+							$(FAKEROOT) tar -xf $< -C $(TMPDIR)
+							$(FAKEROOT) $(MKFS.UBIFS) -d $(TMPDIR)/var/ $(UBIFS_OPTS) -c $(FS_VAR_SIZE_LEBS) -o $@
+							rm -rf $(TMPDIR)/*
+
+
 
 .PHONY: all
 
