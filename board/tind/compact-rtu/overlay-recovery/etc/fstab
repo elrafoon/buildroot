@@ -8,5 +8,6 @@ tmpfs			/dev/shm		tmpfs	mode=0777					0		0
 tmpfs			/tmp			tmpfs	defaults					0		0
 sysfs			/sys			sysfs	defaults					0		0
 /dev/ubi0_0 	/target/rootfs	ubifs	noauto,sync					0		0
-/dev/mtdblock7 	/target/var		ext4	noatime,errors=remount-ro	0		2
+/dev/mtdblock7 	/target/var		ext4	noatime,errors=remount-ro	0		0
+/dev/mmcblk0p1 	/target/srv		ext4	noatime,errors=remount-ro	0		0
 

@@ -1,13 +1,16 @@
 #!/bin/sh
 
-# /var could be ext4
-fsck /target/var
+export PATH=/sbin:/bin:/usr/sbin:/usr/bin
+export HOME=/root
+
+fsck -y /target/var
 
 mount -a
 
-export HOME=/root
+# find update image in target /var and /srv
+export UPDATE_IMAGE=$( (find /target/var/lib/fwupdate/ /target/srv/fwupdate/ -name rootfs.ubifs.sign; echo /target/var/lib/fwupdate/rootfs.ubifs.sign) | head -n 1 )
 
-UPDATE_IMAGE=/target/var/lib/fwupdate/rootfs.ubifs.sign DELETE_IMAGE=1 TARGET=/target/rootfs UMOUNT_LIST="/target/var /proc /sys" FALLBACK="busybox init" exec /sbin/fwupdate update-recover
+DELETE_IMAGE=0 DELETE_INVALID_IMAGE=1 TARGET=/target/rootfs UMOUNT_LIST="/target/var /target/srv /proc /sys" FALLBACK="busybox init" exec /sbin/fwupdate update-recover
 
 # fallback
 echo 1 > /sys/class/leds/error/brightness
