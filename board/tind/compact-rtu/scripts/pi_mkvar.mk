@@ -38,10 +38,19 @@ EXT2_ENV  = GEN=$(BR2_TARGET_ROOTFS_EXT2_GEN)
 EXT2_ENV += REV=$(BR2_TARGET_ROOTFS_EXT2_REV)
 
 ################################################################################
+# SIGNING
+################################################################################
+define SIGN
+	echo "Signing $1 to $2";
+	rm -f $2;
+	gpg --homedir $(TOPDIR)/board/tind/compact-rtu/gpg-keys -s -o $2 $1
+endef
+
+################################################################################
 # GO!
 ################################################################################
 
-all: $(BINARIES_DIR)/rootfs-only.tar $(BINARIES_DIR)/rootfs-only.ubifs $(BINARIES_DIR)/var.tar $(UBIFS_DEP) $(EXT2_DEP)
+all: $(BINARIES_DIR)/rootfs-only.ubifs.sign $(UBIFS_DEP) $(EXT2_DEP)
 
 
 $(BINARIES_DIR)/rootfs-only.tar:	$(BINARIES_DIR)/rootfs.tar
@@ -56,10 +65,15 @@ $(BINARIES_DIR)/rootfs-only.ubifs:	$(BINARIES_DIR)/rootfs-only.tar
 									$(FAKEROOT) $(MKFS.UBIFS) -d $(TMPDIR) $(UBIFS_OPTS) -c $(FS_ROOT_SIZE_LEBS) -o $@
 									rm -rf $(TMPDIR)/*
 
-$(BINARIES_DIR)/var.tar:	$(BINARIES_DIR)/rootfs.tar
+$(BINARIES_DIR)/rootfs-only.ubifs.sign:	$(BINARIES_DIR)/rootfs-only.ubifs
+										echo "Signing $@"
+										$(call SIGN,$<,$@)
+
+$(BINARIES_DIR)/var.tar:	$(BINARIES_DIR)/rootfs.tar $(BINARIES_DIR)/rootfs-only.ubifs.sign
 							echo "Creating $@"
 							cp $< $@
 							tar --delete -f $@ $$(tar -tf $@ | grep -v ^./var | egrep ^./[[:alnum:]]+/*$$)
+							tar --append -f $@ -C $(BINARIES_DIR) --transform 's,^,/var/lib/fwupdate/,S' --transform 's,rootfs-only,rootfs,' rootfs-only.ubifs.sign
 
 $(BINARIES_DIR)/var.ubifs:	$(BINARIES_DIR)/var.tar
 							echo "Creating $@"
