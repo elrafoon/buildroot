@@ -1,0 +1,13 @@
+[Unit]
+Description=Open Data Acquisition Framework - DBus Configuration Daemon
+After=syslog.target network.target
+Before=opendaf.service
+
+[Service]
+EnvironmentFile=/etc/default/opendaf
+ExecStart=/usr/bin/dafmand
+Restart=always
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target
