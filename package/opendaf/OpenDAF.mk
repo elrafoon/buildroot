@@ -40,15 +40,27 @@ define OPENDAF_INSTALL_INIT_SYSV
 	$(INSTALL) -D -m 0755 package/opendaf/S90opendaf $(TARGET_DIR)/etc/init.d/S90opendaf
 endef
 
-define OPENDAF_INSTALL_INIT_SYSTEMD
-    $(INSTALL) -D -m 0644 package/opendaf/opendaf.service $(TARGET_DIR)/etc/systemd/system/opendaf.service
-    $(INSTALL) -D -m 0644 package/opendaf/opendaf-archive.service $(TARGET_DIR)/etc/systemd/system/opendaf-archive.service
-    $(INSTALL) -D -m 0644 package/opendaf/opendaf-dafman.service $(TARGET_DIR)/etc/systemd/system/opendaf-dafman.service
-    mkdir -p $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants
-    ln -fs ../opendaf.service $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/opendaf.service
-    ln -fs ../opendaf-archive.service $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/opendaf-archive.service
-    ln -fs ../opendaf-dafman.service $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/opendaf-dafman.service
+define OPENDAF_SYSTEMD_BASE
+    $(INSTALL) -D -m 0644 package/opendaf/opendaf.service $(TARGET_DIR)/etc/systemd/system/opendaf.service;
+    $(INSTALL) -D -m 0644 package/opendaf/opendaf-archive.service $(TARGET_DIR)/etc/systemd/system/opendaf-archive.service;
+    $(INSTALL) -D -m 0644 package/opendaf/opendaf-dafman.service $(TARGET_DIR)/etc/systemd/system/opendaf-dafman.service;
+    $(INSTALL) -D -m 0644 package/opendaf/opendaf-dafmand.service $(TARGET_DIR)/etc/systemd/system/opendaf-dafmand.service;
+    mkdir -p $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants;
+    ln -fs ../opendaf.service $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/opendaf.service;
+    ln -fs ../opendaf-archive.service $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/opendaf-archive.service;
 endef
+
+define OPENDAF_SYSTEMD_DAFMAN_$(BR2_PACKAGE_OPENDAF_DAFMAN)
+    ln -fs ../opendaf-dafman.service $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/opendaf-dafman.service;
+endef
+
+define OPENDAF_SYSTEMD_DAFMAND_$(BR2_PACKAGE_OPENDAF_DAFMAND)
+    ln -fs ../opendaf-dafmand.service $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/opendaf-dafmand.service;
+endef
+
+OPENDAF_INSTALL_INIT_SYSTEMD += $(OPENDAF_SYSTEMD_BASE)
+OPENDAF_INSTALL_INIT_SYSTEMD += $(OPENDAF_SYSTEMD_DAFMAN_y)
+OPENDAF_INSTALL_INIT_SYSTEMD += $(OPENDAF_SYSTEMD_DAFMAND_y)
 
 define OPENDAF_INSTALL_DEFAULT_CFG
 	$(INSTALL) -D -m 0644 package/opendaf/opendaf.default $(TARGET_DIR)/etc/default/opendaf
