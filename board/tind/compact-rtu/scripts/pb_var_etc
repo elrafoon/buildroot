@@ -16,8 +16,11 @@ set -e
 mkdir -p $TARGET_DIR/var/etc
 
 for fname in hostname hosts; do
-	if [ ! -L $TARGET_DIR/var/etc/$fname ]; then
+	echo "Testing $TARGET_DIR/etc/$fname"
+	if [ ! -L $TARGET_DIR/etc/$fname ]; then
+		echo "Moving $TARGET_DIR/etc/$fname -> $TARGET_DIR/var/etc/$fname"
 		mv -fv $TARGET_DIR/etc/$fname $TARGET_DIR/var/etc/$fname
+		echo "Softlinking ../var/etc/$fname -> $TARGET_DIR/etc/$fname"
 		ln -sf ../var/etc/$fname $TARGET_DIR/etc/$fname
 	fi
 done
