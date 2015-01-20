@@ -1,7 +1,7 @@
 [Unit]
 Description=DAFMan Database Update Service
 After=syslog.target network.target
-Before=opendaf-dafman.service
+Before=opendaf-dafman.service opendaf-dafmand.service
 
 [Service]
 Type=oneshot
