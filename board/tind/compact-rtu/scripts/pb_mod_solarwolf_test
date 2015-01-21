@@ -1,0 +1,23 @@
+#!/bin/sh
+
+set -e
+
+BR=$(pwd)
+MOD=$BR/board/tind/compact-rtu/mod-solarwolf-test
+
+mkdir -p $TARGET_DIR/usr/share/webapps
+
+# index page
+install -D -m 0644 $MOD/index.html $TARGET_DIR/usr/share/webapps/index/index.html
+install -D -m 0644 $MOD/style.css $TARGET_DIR/usr/share/webapps/index/css/style.css
+
+# solarwolf-test-ui
+tar -C $TARGET_DIR/usr/share/webapps -xf $MOD/solarwolf-test-ui.tgz
+cd $TARGET_DIR/var/www && ln -sf ../../usr/share/webapps/solarwolf-test-ui solarwolf-test-ui
+
+# dafman database update
+install -D -m 0755 $MOD/update-dafman $TARGET_DIR/usr/sbin/update-dafman
+install -D -m 0644 $MOD/update-dafman.service $TARGET_DIR/etc/systemd/system/update-dafman.service
+mkdir -p $TARGET_DIR/etc/systemd/system/multi-user.target.wants
+ln -fs ../update-dafman.service $TARGET_DIR/etc/systemd/system/multi-user.target.wants/update-dafman.service
+
