@@ -1,0 +1,13 @@
+[Unit]
+Description=System upgrade during bootup
+DefaultDependencies=no
+After=sysinit.target paths.target
+Before=basic.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/upgrade
+
+[Install]
+WantedBy=basic.target
+

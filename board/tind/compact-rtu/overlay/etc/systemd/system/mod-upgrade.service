@@ -1,0 +1,14 @@
+[Unit]
+Description=Mod upgrade during bootup
+DefaultDependencies=no
+After=sysinit.target paths.target upgrade.service
+Before=basic.target
+ConditionPathExists=/usr/sbin/mod-upgrade
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/mod-upgrade
+
+[Install]
+WantedBy=basic.target
+
