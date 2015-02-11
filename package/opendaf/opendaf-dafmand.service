@@ -1,6 +1,6 @@
 [Unit]
 Description=Open Data Acquisition Framework - DBus Configuration Daemon
-After=syslog.target network.target
+After=syslog.target network.target opendaf-dafman.service
 Before=opendaf.service
 
 [Service]
