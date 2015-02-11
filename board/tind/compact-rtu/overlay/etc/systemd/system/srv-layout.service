@@ -1,0 +1,12 @@
+[Unit]
+Description=Setup /srv layout
+DefaultDependencies=no
+RequiresMountsFor=/srv
+
+[Service]
+Type=oneshot
+ExecStart=/bin/mkdir -p /srv/journal /srv/persistor /srv/recorder
+
+[Install]
+WantedBy=sysinit.target
+
