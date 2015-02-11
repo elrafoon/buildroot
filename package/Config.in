@@ -982,6 +982,7 @@ menu "Networking applications"
 	source "package/connman/Config.in"
 	source "package/conntrack-tools/Config.in"
 	source "package/crda/Config.in"
+	source "package/crontab-cgi/Config.in"
 	source "package/ctorrent/Config.in"
 	source "package/cups/Config.in"
 if BR2_PACKAGE_BUSYBOX_SHOW_OTHERS

@@ -1,0 +1,5 @@
+config BR2_PACKAGE_CRONTAB_CGI
+	bool "crontab-cgi"
+	help
+	  Simple crontab management CGI script written in dash
+
