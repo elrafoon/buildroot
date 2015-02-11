@@ -24,3 +24,6 @@ install -D -m 0644 $MOD/update-dafman.service $TARGET_DIR/etc/systemd/system/upd
 mkdir -p $TARGET_DIR/etc/systemd/system/multi-user.target.wants
 ln -fs ../update-dafman.service $TARGET_DIR/etc/systemd/system/multi-user.target.wants/update-dafman.service
 
+# mod upgrade script
+install -D -m 0755 $MOD/upgrade $TARGET_DIR/usr/sbin/mod-upgrade
+

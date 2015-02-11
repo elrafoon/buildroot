@@ -1,0 +1,37 @@
+#!/bin/sh
+
+# mod-specific upgrade script
+
+set -e
+
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+RELEASE_PATH=/etc/release
+PREV_RELEASE_PATH=/var/state/previous-release.falcon
+DAFMAN_DB=/var/lib/opendaf/dafman/dafman.sqlite3
+
+PREV_RELEASE=0
+
+[ -e $PREV_RELEASE_PATH ] && PREV_RELEASE=$(cat $PREV_RELEASE_PATH)
+
+if [ "$PREV_RELEASE" -lt 20120209 ]; then
+	echo "Upgrading from $PREV_RELEASE to 20120209"
+	if [ -e $DAFMAN_DB ]; then
+		cat <<EOF | sqlite3 /var/lib/opendaf/dafman/dafman.sqlite3
+update connectors set vars='DEBUG=0
+DUMP=0
+TTY=ttyAPP3
+SCAN_PERIOD=1.0
+RESPONSE_TIMEOUT=0.5
+REQUEST_TTL=60
+CONTROLLER_QUEUE=1024
+' where name='PNT';
+EOF
+	fi
+fi
+
+echo "Falcon upgrade complete"
+
+mkdir -p $(dirname $PREV_RELEASE_PATH)
+cp -f $RELEASE_PATH $PREV_RELEASE_PATH
+
