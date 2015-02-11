@@ -1,0 +1,10 @@
+[Unit]
+Description=Command Scheduler
+
+[Service]
+ExecStart=/usr/sbin/crond
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+
