@@ -14,8 +14,8 @@ PREV_RELEASE=0
 
 [ -e $PREV_RELEASE_PATH ] && PREV_RELEASE=$(cat $PREV_RELEASE_PATH)
 
-if [ "$PREV_RELEASE" -lt 20120209 ]; then
-	echo "Upgrading from $PREV_RELEASE to 20120209"
+if [ "$PREV_RELEASE" -lt 20150209 ]; then
+	echo "Upgrading from $PREV_RELEASE to 20150209"
 	if [ -e $DAFMAN_DB ]; then
 		cat <<EOF | sqlite3 /var/lib/opendaf/dafman/dafman.sqlite3
 update connectors set vars='DEBUG=0
