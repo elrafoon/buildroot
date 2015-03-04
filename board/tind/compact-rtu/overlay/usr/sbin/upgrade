@@ -21,6 +21,12 @@ if [ "$PREV_RELEASE" -lt 20150209 ]; then
 	mkdir -p /var/spool/cron/crontabs
 fi
 
+if [ "$PREV_RELEASE" -lt 20150225 ]; then
+	echo "Upgrading from $PREV_RELEASE to 20150225"
+	mkdir -p /var/etc/NetworkManager/dispatcher.d/pre-down.d
+	mkdir -p /var/etc/NetworkManager/dispatcher.d/pre-up.d
+fi
+
 echo "Upgrade complete"
 
 mkdir -p $(dirname $PREV_RELEASE_PATH)
