@@ -1,0 +1,10 @@
+[Unit]
+Description=Simple relay-only mail transport agent
+
+[Service]
+ExecStart=/usr/sbin/nullmailer-send-syslog
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+

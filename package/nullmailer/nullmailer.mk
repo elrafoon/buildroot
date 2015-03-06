@@ -27,11 +27,16 @@ define NULLMAILER_INSTALL_UTILS
 	$(INSTALL) -D -m 755 package/nullmailer/nullmailer-send-syslog $(TARGET_DIR)/usr/sbin/nullmailer-send-syslog
 endef
 
-define NULLMAILER_INSTALL_INITSCRIPT
+define NULLMAILER_INSTALL_INIT_SYSV
 	$(INSTALL) -D -m 755 package/nullmailer/S65nullmailer $(TARGET_DIR)/etc/init.d/S65nullmailer
 endef
 
+define NULLMAILER_INSTALL_INIT_SYSTEMD
+	$(INSTALL) -D -m 0644 package/nullmailer/nullmailer.service $(TARGET_DIR)/etc/systemd/system/nullmailer.service
+	ln -fs ../nullmailer.service $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/nullmailer.service
+endef
+
 NULLMAILER_POST_INSTALL_TARGET_HOOKS += NULLMAILER_INSTALL_UTILS
-NULLMAILER_POST_INSTALL_TARGET_HOOKS += NULLMAILER_INSTALL_INITSCRIPT
 
 $(eval $(autotools-package))
+
