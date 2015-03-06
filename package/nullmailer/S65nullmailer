@@ -6,6 +6,8 @@
 set -e
 
 NULLMAILER_SEND=/usr/sbin/nullmailer-send-syslog
+NULLMAILER_STATEDIR=/var/spool/nullmailer
+NULLMAILER_TRIGGER=$NULLMAILER_STATEDIR/trigger
 
 . /etc/profile
 
@@ -13,8 +15,21 @@ if [ -r /etc/default/nullmailer ]; then
 	. /etc/default/nullmailer
 fi
 
+nullmailer_mkinfra () {
+	echo "Creating nullmailer infrastructure in $NULLMAILER_STATEDIR ..."
+	for d in queue tmp; do
+		mkdir -p $NULLMAILER_STATEDIR/$d
+		chmod 600 $NULLMAILER_STATEDIR/$d
+	done
+
+	rm -f $NULLMAILER_TRIGGER
+	mkfifo $NULLMAILER_TRIGGER
+	chmod 600 $NULLMAILER_TRIGGER
+}
+
 case $1 in
   start)
+		[ -d /var/spool/nullmailer ] || nullmailer_mkinfra
         echo "Starting nullmailer MTA ..."
 	    start-stop-daemon -m -p /var/run/nullmailer.pid -x $NULLMAILER_SEND -b -S -- $NULLMAILER_OPTIONS >/dev/null
         ;;
