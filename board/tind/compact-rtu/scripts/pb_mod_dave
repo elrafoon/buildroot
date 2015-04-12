@@ -12,8 +12,22 @@ install -D -m 0755 $MOD/controller.exe $TARGET_DIR/usr/share/opendaf/function-mo
 cd $TARGET_DIR/var/lib/opendaf/function-modules && ln -sf ../../../../usr/share/opendaf/function-modules/controller.exe controller.exe
 
 # index page
-install -D -m 0644 $MOD/index.html $TARGET_DIR/usr/share/webapps/index/index.html
-install -D -m 0644 $MOD/style.css $TARGET_DIR/usr/share/webapps/index/css/style.css
+
+exists() { [[ -f $1 ]]; }
+
+if [ "$BRAND" == "" ]; then
+	BRAND=dave
+fi
+
+install -d $TARGET_DIR/usr/share/webapps/index/css
+install -d $TARGET_DIR/usr/share/webapps/index/img
+
+pushd $MOD/brand/$BRAND
+exists *.html && install -m 0644 *.html $TARGET_DIR/usr/share/webapps/index/
+exists *.css && install -m 0644 *.css $TARGET_DIR/usr/share/webapps/index/css
+exists *.png && install -m 0644 *.png $TARGET_DIR/usr/share/webapps/index/img
+exists *.jpg && install -m 0644 *.jpg $TARGET_DIR/usr/share/webapps/index/img
+popd
 
 # dave-ui
 tar -C $TARGET_DIR/usr/share/webapps -xf $MOD/dave-ui.tgz
