@@ -15,3 +15,6 @@ set -e
 # fixup network-manager hostname
 sed -i s/"hostname_to_replace"/"$(<$TARGET_DIR/etc/hostname)"/ $TARGET_DIR/etc/NetworkManager/NetworkManager.conf
 
+# bind systemd-journald to localhost
+sed -i s/=19531/"=127.0.0.1:19531"/ $TARGET_DIR/lib/systemd/system/systemd-journal-gatewayd.socket
+
