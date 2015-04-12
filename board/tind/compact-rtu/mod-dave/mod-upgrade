@@ -1,0 +1,50 @@
+#!/bin/sh
+
+set -e
+
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+RELEASE=2
+
+PREV_RELEASE_PATH=/var/state/previous-dave-release
+DB=/var/lib/opendaf/dafman/dafman.sqlite3
+FWDB=/usr/share/opendaf-appconf/$DB
+
+PREV_RELEASE=0
+
+[ -e $PREV_RELEASE_PATH ] && PREV_RELEASE=$(cat $PREV_RELEASE_PATH)
+
+if [ "$PREV_RELEASE" -lt 1 ]; then
+	# very ancient database, no way, just replace
+	echo "Replacing ancient dafman database"
+	install -D -m 0644 $FWDB $DB
+fi
+
+# replace with new database, copy measurements & commands from upgraded original database
+if [ "$PREV_RELEASE" -lt "$RELEASE" ]; then
+	echo "Upgrading DAVE from $PREV_RELEASE to $RELEASE"
+	# render current database, upgrading it to current schema version in the process
+	dafman render
+	# backup current db
+	mv -f $DB $DB.orig
+	# install new db
+	install -D -m 0644 $FWDB $DB
+	# take measurements & commands from current db
+	cat <<EOF |
+attach database '$DB.orig' as orig;
+begin;
+insert or ignore into measurements select * from orig.measurements;
+insert or ignore into commands select * from orig.commands;
+commit;
+detach database orig;
+EOF
+	sqlite3 -echo $DB
+	# remove backup
+	rm $DB.orig
+fi
+
+echo "Upgrade complete"
+
+mkdir -p $(dirname $PREV_RELEASE_PATH)
+echo -n $RELEASE >$PREV_RELEASE_PATH
+

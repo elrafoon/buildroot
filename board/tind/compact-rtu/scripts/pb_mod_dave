@@ -33,9 +33,6 @@ popd
 tar -C $TARGET_DIR/usr/share/webapps -xf $MOD/dave-ui.tgz
 cd $TARGET_DIR/var/www && ln -sf ../../usr/share/webapps/dave-ui dave-ui
 
-# dafman database update
-install -D -m 0755 $MOD/update-dafman $TARGET_DIR/usr/sbin/update-dafman
-install -D -m 0644 $MOD/update-dafman.service $TARGET_DIR/etc/systemd/system/update-dafman.service
-mkdir -p $TARGET_DIR/etc/systemd/system/multi-user.target.wants
-ln -fs ../update-dafman.service $TARGET_DIR/etc/systemd/system/multi-user.target.wants/update-dafman.service
+# mod upgrade script
+install -D -m 0755 $MOD/mod-upgrade $TARGET_DIR/usr/sbin/mod-upgrade
 
