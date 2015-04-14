@@ -11,14 +11,14 @@ span {
     display: inline-block; }
 .outer {
     width: 400px;
-    height: 330px;
+    height: 540px;
     padding: 0;
     border: 1px solid #000;
     vertical-align: middle;
     display: inline-block; }
 .inner {
     width: 350px;
-    height: 330px;    
+    height: 540px;    
     vertical-align: middle;
     display: inline-block; }
 .btn-nav{
