@@ -1,0 +1,5 @@
+config BR2_PACKAGE_WEBDAF
+	bool "webdaf"
+	help
+		This package contains WebDAF management interface.
+

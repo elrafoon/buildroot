@@ -27,6 +27,11 @@ if [ "$PREV_RELEASE" -lt 20150225 ]; then
 	mkdir -p /var/etc/NetworkManager/dispatcher.d/pre-up.d
 fi
 
+if [ "$PREV_RELEASE" -lt 20150412 ]; then
+	echo "Upgrading from $PREV_RELEASE to 20150412"
+	ln -sf /usr/share/webdaf /var/www/webdaf
+fi
+
 echo "Upgrade complete"
 
 mkdir -p $(dirname $PREV_RELEASE_PATH)

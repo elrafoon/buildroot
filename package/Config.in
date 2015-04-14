@@ -388,6 +388,7 @@ menu "Industrial applications"
 	source "package/uHMI/Config.in"
 	source "package/uHMI-demos/Config.in"
 	source "package/wavegen/Config.in"
+	source "package/webdaf/Config.in"
 endmenu
 
 menu "Interpreter languages and scripting"
