@@ -1,0 +1,28 @@
+#!/bin/sh
+
+set -e
+
+SHDN=57
+RESET=69
+POWER=21
+
+cd /sys/class/gpio
+
+for pin in $POWER $SHDN $RESET; do
+	[ -d gpio$pin ] || echo $pin >export
+	echo out > gpio$pin/direction
+	echo 0 > gpio$pin/value
+done
+
+echo 0 >gpio$SHDN/value
+usleep 250000
+
+echo 1 >gpio$POWER/value
+echo 1 >gpio$RESET/value
+
+usleep 250000
+
+echo 0 >gpio$POWER/value
+usleep 100000
+echo 0 >gpio$RESET/value
+

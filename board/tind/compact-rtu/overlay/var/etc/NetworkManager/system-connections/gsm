@@ -1,0 +1,8 @@
+[connection]
+id=gsm
+uuid=9c499e7c-f20d-426a-b606-2e0ee25c6427
+type=gsm
+
+[gsm]
+number=*99#
+apn=internet

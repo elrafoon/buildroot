@@ -1,0 +1,14 @@
+ACTION!="add|change", GOTO="mm_quectel_port_types_end"
+SUBSYSTEM!="tty", GOTO="mm_quectel_port_types_end"
+
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="05c6", GOTO="mm_uc20_vendorcheck"
+GOTO="mm_quectel_port_types_end"
+
+LABEL="mm_uc20_vendorcheck"
+SUBSYSTEMS=="usb", ATTRS{bInterfaceNumber}=="?*", ENV{.MM_USBIFNUM}="$attr{bInterfaceNumber}"
+
+ATTRS{idProduct}=="9003", ENV{.MM_USBIFNUM}=="02", ENV{ID_MM_CANDIDATE}="0"
+
+GOTO="mm_quectel_port_types_end"
+
+LABEL="mm_quectel_port_types_end"

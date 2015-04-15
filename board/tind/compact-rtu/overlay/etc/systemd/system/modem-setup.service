@@ -1,0 +1,12 @@
+[Unit]
+Description=Setup integrated GSM modem
+DefaultDependencies=no
+RequiresMountsFor=/sys
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/modem-setup
+
+[Install]
+WantedBy=sysinit.target
+
