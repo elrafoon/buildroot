@@ -26,4 +26,10 @@ else
 	MODEM_MANAGER_CONF_OPT += --without-mbim
 endif
 
+define MODEM_MANAGER_INSTALL_INIT_SYSTEMD
+    mkdir -p $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants
+	ln -fs /lib/systemd/system/ModemManager.service $(TARGET_DIR)/etc/systemd/system/dbus-org.freedesktop.ModemManager1.service
+	ln -fs /lib/systemd/system/ModemManager.service $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/ModemManager.service
+endef
+
 $(eval $(autotools-package))
