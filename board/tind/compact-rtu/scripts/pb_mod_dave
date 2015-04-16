@@ -30,7 +30,11 @@ exists *.jpg && install -m 0644 *.jpg $TARGET_DIR/usr/share/webapps/index/img
 popd
 
 # dave-ui
-tar -C $TARGET_DIR/usr/share/webapps -xf $MOD/dave-ui.tgz
+if [[ -n "$BRAND" && -e $MOD/dave-ui-$BRAND.tgz ]]; then
+	tar -C $TARGET_DIR/usr/share/webapps -xf $MOD/dave-ui-$BRAND.tgz
+else
+	tar -C $TARGET_DIR/usr/share/webapps -xf $MOD/dave-ui.tgz
+fi
 cd $TARGET_DIR/var/www && ln -sf ../../usr/share/webapps/dave-ui dave-ui
 
 # mod upgrade script
