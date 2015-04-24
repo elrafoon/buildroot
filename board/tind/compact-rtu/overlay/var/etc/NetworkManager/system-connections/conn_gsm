@@ -1,5 +1,5 @@
 [connection]
-id=gsm
+id=conn_gsm
 uuid=9c499e7c-f20d-426a-b606-2e0ee25c6427
 type=gsm
 
