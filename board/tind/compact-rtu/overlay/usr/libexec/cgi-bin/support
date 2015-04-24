@@ -1,0 +1,53 @@
+#!/bin/dash
+
+failure () {
+	/bin/cat << EOM1
+Status: $1
+Content-type: text/plain
+
+$2
+EOM1
+}
+
+case "$REQUEST_METHOD" in
+	GET)
+		case "$PATH_INFO" in
+			/enabled)
+				echo Content-type: text/plain
+				echo ""
+				systemctl is-enabled support-vpn.service 2>&1 >/dev/null && echo -n yes || echo -n no
+				;;
+			/active)
+				echo Content-type: text/plain
+				echo ""
+				ip link show tun0 2>&1 >/dev/null && echo -n yes || echo -n no
+				;; 
+			*)
+				failure "400 Bad Request" "Unknown URI $PATH_INFO"
+				;;
+		esac
+		;;
+	POST)
+		case "$PATH_INFO" in
+			/enable)
+				systemctl enable support-vpn.service 2>&1 >/dev/null
+				systemctl start support-vpn.service 2>&1 >/dev/null
+				echo Status: 204 No Content
+				echo ""
+				;;
+			/disable)
+				systemctl stop support-vpn.service 2>&1 >/dev/null
+				systemctl disable support-vpn.service 2>&1 >/dev/null
+				echo Status: 204 No Content
+				echo ""
+				;;
+			*)
+				failure "400 Bad Request" "Unknown URI $PATH_INFO"
+				;;
+		esac
+		;;
+	*)
+		failure "405 Method Not Allowed" "Method $REQUEST_METHOD is not supported"
+		;;
+esac
+

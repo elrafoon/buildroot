@@ -1,0 +1,12 @@
+[Unit]
+Description=Persistent support VPN connection
+After=NetworkManager.service
+
+[Service]
+ExecStart=/usr/sbin/openvpn --config /etc/support/vpn.conf
+Restart=always
+RestartSec=300
+
+[Install]
+WantedBy=multi-user.target
+
