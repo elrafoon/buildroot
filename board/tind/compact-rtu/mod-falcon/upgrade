@@ -30,6 +30,11 @@ EOF
 	fi
 fi
 
+if [ "$PREV_RELEASE" -lt 20140423 ]; then
+	echo "Upgrading from $PREV_RELEASE to 20150423"
+	dafman call falcon upgrade [$PREV_RELEASE]
+fi
+
 echo "Falcon upgrade complete"
 
 mkdir -p $(dirname $PREV_RELEASE_PATH)
