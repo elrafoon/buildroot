@@ -32,6 +32,21 @@ if [ "$PREV_RELEASE" -lt 20150412 ]; then
 	ln -sf /usr/share/webdaf /var/www/webdaf
 fi
 
+if [ "$PREV_RELEASE" -lt 20150423 ]; then
+	echo "Upgrading from $PREV_RELEASE to 20150423"
+	cat <<EOF >/etc/NetworkManager/system-connections/conn_gsm
+[connection]
+id=conn_gsm
+uuid=9c499e7c-f20d-426a-b606-2e0ee25c6427
+type=gsm
+
+[gsm]
+number=*99#
+apn=internet
+EOF
+	mkdir -p /var/spool/cron/cronstamps
+fi
+
 echo "Upgrade complete"
 
 mkdir -p $(dirname $PREV_RELEASE_PATH)

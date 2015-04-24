@@ -5,6 +5,7 @@ RequiresMountsFor=/var/spool/cron/
 [Service]
 ExecStart=/usr/sbin/crond
 KillMode=process
+Type=forking
 
 [Install]
 WantedBy=multi-user.target
