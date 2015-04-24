@@ -45,6 +45,7 @@ number=*99#
 apn=internet
 EOF
 	mkdir -p /var/spool/cron/cronstamps
+	mkdir -p /var/spool/astron/astrotabs
 fi
 
 echo "Upgrade complete"
