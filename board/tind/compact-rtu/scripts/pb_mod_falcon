@@ -56,3 +56,7 @@ cat <<EOF >$TARGET_DIR/var/spool/cron/crontabs/astroclock
 EOF
 chmod 600 $TARGET_DIR/var/spool/cron/crontabs/astroclock
 
+# support keys
+install -d -m 0700 $TARGET_DIR/etc/support
+cat $MOD/falcon-support-keys.tgz | tar -C $TARGET_DIR/etc/support -xz
+
