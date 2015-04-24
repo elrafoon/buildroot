@@ -26,4 +26,20 @@ ln -fs ../update-dafman.service $TARGET_DIR/etc/systemd/system/multi-user.target
 
 # mod upgrade script
 install -D -m 0755 $MOD/upgrade $TARGET_DIR/usr/sbin/mod-upgrade
+ 
+# KVDS on external storage
+cat <<EOF >$TARGET_DIR/usr/libexec/cgi-bin/kvds-ext
+#!/bin/sh
+
+KVDS_ROOT=/srv/kvds exec /usr/bin/kvds cgi
+EOF
+chmod 755 $TARGET_DIR/usr/libexec/cgi-bin/kvds-ext
+
+# lighttpd mod-specific configuration
+cat <<EOF >$TARGET_DIR/etc/lighttpd/conf.d/mod.conf
+url.rewrite-once += (
+	"^/kvds-ext/(.*)" => "/cgi-bin/kvds-ext/\$1"
+)
+EOF
+
 
