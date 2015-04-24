@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-CRONTAB_CGI_VERSION = 1e956a2
+CRONTAB_CGI_VERSION = 6dd91db
 CRONTAB_CGI_SITE_METHOD = git
 CRONTAB_CGI_SITE = gitolite@merlin.swind.sk:embedded-tools.git
 CRONTAB_CGI_LICENSE = BSD-3c
