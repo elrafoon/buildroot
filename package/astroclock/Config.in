@@ -1,0 +1,16 @@
+config BR2_PACKAGE_ASTROCLOCK
+	bool "astroclock"
+	depends on BR2_PACKAGE_DCRON
+	help
+	  Astronomical clock calculation package
+
+if BR2_PACKAGE_ASTROCLOCK
+	config BR2_PACKAGE_ASTROCLOCK_CGI
+		bool "install CGI wrapper"
+		default y
+
+endif
+
+comment "astroclock depends on dcron"
+	depends on !BR2_PACKAGE_DCRON
+

@@ -935,6 +935,7 @@ endmenu
 
 menu "Miscellaneous"
 	source "package/aespipe/Config.in"
+	source "package/astroclock/Config.in"
 	source "package/bc/Config.in"
 	source "package/collectd/Config.in"
 	source "package/empty/Config.in"
