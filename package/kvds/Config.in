@@ -1,0 +1,13 @@
+config BR2_PACKAGE_KVDS
+	bool "kvds"
+	depends on BR2_PACKAGE_COREUTILS
+	help
+	  Filesystem-based Key-Value datastore written in dash
+
+if BR2_PACKAGE_KVDS
+	config BR2_PACKAGE_KVDS_CGI
+		bool "install CGI wrapper"
+		default y
+
+endif
+
