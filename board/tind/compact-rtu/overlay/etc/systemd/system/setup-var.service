@@ -1,0 +1,16 @@
+[Unit]
+Description=Setup /var mountpoint
+DefaultDependencies=no
+# trigger mounting when not running with nfsroot
+ConditionKernelCommandLine =|!root=/dev/nfs
+# disable mount when booting from /dev/sda (qemu)
+ConditionKernelCommandLine =!root=/dev/sda
+Before=local-fs.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/systemctl enable var.mount
+
+[Install]
+WantedBy=local-fs-pre.target
+

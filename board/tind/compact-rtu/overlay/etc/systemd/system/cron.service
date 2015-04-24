@@ -1,5 +1,6 @@
 [Unit]
 Description=Command Scheduler
+RequiresMountsFor=/var/spool/cron/
 
 [Service]
 ExecStart=/usr/sbin/crond

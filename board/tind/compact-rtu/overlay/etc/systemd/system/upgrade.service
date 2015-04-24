@@ -1,8 +1,9 @@
 [Unit]
 Description=System upgrade during bootup
 DefaultDependencies=no
-After=sysinit.target paths.target
+After=sysinit.target paths.target var.mount
 Before=basic.target
+Requires=var.mount
 
 [Service]
 Type=oneshot
