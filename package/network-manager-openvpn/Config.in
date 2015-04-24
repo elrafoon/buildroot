@@ -1,0 +1,9 @@
+config BR2_PACKAGE_NM_OPENVPN
+	bool "network-manager openvpn plugin"
+	depends on (BR2_PACKAGE_NETWORK_MANAGER && BR2_PACKAGE_OPENVPN)
+	help
+	  OpenVPN plugin for NetworkManager
+
+comment "network-manager openvpn plugin needs network-manager and openvpn"
+	depends on !(BR2_PACKAGE_NETWORK_MANAGER && BR2_PACKAGE_OPENVPN)
+
