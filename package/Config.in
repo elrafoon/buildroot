@@ -1113,6 +1113,7 @@ endif
 	source "package/tn5250/Config.in"
 	source "package/transmission/Config.in"
 	source "package/tvheadend/Config.in"
+	source "package/tzconfig/Config.in"
 	source "package/udpcast/Config.in"
 	source "package/ulogd/Config.in"
 	source "package/ushare/Config.in"

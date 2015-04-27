@@ -1,0 +1,5 @@
+config BR2_PACKAGE_TZCONFIG
+	bool "tzconfig cgi wrapper"
+	help
+	  Timezone list/get/set CGI wrapper script
+
