@@ -4,7 +4,7 @@ After=opendaf.service
 StopWhenUnneeded=true
 
 [Service]
-ExecStart=/bin/sh -c 'stty -F /dev/ttyAPP0 speed 115200 -parenb; exec /root/serdebug <> /dev/ttyAPP0 >&0 2>&1'
+ExecStart=/bin/sh -c 'stty -F /dev/ttyAPP0 speed 115200 -parenb; exec /usr/bin/mmdump <> /dev/ttyAPP0 >&0 2>&1'
 
 [Install]
 WantedBy=opendaf.service
