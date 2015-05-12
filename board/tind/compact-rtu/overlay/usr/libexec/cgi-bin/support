@@ -15,12 +15,12 @@ case "$REQUEST_METHOD" in
 			/enabled)
 				echo Content-type: text/plain
 				echo ""
-				systemctl is-enabled support-vpn.service 2>&1 >/dev/null && echo -n yes || echo -n no
+				systemctl is-enabled support-vpn.service &>/dev/null && echo -n yes || echo -n no
 				;;
 			/active)
 				echo Content-type: text/plain
 				echo ""
-				ip link show tun0 2>&1 >/dev/null && echo -n yes || echo -n no
+				ip link show tun0 &>/dev/null && echo -n yes || echo -n no
 				;; 
 			*)
 				failure "400 Bad Request" "Unknown URI $PATH_INFO"
@@ -30,14 +30,14 @@ case "$REQUEST_METHOD" in
 	POST)
 		case "$PATH_INFO" in
 			/enable)
-				systemctl enable support-vpn.service 2>&1 >/dev/null
-				systemctl start support-vpn.service 2>&1 >/dev/null
+				systemctl enable support-vpn.service &>/dev/null
+				systemctl start support-vpn.service &>/dev/null
 				echo Status: 204 No Content
 				echo ""
 				;;
 			/disable)
-				systemctl stop support-vpn.service 2>&1 >/dev/null
-				systemctl disable support-vpn.service 2>&1 >/dev/null
+				systemctl stop support-vpn.service &>/dev/null
+				systemctl disable support-vpn.service &>/dev/null
 				echo Status: 204 No Content
 				echo ""
 				;;
