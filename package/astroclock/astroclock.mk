@@ -19,6 +19,7 @@ ASTROCLOCK_POST_INSTALL_TARGET_HOOKS += ASTROCLOCK_INSTALL_TARGET_CGI_y
 
 define ASTROCLOCK_INSTALL_INIT_SYSTEMD
 	$(INSTALL) -D -m 0644 $(@D)/$(ASTROCLOCK_SUBDIR)/astroclock.service $(TARGET_DIR)/etc/systemd/system/astroclock.service;
+	$(INSTALL) -d -m 0755 $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/
 	ln -fs ../astroclock.service $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/astroclock.service;
 endef
 
