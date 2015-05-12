@@ -1,0 +1,4 @@
+#!/bin/sh
+
+watch "wget -q -O - http://localhost/measurements/?names=L1_U,L1_I,L1_P,L2_U,L2_I,L2_P,L3_U,L3_I,L3_P,F | jq -r '.[] | .name + \"=\" + .vtq[0]' | sort"
+

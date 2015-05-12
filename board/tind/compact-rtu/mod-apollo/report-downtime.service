@@ -1,0 +1,11 @@
+[Unit]
+Description=Report last downtime via email
+After=basic.target
+
+[Service]
+Type=simple
+RemainAfterExit=yes
+ExecStart=/usr/bin/report-downtime
+
+[Install]
+WantedBy=multi-user.target

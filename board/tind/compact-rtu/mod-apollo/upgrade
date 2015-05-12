@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# mod-specific upgrade script
+
+set -e
+
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+RELEASE_PATH=/etc/release
+PREV_RELEASE_PATH=/var/state/previous-release.falcon
+DAFMAN_DB=/var/lib/opendaf/dafman/dafman.sqlite3
+
+PREV_RELEASE=0
+
+[ -e $PREV_RELEASE_PATH ] && PREV_RELEASE=$(cat $PREV_RELEASE_PATH)
+
+echo "Previous release is '$PREV_RELEASE'"
+
+# template
+
+# if [ "$PREV_RELEASE" -lt 20150209 ]; then
+#	echo "Upgrading from $PREV_RELEASE to 20150209"
+#	...
+# fi
+
+echo "Apollo upgrade complete"
+
+mkdir -p $(dirname $PREV_RELEASE_PATH)
+cp -f $RELEASE_PATH $PREV_RELEASE_PATH
+

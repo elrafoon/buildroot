@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -e
+
+[ -e /etc/profile ] && . /etc/profile
+
+dfmt='%-d.%-m.%Y %H:%M:%S'
+downtime=$(downtime)
+since=$(downtime -s)
+since_fmt=$(date -d "@$since" "+$dfmt")
+now_fmt=$(date "+$dfmt")
+downtime_m=$(($downtime/60))
+
+msg="Jednotka $(cat /etc/hostname) naštartoval ${now_fmt} po ${downtime_m}m výpadku, ktorý sa začal ${since_fmt}."
+
+/usr/bin/simplemail -s "$msg" -b "$msg"
+

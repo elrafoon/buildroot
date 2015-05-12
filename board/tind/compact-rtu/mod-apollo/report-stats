@@ -1,0 +1,58 @@
+#!/bin/sh
+
+set -e
+
+period=$((24*60*60))
+dfmt='%-d.%-m.%Y %H:%M:%S'
+
+mode=text
+stb='style="border-collapse: collapse; border: 1px solid black;"'
+sth='style="border: 1px solid black; background-color: green; color: white; padding: 5px; text-align: center;"'
+std='style="border: 1px solid black; padding: 5px; text-align: center;"'
+
+eval set -- $(getopt -n report -o +th -- "$@")
+while test "$1" != "--"; do
+	case "$1" in
+		-t) mode=text;;
+		-h) mode=html;;
+		-h*) echo "Usage: downtime -t|-h" >&2; exit 1 ;;
+	esac
+	shift	# delete "$1"
+done	# delete "--"
+
+now=$(date -u +%s)
+prev=$(($now - $period))
+now_fmt=$(date -d "@$now" "+$dfmt")
+prev_fmt=$(date -d "@$prev" "+$dfmt")
+
+if [ "$mode" = html ]; then
+	echo '<!DOCTYPE html>'
+	echo '<html><head><meta charset="UTF-8"><title>Report stavu osvetlenia</title></head>'
+	echo '<body>'
+	echo "<h1>Report stavu osvetlenia od $prev_fmt do $now_fmt</h1>"
+	echo "<table $stb><tr><th $sth>Fáza</th><th $sth>Ulica</th><th $sth>Spotreba [kWh]</th><th $sth>Závady</th></tr>"
+else
+	echo "Report stavu osvetlenia od $prev_fmt do $now_fmt"
+	echo
+fi
+
+for l in 1 2 3; do
+	street=$(kvds get phase.$l.description)
+	failures=$(wget -q -O - http://localhost:8081/archive/measurements/L${l}_FAIL/$prev/$now | jq '.[][] | select(.[0] == "b1") | .[0]' | wc -l)
+	energy_p=$(wget -q -O - http://localhost:8081/archive/measurements/L${l}_E/$prev/$prev | jq -r '.[][0][0]' | cut -c 2-)
+	energy_n=$(wget -q -O - http://localhost:8081/archive/measurements/L${l}_E/$now/$now | jq -r '.[][0][0]' | cut -c 2-)
+	consumption=$(echo "$energy_n-$energy_p" | bc)
+	cons_fmt=$(printf %.1f $consumption)
+
+	if [ "$mode" = html ]; then
+		echo "<tr><td $std>$l</td><td $std>$street</td><td $std>$cons_fmt</td><td $std>$failures</td></tr>"
+	else
+		echo "Ulica \"$street\" (fáza $l): Spotreba $cons_fmt kWh, závady $failures"
+	fi
+done
+
+
+if [ "$mode" = html ]; then
+	echo '</table></body></html>'
+fi
+

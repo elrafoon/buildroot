@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -s
+
+DB=/var/lib/opendaf/dafman/dafman.sqlite3
+FWDB=/usr/share/opendaf-appconf/$DB
+
+install -D -m 0644 $FWDB $DB
+
+exit 0
+

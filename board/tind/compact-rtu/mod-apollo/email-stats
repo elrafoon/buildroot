@@ -1,0 +1,11 @@
+#!/bin/sh
+
+[ -f /etc/simplemail.conf ] && . /etc/simplemail.conf
+
+if [ -z "$FROM" ] || [ -z "$TO" ]; then
+	echo "Variables FROM, TO are required to be defined!" >&2
+	exit 1
+fi
+
+/usr/bin/report-stats -t | mailx -r "$FROM" -s 'Report stavu osvetlenia' "$TO"
+
