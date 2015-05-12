@@ -9,6 +9,7 @@ NULLMAILER_SITE = http://untroubled.org/nullmailer/
 NULLMAILER_LICENSE = GPLv2
 NULLMAILER_LICENSE_FILES = COPYING
 NULLMAILER_CONF_OPT = --localstatedir=/var/spool
+NULLMAILER_INSTALL_TARGET_OPTS = DESTDIR=$(TARGET_DIR) install install-data-local
 
 ifeq ($(BR2_PACKAGE_GNUTLS),y)
 	NULLMAILER_CONF_OPT += --enable-tls
