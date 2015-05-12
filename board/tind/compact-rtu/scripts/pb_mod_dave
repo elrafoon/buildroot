@@ -40,3 +40,7 @@ cd $TARGET_DIR/var/www && ln -sf ../../usr/share/webapps/dave-ui dave-ui
 # mod upgrade script
 install -D -m 0755 $MOD/mod-upgrade $TARGET_DIR/usr/sbin/mod-upgrade
 
+# support keys
+install -d -m 0700 $TARGET_DIR/etc/support
+cat $MOD/dave-support-keys.tgz | tar -C $TARGET_DIR/etc/support -xz
+
