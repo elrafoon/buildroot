@@ -26,6 +26,7 @@ if [ -n "$RELEASE" ]; then
 	mkdir -p $RELEASE_DIR/images
 
 	cp $IMAGES_DIR/* $RELEASE_DIR/images/
+	ln -sf rootfs-only.ubifs.sign $RELEASE_DIR/images/firmware-update-$RELEASE_TAG.img
 else
 	echo "NOT DOING RELEASE BUILD! (use make RELEASE=1 to make a release)"
 fi
