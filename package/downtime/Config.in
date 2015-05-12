@@ -1,0 +1,16 @@
+config BR2_PACKAGE_DOWNTIME
+	bool "downtime"
+	depends on BR2_PACKAGE_DCRON
+	help
+	  Downtime reporting tool
+
+if BR2_PACKAGE_DOWNTIME
+	config BR2_PACKAGE_DOWNTIME_CGI
+		bool "install CGI wrapper"
+		default y
+
+endif
+
+comment "downtime depends on dcron"
+	depends on !BR2_PACKAGE_DCRON
+
