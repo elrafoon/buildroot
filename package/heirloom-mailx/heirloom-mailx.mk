@@ -30,4 +30,13 @@ define HEIRLOOM_MAILX_INSTALL_TARGET_CMDS
 		install
 endef
 
+# set e-mail encoding to UTF8
+define HEIRLOOM_MAILX_SET_UTF8_$(BR2_PACKAGE_HEIRLOOM_MAILX_UTF8)
+	sed -i s/sendcharsets=iso-8859-1,/sendcharsets=/ $(TARGET_DIR)/etc/nail.rc
+	echo "set ttycharset=utf8" >> $(TARGET_DIR)/etc/nail.rc
+	echo "set print-all-chars" >> $(TARGET_DIR)/etc/nail.rc
+endef
+
+HEIRLOOM_MAILX_POST_INSTALL_TARGET_HOOKS += HEIRLOOM_MAILX_SET_UTF8_y
+
 $(eval $(generic-package))

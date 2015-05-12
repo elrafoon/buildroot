@@ -13,3 +13,9 @@ config BR2_PACKAGE_HEIRLOOM_MAILX
 	  cram-md5), SMTPS, MIME encoding of attachements, and more.
 
 	  http://heirloom.sourceforge.net/mailx.html
+
+config BR2_PACKAGE_HEIRLOOM_MAILX_UTF8
+	bool "create emails with utf-8 encoding"
+	depends on BR2_PACKAGE_HEIRLOOM_MAILX
+
+
