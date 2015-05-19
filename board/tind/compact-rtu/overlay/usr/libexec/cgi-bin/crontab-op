@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# force user op for crontab
+
+export REMOTE_USER=op
+exec /usr/libexec/cgi-bin/crontab
+
