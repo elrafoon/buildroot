@@ -40,7 +40,7 @@ chmod 755 $TARGET_DIR/usr/libexec/cgi-bin/kvds-ext
 # lighttpd mod-specific configuration
 cat <<EOF >$TARGET_DIR/etc/lighttpd/conf.d/mod.conf
 url.rewrite-once += (
-	"^/astroclock/(.*)" => "/cgi-bin/astro/\$1",
+	"^/astroclock/(.*)" => "/cgi-bin/astro-op/\$1",
 	"^/kvds-ext/(.*)" => "/cgi-bin/kvds-ext/\$1"
 )
 EOF
@@ -57,6 +57,7 @@ cat <<EOF >$TARGET_DIR/var/spool/cron/crontabs/astroclock
 */1 * * * * /usr/sbin/astron
 EOF
 chmod 600 $TARGET_DIR/var/spool/cron/crontabs/astroclock
+install -D -m 0755 $MOD/astro-op $TARGET_DIR/usr/libexec/cgi-bin/astro-op
 
 # support keys
 install -d -m 0700 $TARGET_DIR/etc/support
