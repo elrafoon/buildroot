@@ -82,3 +82,9 @@ install -D -m 0644 $MOD/mmdump.service $TARGET_DIR/etc/systemd/system/mmdump.ser
 install -d -m 0755 $TARGET_DIR/etc/systemd/system/opendaf.service.wants
 ln -fs ../mmdump.service $TARGET_DIR/etc/systemd/system/opendaf.service.wants/mmdump.service
 
+# meter setup
+install -D -m 0755 $MOD/meter-setup $TARGET_DIR/usr/sbin/meter-setup
+install -D -m 0644 $MOD/meter-setup.service $TARGET_DIR/etc/systemd/system/meter-setup.service
+install -d -m 0755 $TARGET_DIR/etc/systemd/system/sysinit.target.wants
+ln -fs ../meter-setup.service $TARGET_DIR/etc/systemd/system/sysinit.target.wants/meter-setup.service
+

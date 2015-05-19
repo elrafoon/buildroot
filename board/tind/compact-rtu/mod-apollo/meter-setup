@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -e
+
+RESET=68
+
+cd /sys/class/gpio
+
+[ -d gpio$RESET ] || echo $RESET >export
+echo out > gpio$RESET/direction
+
+# reset meter CPU
+echo 1 > gpio$RESET/value
+usleep 250000
+echo 0 >gpio$RESET/value
+
