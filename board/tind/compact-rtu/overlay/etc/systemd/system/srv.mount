@@ -3,6 +3,7 @@ Description = /srv on SD card
 BindsTo = mmcblk0p1.device
 RequiresOverridable = systemd-fsck@dev-mmcblk0p1.service
 After = systemd-fsck@dev-mmcblk0p1.service
+JobTimeoutSec = 35
 
 [Mount]
 What = /dev/mmcblk0p1
