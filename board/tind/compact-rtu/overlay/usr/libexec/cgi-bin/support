@@ -1,5 +1,7 @@
 #!/bin/dash
 
+statefile=/var/state/support-vpn-enabled
+
 failure () {
 	/bin/cat << EOM1
 Status: $1
@@ -15,7 +17,7 @@ case "$REQUEST_METHOD" in
 			/enabled)
 				echo Content-type: text/plain
 				echo ""
-				systemctl is-enabled support-vpn.service &>/dev/null && echo -n yes || echo -n no
+				[ -f $statefile ] && echo -n yes || echo -n no
 				;;
 			/active)
 				echo Content-type: text/plain
@@ -30,14 +32,14 @@ case "$REQUEST_METHOD" in
 	POST)
 		case "$PATH_INFO" in
 			/enable)
-				systemctl enable support-vpn.service &>/dev/null
+				touch /var/state/support-vpn-enabled
 				systemctl start support-vpn.service &>/dev/null
 				echo Status: 204 No Content
 				echo ""
 				;;
 			/disable)
 				systemctl stop support-vpn.service &>/dev/null
-				systemctl disable support-vpn.service &>/dev/null
+				rm -f /var/state/support-vpn-enabled
 				echo Status: 204 No Content
 				echo ""
 				;;

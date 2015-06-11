@@ -1,6 +1,7 @@
 [Unit]
 Description=Persistent support VPN connection
 After=NetworkManager.service
+ConditionPathExists=/var/state/support-vpn-enabled
 
 [Service]
 ExecStart=/usr/sbin/openvpn --config /etc/support/vpn.conf
