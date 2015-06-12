@@ -4,7 +4,7 @@ set -e
 
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin
 
-RELEASE=3
+RELEASE=4
 
 PREV_RELEASE_PATH=/var/state/previous-dave-release
 DB=/var/lib/opendaf/dafman/dafman.sqlite3
