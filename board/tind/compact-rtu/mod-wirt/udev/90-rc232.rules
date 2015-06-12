@@ -1,0 +1,3 @@
+SUBSYSTEM=="gpio", KERNEL=="gpio71", RUN+="/bin/ln -sf /sys/%p /dev/rc232_config"
+SUBSYSTEM=="tty", KERNEL=="ttyAPP1", SYMLINK+="ttyRC232"
+

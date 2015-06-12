@@ -1,0 +1,84 @@
+#!/bin/sh
+
+set -e
+
+BR=$(pwd)
+MOD=$BR/board/tind/compact-rtu/mod-wirt
+
+mkdir -p $TARGET_DIR/usr/share/webapps
+
+# hardware abstractions
+install -D -m 0644 $MOD/udev/90-rc232.rules $TARGET_DIR/etc/udev/rules.d/90-rc232.rules
+
+# function modules
+install -D -m 0755 $MOD/controller.exe $TARGET_DIR/usr/share/opendaf/function-modules/controller.exe
+mkdir -p $TARGET_DIR/var/lib/opendaf/function-modules
+ln -sf /usr/share/opendaf/function-modules/controller.exe $TARGET_DIR/var/lib/opendaf/function-modules/controller.exe
+
+# wirt-ui
+tar -C $TARGET_DIR/usr/share/webapps -xf $MOD/wirt-ui.tgz
+cd $TARGET_DIR/var/www && ln -sf ../../usr/share/webapps/wirt-ui wirt-ui
+
+# index page
+install -D -m 0644 $MOD/index.html $TARGET_DIR/usr/share/webapps/index/index.html
+install -D -m 0644 $MOD/style.css $TARGET_DIR/usr/share/webapps/index/css/style.css
+
+# lighttpd mod-specific configuration
+cat <<EOF >$TARGET_DIR/etc/lighttpd/conf.d/mod.conf
+auth.require += ( "/measurements" => 
+					(
+						"method"	=>	"basic",
+						"realm"		=>	"compactrtu",
+						"require"	=>	"valid-user"
+					),
+				  "/commands" =>
+					(
+						"method"	=>	"basic",
+						"realm"		=>	"compactrtu",
+						"require"	=>	"valid-user"
+					),
+				  "/wirt-ui" =>
+					(
+						"method"	=>	"basic",
+						"realm"		=>	"compactrtu",
+						"require"	=>	"valid-user"
+					)
+				)
+EOF
+
+# dafman database update
+#install -D -m 0755 $MOD/update-dafman $TARGET_DIR/usr/sbin/update-dafman
+#install -D -m 0644 $MOD/update-dafman.service $TARGET_DIR/etc/systemd/system/update-dafman.service
+#mkdir -p $TARGET_DIR/etc/systemd/system/multi-user.target.wants
+#ln -fs ../update-dafman.service $TARGET_DIR/etc/systemd/system/multi-user.target.wants/update-dafman.service
+
+# mod upgrade script
+#install -D -m 0755 $MOD/upgrade $TARGET_DIR/usr/sbin/mod-upgrade
+
+# KVDS on external storage
+#cat <<EOF >$TARGET_DIR/usr/libexec/cgi-bin/kvds-ext
+##!/bin/sh
+#
+#KVDS_ROOT=/srv/kvds exec /usr/bin/kvds cgi
+#EOF
+#chmod 755 $TARGET_DIR/usr/libexec/cgi-bin/kvds-ext
+#
+## lighttpd mod-specific configuration
+#cat <<EOF >$TARGET_DIR/etc/lighttpd/conf.d/mod.conf
+#url.rewrite-once += (
+#	"^/astroclock/(.*)" => "/cgi-bin/astro-op/\$1",
+#	"^/kvds-ext/(.*)" => "/cgi-bin/kvds-ext/\$1"
+#)
+#EOF
+
+# support keys
+#install -d -m 0700 $TARGET_DIR/etc/support
+#cat $MOD/apollo-support-keys.tgz | tar -C $TARGET_DIR/etc/support -xz
+
+# rc232 setup
+install -D -m 0755 $MOD/init-rc232.exp $TARGET_DIR/usr/sbin/rc232-init
+install -D -m 0755 $MOD/rc232-setup $TARGET_DIR/usr/sbin/rc232-setup
+install -D -m 0644 $MOD/rc232-setup.service $TARGET_DIR/etc/systemd/system/rc232-setup.service
+install -d -m 0755 $TARGET_DIR/etc/systemd/system/sysinit.target.wants
+ln -fs ../rc232-setup.service $TARGET_DIR/etc/systemd/system/sysinit.target.wants/rc232-setup.service
+

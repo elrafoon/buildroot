@@ -1,0 +1,98 @@
+#!/usr/bin/expect
+
+set timeout 3
+set port /dev/ttyRC232
+set baud 19200
+
+# define alias for chr
+interp alias {} chr {} format %c
+
+set fp_config [open "/dev/rc232_config/value" w]
+set fp_tty [open $port w+]
+fconfigure $fp_tty -mode 19200,n,8,1 -translation binary
+set spawned [spawn -open $fp_tty]
+stty ispeed $baud ospeed $baud raw -echo cs8 -parenb -cstopb < $port
+remove_nulls 0
+
+# expect is not able to provide true raw terminal
+# so only way to send raw data to serial port
+# is by writing to serial channel itself, 
+# not to the terminal connected
+# however, raw terminal input works
+proc write { msg } {
+	global fp_tty
+	puts -nonewline $fp_tty "$msg"
+	flush $fp_tty
+}
+
+proc set_config { value } {
+	global fp_config
+	if { $value == 0 } {
+		puts "Assert config"
+		puts $fp_config "0"
+	} else {
+		puts "Deassert config"
+		puts $fp_config "1"
+	}
+	flush $fp_config
+}
+
+proc do_exit { } {
+	puts "On exit"
+	set_config 1
+	exit 1
+}
+
+proc wait_prompt { } {
+	expect {
+		">" { }
+		timeout {
+			puts "Timed out waiting for prompt!\n"
+			do_exit
+		}
+	}
+}
+
+proc cfg_mem { addr value } {
+	puts "Program $value into $addr"
+	set sAddr [chr $addr]
+	set sValue [chr $value]
+	write "$sAddr$sValue"
+}
+
+trap { do_exit } SIGTERM
+trap { do_exit } SIGINT
+
+write "X"
+
+set_config 0
+wait_prompt
+set_config 1	
+
+write "M"
+
+# RSSI mode
+cfg_mem 0x05 0x01
+# packet length high
+cfg_mem 0x0e 0x00
+# packet length low
+cfg_mem 0x0f 0x20
+# packet timeout
+cfg_mem 0x10 0x01
+# address mode
+cfg_mem 0x14 0x08
+# unique ID 1..4
+cfg_mem 0x19 0x64
+cfg_mem 0x1B 0x00
+cfg_mem 0x1D 0x00
+cfg_mem 0x1F 0x00
+# destination ID 1..4
+cfg_mem 0x21 0xff
+cfg_mem 0x22 0x00
+cfg_mem 0x23 0x00
+cfg_mem 0x24 0x00
+
+write "\xff"
+wait_prompt
+write "X"
+

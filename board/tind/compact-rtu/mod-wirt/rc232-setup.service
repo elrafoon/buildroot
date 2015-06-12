@@ -1,0 +1,16 @@
+[Unit]
+Description=Setup integrated RC232 module
+DefaultDependencies=no
+RequiresMountsFor=/sys /var
+Wants=dev-ttyRC232.device
+After=dev-ttyRC232.device
+Before=sysinit.target
+RefuseManualStart=true
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/rc232-setup
+
+[Install]
+WantedBy=sysinit.target
+

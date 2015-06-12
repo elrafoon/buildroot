@@ -1,0 +1,31 @@
+#!/bin/sh
+
+set -e
+
+CONFIG=71
+INIT_RC232=/usr/sbin/rc232-init
+STAMP_INIT=/var/lib/rc232/stamp-initialized
+
+cd /sys/class/gpio
+
+[ -d gpio$CONFIG ] || echo $CONFIG >export
+echo out > gpio$CONFIG/direction
+echo 1 > gpio$CONFIG/value
+
+# setup default serial settings
+stty -F /dev/ttyRC232 speed 19200 -parenb
+
+# wait until RC232 enters setup
+sleep 1
+
+# exit configuration mode for sure
+echo X >/dev/ttyRC232
+
+# reinitialize RC232 if necessary
+if [ ! -e $STAMP_INIT ] || [ $INIT_RC232 -nt $STAMP_INIT ]; then
+	echo "RC232 initialization required"
+	$INIT_RC232
+	mkdir -p $(dirname $STAMP_INIT)
+	touch /var/lib/rc232/stamp-initialized
+fi
+
