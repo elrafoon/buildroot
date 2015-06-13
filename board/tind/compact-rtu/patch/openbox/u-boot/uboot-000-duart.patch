@@ -1,0 +1,87 @@
+diff --git a/board/karo/tx28/spl_boot.c b/board/karo/tx28/spl_boot.c
+index 58335ff..26d07c2 100644
+--- a/board/karo/tx28/spl_boot.c
++++ b/board/karo/tx28/spl_boot.c
+@@ -79,15 +79,11 @@ static iomux_cfg_t tx28_stk5_pads[] = {
+ 	MX28_PAD_LCD_RESET__GPIO_3_30 | MUX_CONFIG_LCD,
+ 
+ 	/* DUART pads */
+-	MX28_PAD_PWM0__GPIO_3_16 | MUX_CONFIG_GPIO,
+-	MX28_PAD_PWM1__GPIO_3_17 | MUX_CONFIG_GPIO,
+ 	MX28_PAD_I2C0_SCL__GPIO_3_24 | MUX_CONFIG_GPIO,
+ 	MX28_PAD_I2C0_SDA__GPIO_3_25 | MUX_CONFIG_GPIO,
+ 
+-	MX28_PAD_AUART0_RTS__DUART_TX,
+-	MX28_PAD_AUART0_CTS__DUART_RX,
+-	MX28_PAD_AUART0_TX__DUART_RTS,
+-	MX28_PAD_AUART0_RX__DUART_CTS,
++	MX28_PAD_PWM0__DUART_RX,
++	MX28_PAD_PWM1__DUART_TX,
+ 
+ 	/* EMI */
+ 	MX28_PAD_EMI_D00__EMI_DATA0 | MUX_CONFIG_EMI,
+@@ -209,7 +205,6 @@ static iomux_cfg_t tx28_stk5_pads[] = {
+ 
+ static void tx28_stk5_lcd_init(void)
+ {
+-	gpio_direction_output(MX28_PAD_PWM0__GPIO_3_16, 1);
+ 	gpio_direction_output(MX28_PAD_LCD_RESET__GPIO_3_30, 0);
+ 	gpio_direction_output(MX28_PAD_LCD_ENABLE__GPIO_1_31, 0);
+ }
+diff --git a/board/karo/tx28/tx28.c b/board/karo/tx28/tx28.c
+index 7511735..e7430ef 100644
+--- a/board/karo/tx28/tx28.c
++++ b/board/karo/tx28/tx28.c
+@@ -47,7 +47,6 @@ DECLARE_GLOBAL_DATA_PTR;
+ 
+ #define TX28_LCD_PWR_GPIO	MX28_PAD_LCD_ENABLE__GPIO_1_31
+ #define TX28_LCD_RST_GPIO	MX28_PAD_LCD_RESET__GPIO_3_30
+-#define TX28_LCD_BACKLIGHT_GPIO	MX28_PAD_PWM0__GPIO_3_16
+ 
+ #define TX28_USBH_VBUSEN_GPIO	MX28_PAD_SPDIF__GPIO_3_27
+ #define TX28_USBH_OC_GPIO	MX28_PAD_JTAG_RTCK__GPIO_4_20
+@@ -68,10 +67,6 @@ static const struct gpio tx28_gpios[] = {
+ static const iomux_cfg_t tx28_pads[] = {
+ 	/* UART pads */
+ #if CONFIG_CONS_INDEX == 0
+-	MX28_PAD_AUART0_RX__DUART_CTS,
+-	MX28_PAD_AUART0_TX__DUART_RTS,
+-	MX28_PAD_AUART0_CTS__DUART_RX,
+-	MX28_PAD_AUART0_RTS__DUART_TX,
+ #elif CONFIG_CONS_INDEX == 1
+ 	MX28_PAD_AUART1_RX__AUART1_RX,
+ 	MX28_PAD_AUART1_TX__AUART1_TX,
+@@ -502,8 +497,6 @@ void lcd_enable(void)
+ 		gpio_set_value(TX28_LCD_PWR_GPIO, 1);
+ 		udelay(100);
+ 		gpio_set_value(TX28_LCD_RST_GPIO, 1);
+-		udelay(300000);
+-		gpio_set_value(TX28_LCD_BACKLIGHT_GPIO, 0);
+ 	}
+ }
+ 
+@@ -516,7 +509,6 @@ void lcd_panel_disable(void)
+ {
+ 	if (lcd_enabled) {
+ 		debug("Switching LCD off\n");
+-		gpio_set_value(TX28_LCD_BACKLIGHT_GPIO, 1);
+ 		gpio_set_value(TX28_LCD_RST_GPIO, 0);
+ 		gpio_set_value(TX28_LCD_PWR_GPIO, 0);
+ 	}
+@@ -527,8 +519,6 @@ static const iomux_cfg_t stk5_lcd_pads[] = {
+ 	MX28_PAD_LCD_RESET__GPIO_3_30 | MXS_PAD_CTRL,
+ 	/* LCD POWER_ENABLE */
+ 	MX28_PAD_LCD_ENABLE__GPIO_1_31 | MXS_PAD_CTRL,
+-	/* LCD Backlight (PWM) */
+-	MX28_PAD_PWM0__GPIO_3_16 | MXS_PAD_CTRL,
+ 
+ 	/* Display */
+ 	MX28_PAD_LCD_D00__LCD_D0 | MXS_PAD_CTRL,
+@@ -567,7 +557,6 @@ static const iomux_cfg_t stk5_lcd_pads[] = {
+ static const struct gpio stk5_lcd_gpios[] = {
+ 	{ TX28_LCD_RST_GPIO, GPIOF_OUTPUT_INIT_LOW, "LCD RESET", },
+ 	{ TX28_LCD_PWR_GPIO, GPIOF_OUTPUT_INIT_LOW, "LCD POWER", },
+-	{ TX28_LCD_BACKLIGHT_GPIO, GPIOF_OUTPUT_INIT_HIGH, "LCD BACKLIGHT", },
+ };
+ 
+ extern void video_hw_init(void *lcdbase);
