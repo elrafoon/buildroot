@@ -32,8 +32,11 @@ EOF
 	fi
 fi
 
-if [ "$PREV_RELEASE" -lt 20150423 ]; then
-	echo "Upgrading from $PREV_RELEASE to 20150423"
+if [ "$PREV_RELEASE" -lt 20150625 ]; then
+	echo "Upgrading from $PREV_RELEASE to 20150625"
+	mkdir -p /var/lib/opendaf/function-modules
+	ln -sf /usr/share/opendaf/function-modules/controller.exe /var/lib/opendaf/function-modules/controller.exe
+
 	dafman call falcon upgrade [$PREV_RELEASE]
 	dafman render --force
 fi

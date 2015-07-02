@@ -8,7 +8,9 @@ MOD=$BR/board/tind/compact-rtu/mod-falcon
 mkdir -p $TARGET_DIR/usr/share/webapps
 
 # function modules
-# none
+install -D -m 0755 $MOD/controller.exe $TARGET_DIR/usr/share/opendaf/function-modules/controller.exe
+mkdir -p $TARGET_DIR/var/lib/opendaf/function-modules
+ln -sf /usr/share/opendaf/function-modules/controller.exe $TARGET_DIR/var/lib/opendaf/function-modules/controller.exe
 
 # index page
 install -D -m 0644 $MOD/index.html $TARGET_DIR/usr/share/webapps/index/index.html
