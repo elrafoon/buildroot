@@ -1,12 +1,11 @@
 [Unit]
-Description=Setup integrated GSM modem
+Description=Initial GPIO setup
 DefaultDependencies=no
 RequiresMountsFor=/sys
-After=gpio-setup
 
 [Service]
 Type=oneshot
-ExecStart=/usr/sbin/modem-setup
+ExecStart=/usr/sbin/gpio-setup
 
 [Install]
 WantedBy=sysinit.target
