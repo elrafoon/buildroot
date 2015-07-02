@@ -1,0 +1,14 @@
+[Unit]
+Description=Render configuration using rang
+DefaultDependencies=no
+After=upgrade.service
+Before=basic.target
+Requires=var.mount
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/rang render
+
+[Install]
+WantedBy=basic.target
+

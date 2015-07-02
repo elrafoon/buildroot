@@ -1,0 +1,17 @@
+config BR2_PACKAGE_RTUADMIN_RANG
+	bool "rang"
+	depends on BR2_PACKAGE_DCRON && BR2_PACKAGE_JQ && BR2_PACKAGE_WGET
+	default y
+	help
+	  Next-generation RTU administration system
+
+if BR2_PACKAGE_RTUADMIN_RANG
+	config BR2_PACKAGE_RTUADMIN_RANG_CGI
+		bool "install CGI wrapper"
+		default y
+
+endif
+
+comment "rang depends on dcron, jq & wget"
+	depends on !(BR2_PACKAGE_DCRON && BR2_PACKAGE_JQ && BR2_PACKAGE_WGET)
+

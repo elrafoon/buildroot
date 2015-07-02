@@ -1,5 +1,5 @@
 config BR2_PACKAGE_RTUADMIN_TEMPLATES
-	bool "rtuadmin_templates"
+	bool "rtuadmin-templates"
 	help
 	  RTUAdmin system templates
 

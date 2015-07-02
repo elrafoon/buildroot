@@ -12,5 +12,6 @@ config BR2_PACKAGE_RTUADMIN_VERSION
 source "package/rtuadmin/rtuadmin-server/Config.in"
 source "package/rtuadmin/rtuadmin-client/Config.in"
 source "package/rtuadmin/rtuadmin-templates/Config.in"
+source "package/rtuadmin/rtuadmin-rang/Config.in"
 endmenu
 
