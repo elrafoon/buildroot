@@ -42,6 +42,11 @@ if BR2_PACKAGE_OPENDAF
 
 	endchoice
 
+	config BR2_PACKAGE_OPENDAF_ARCHIVE
+		bool "Enable archivation system"
+		default y
+		depends on BR2_PACKAGE_OPENDAF
+
 	config BR2_PACKAGE_OPENDAF_DAFMAN
 		bool "Build dafman management library"
 		depends on BR2_PACKAGE_OPENDAF && BR2_PACKAGE_SOCI && BR2_PACKAGE_SOCI_BOOST_INTEGRATION && BR2_PACKAGE_SOCI_BACKEND_SQLITE

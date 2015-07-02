@@ -76,8 +76,12 @@ define OPENDAF_SYSTEMD_BASE
     $(INSTALL) -D -m 0644 package/opendaf/opendaf-dafmand.service $(TARGET_DIR)/etc/systemd/system/opendaf-dafmand.service;
     mkdir -p $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants;
     ln -fs ../opendaf.service $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/opendaf.service;
-    ln -fs ../opendaf-archive.service $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/opendaf-archive.service;
+    rm -f $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/opendaf-archive.service;
 endef
+
+define OPENDAF_SYSTEMD_ARCHIVE_$(BR2_PACKAGE_OPENDAF_ARCHIVE)
+    ln -fs ../opendaf-archive.service $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/opendaf-archive.service;
+endef	
 
 define OPENDAF_SYSTEMD_DAFMAN_$(BR2_PACKAGE_OPENDAF_DAFMAN)
     ln -fs ../opendaf-dafman.service $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/opendaf-dafman.service;
@@ -88,6 +92,7 @@ define OPENDAF_SYSTEMD_DAFMAND_$(BR2_PACKAGE_OPENDAF_DAFMAND)
 endef
 
 OPENDAF_INSTALL_INIT_SYSTEMD += $(OPENDAF_SYSTEMD_BASE)
+OPENDAF_INSTALL_INIT_SYSTEMD += $(OPENDAF_SYSTEMD_ARCHIVE_y)
 OPENDAF_INSTALL_INIT_SYSTEMD += $(OPENDAF_SYSTEMD_DAFMAN_y)
 OPENDAF_INSTALL_INIT_SYSTEMD += $(OPENDAF_SYSTEMD_DAFMAND_y)
 
