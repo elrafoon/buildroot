@@ -48,6 +48,11 @@ EOF
 	mkdir -p /var/spool/astron/astrotabs
 fi
 
+if [ "$PREV_RELEASE" -lt 20150701 ]; then
+	echo "Upgrading from $PREV_RELEASE to 20150701"
+	install -D -m 0644 /usr/share/rang/cfg.json /var/lib/rang/cfg.json
+fi
+
 echo "Upgrade complete"
 
 mkdir -p $(dirname $PREV_RELEASE_PATH)
