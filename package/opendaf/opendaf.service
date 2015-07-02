@@ -4,6 +4,7 @@ After=syslog.target network.target
 
 [Service]
 EnvironmentFile=/etc/default/opendaf
+EnvironmentFile=/etc/default/opendaf-gpio
 ExecStart=/usr/bin/opendaf -f /etc/opendaf/svc.conf
 Restart=always
 RestartSec=10s

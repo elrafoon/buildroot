@@ -55,6 +55,93 @@ if BR2_PACKAGE_OPENDAF
 
 	comment "dafmand depends on dafman and glibmm"
 		depends on !(BR2_PACKAGE_OPENDAF_DAFMAN && BR2_PACKAGE_GLIBMM)
+
+	menu "Connector stacks"
+
+		config BR2_PACKAGE_OPENDAF_STACK_C_GPIO
+			bool gpio
+			default y
+
+			config BR2_PACKAGE_OPENDAF_GPIO_DEF
+				string "GPIO definition file"
+				depends on BR2_PACKAGE_OPENDAF_STACK_C_GPIO
+
+		config BR2_PACKAGE_OPENDAF_STACK_C_IEC_104_CONTROLLING_STATION
+			bool iec-104-controlling-station
+			default y
+
+		config BR2_PACKAGE_OPENDAF_STACK_C_MODBUS_RTU_MASTER
+			bool modbus-rtu-master
+			default y
+
+		config BR2_PACKAGE_OPENDAF_STACK_C_MODBUS_TCP_MASTER
+			bool modbus-tcp-master
+			default y
+
+		config BR2_PACKAGE_OPENDAF_STACK_C_MONEZ_CLIENT
+			bool monez-client
+
+		config BR2_PACKAGE_OPENDAF_STACK_C_O_GATE_CLIENT
+			bool o_gate-client
+
+		config BR2_PACKAGE_OPENDAF_STACK_C_OGW_NOTIFY_CLIENT
+			bool ogw-notify-client
+
+		config BR2_PACKAGE_OPENDAF_STACK_C_PANTER
+			bool panter
+
+		config BR2_PACKAGE_OPENDAF_STACK_C_PERSISTOR
+			bool persistor
+			default y
+
+		config BR2_PACKAGE_OPENDAF_STACK_C_ROMET_ECS
+			bool romet-ecs
+
+		config BR2_PACKAGE_OPENDAF_STACK_C_SIGNAL_GENERATOR
+			bool signal-generator
+			default y
+
+		config BR2_PACKAGE_OPENDAF_STACK_C_SQL_CLIENT_EBO_DOSIMETRY
+			bool sql-client-ebo-dosimetry
+
+		config BR2_PACKAGE_OPENDAF_STACK_C_SUHUB_NOTIFY_CLIENT
+			bool suhub-notify-client
+
+		config BR2_PACKAGE_OPENDAF_STACK_C_SWTN_CONTROLLING_STATION
+			bool swtn-controlling-station
+
+	endmenu
+
+	menu "Provider stacks"
+
+		config BR2_PACKAGE_OPENDAF_STACK_P_CHEMIS_SERVER
+			bool chemis-server
+
+		config BR2_PACKAGE_OPENDAF_STACK_P_DAFLINK_PROVIDER
+			bool daflink-provider
+
+		config BR2_PACKAGE_OPENDAF_STACK_P_IEC_101_CONTROLLED_STATION
+			bool iec-101-controlled-station
+			default y
+
+		config BR2_PACKAGE_OPENDAF_STACK_P_IEC_104_CONTROLLED_STATION
+			bool iec-104-controlled-station
+			default y
+
+		config BR2_PACKAGE_OPENDAF_STACK_P_MODBUS_RTU_SLAVE
+			bool modbus-rtu-slave
+
+		config BR2_PACKAGE_OPENDAF_STACK_P_OGW_NOTIFY_SERVER
+			bool ogw-notify-server
+
+		config BR2_PACKAGE_OPENDAF_STACK_P_SUHUB_NOTIFY_SERVER
+			bool suhub-notify-server
+
+		config BR2_PACKAGE_OPENDAF_STACK_P_SQL_PROVIDER_EBO_DOSIMETRY
+			bool sql-provider-ebo-dosimetry
+
+	endmenu
+
 endif
 
 comment "OpenDAF depends on ACE, boost-system, boost-signals, boost-regex, NetSNMP and Protobuf"
