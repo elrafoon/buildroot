@@ -13,6 +13,7 @@ DAFMAN_DB=/var/lib/opendaf/dafman/dafman.sqlite3
 PREV_RELEASE=0
 
 [ -e $PREV_RELEASE_PATH ] && PREV_RELEASE=$(cat $PREV_RELEASE_PATH)
+[ -e $RELEASE_PATH ] && RELEASE=$(cat $RELEASE_PATH)
 
 if [ "$PREV_RELEASE" -lt 20150209 ]; then
 	echo "Upgrading from $PREV_RELEASE to 20150209"
@@ -51,6 +52,11 @@ fi
 if [ "$PREV_RELEASE" -lt 20150701 ]; then
 	echo "Upgrading from $PREV_RELEASE to 20150701"
 	install -D -m 0644 /usr/share/rang/cfg.json /var/lib/rang/cfg.json
+fi
+
+if [ "$PREV_RELEASE" -ne "$RELEASE" ]; then
+	echo "Force-rendering configuration because of release change"
+	rang force-render
 fi
 
 echo "Upgrade complete"
