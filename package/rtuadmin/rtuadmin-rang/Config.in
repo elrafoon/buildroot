@@ -1,6 +1,6 @@
 config BR2_PACKAGE_RTUADMIN_RANG
 	bool "rang"
-	depends on BR2_PACKAGE_DCRON && BR2_PACKAGE_JQ && BR2_PACKAGE_WGET
+	depends on BR2_PACKAGE_DCRON && BR2_PACKAGE_JQ && BR2_PACKAGE_WGET && BR2_PACKAGE_GETENT
 	default y
 	help
 	  Next-generation RTU administration system
