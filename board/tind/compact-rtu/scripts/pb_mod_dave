@@ -37,6 +37,9 @@ else
 fi
 cd $TARGET_DIR/var/www && ln -sf ../../usr/share/webapps/dave-ui dave-ui
 
+# lighttpd mod-specific conf
+install -D -m 0644 $MOD/lighttpd-mod.conf $TARGET_DIR/etc/lighttpd/conf.d/mod.conf
+
 # mod upgrade script
 install -D -m 0755 $MOD/mod-upgrade $TARGET_DIR/usr/sbin/mod-upgrade
 
