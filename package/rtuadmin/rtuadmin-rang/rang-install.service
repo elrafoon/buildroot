@@ -1,0 +1,15 @@
+[Unit]
+Description=Install default rang configuration
+DefaultDependencies=no
+After=upgrade.service
+Before=rang-render.service
+Requires=var.mount
+ConditionPathExists=!/var/lib/rang/cfg.json
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/rang install /usr/share/rang/cfg.json
+
+[Install]
+WantedBy=multi-user.target
+
