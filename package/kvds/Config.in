@@ -11,3 +11,6 @@ if BR2_PACKAGE_KVDS
 
 endif
 
+comment "kvds depends on coreutils"
+	depends on !BR2_PACKAGE_COREUTILS
+
