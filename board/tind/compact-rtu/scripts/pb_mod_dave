@@ -9,7 +9,8 @@ mkdir -p $TARGET_DIR/usr/share/webapps
 
 # function modules
 install -D -m 0755 $MOD/controller.exe $TARGET_DIR/usr/share/opendaf/function-modules/controller.exe
-cd $TARGET_DIR/var/lib/opendaf/function-modules && ln -sf ../../../../usr/share/opendaf/function-modules/controller.exe controller.exe
+install -d -m 0755 $TARGET_DIR/var/lib/opendaf/function-modules/
+ln -sf ../../../../usr/share/opendaf/function-modules/controller.exe $TARGET_DIR/var/lib/opendaf/function-modules/controller.exe
 
 # index page
 
