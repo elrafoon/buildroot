@@ -3,8 +3,8 @@
 set -e
 
 SHDN=57
-RESET=69
-POWER=21
+RESET=85
+POWER=49
 
 cd /sys/class/gpio
 

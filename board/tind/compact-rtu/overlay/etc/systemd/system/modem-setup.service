@@ -2,7 +2,7 @@
 Description=Setup integrated GSM modem
 DefaultDependencies=no
 RequiresMountsFor=/sys
-After=gpio-setup
+After=gpio-setup.service
 
 [Service]
 Type=oneshot
