@@ -12,6 +12,6 @@ if BR2_PACKAGE_RTUADMIN_RANG
 
 endif
 
-comment "rang depends on dcron, jq & wget"
-	depends on !(BR2_PACKAGE_DCRON && BR2_PACKAGE_JQ && BR2_PACKAGE_WGET)
+comment "rang depends on dcron, jq, wget & getent"
+	depends on !(BR2_PACKAGE_DCRON && BR2_PACKAGE_JQ && BR2_PACKAGE_WGET && BR2_PACKAGE_GETENT)
 
