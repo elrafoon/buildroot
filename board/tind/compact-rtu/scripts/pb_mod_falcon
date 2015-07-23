@@ -20,6 +20,9 @@ install -D -m 0644 $MOD/style.css $TARGET_DIR/usr/share/webapps/index/css/style.
 tar -C $TARGET_DIR/usr/share/webapps -xf $MOD/falcon-ui.tgz
 cd $TARGET_DIR/var/www && ln -sf ../../usr/share/webapps/falcon-ui falcon-ui
 
+# lighttpd mod-specific conf
+install -D -m 0644 $MOD/lighttpd-mod.conf $TARGET_DIR/etc/lighttpd/conf.d/mod.conf
+
 # dafman database update
 install -D -m 0755 $MOD/update-dafman $TARGET_DIR/usr/sbin/update-dafman
 install -D -m 0644 $MOD/update-dafman.service $TARGET_DIR/etc/systemd/system/update-dafman.service
@@ -36,14 +39,6 @@ cat <<EOF >$TARGET_DIR/usr/libexec/cgi-bin/kvds-ext
 KVDS_ROOT=/srv/kvds exec /usr/bin/kvds cgi
 EOF
 chmod 755 $TARGET_DIR/usr/libexec/cgi-bin/kvds-ext
-
-# lighttpd mod-specific configuration
-cat <<EOF >$TARGET_DIR/etc/lighttpd/conf.d/mod.conf
-url.rewrite-once += (
-	"^/astroclock/(.*)" => "/cgi-bin/astro/\$1",
-	"^/kvds-ext/(.*)" => "/cgi-bin/kvds-ext/\$1"
-)
-EOF
 
 # astroclock configuration
 cat <<EOF >$TARGET_DIR/etc/astroclock.conf
