@@ -1,0 +1,4 @@
+#!/bin/sh
+
+(ifconfig ppp0 || echo "!!! Modem nieje pritomny !!!") >/dev/console
+

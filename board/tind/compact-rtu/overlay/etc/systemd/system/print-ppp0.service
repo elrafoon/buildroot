@@ -1,0 +1,8 @@
+[Unit]
+Description=Print modem status to console
+DefaultDependencies=yes
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/modem-status
+
