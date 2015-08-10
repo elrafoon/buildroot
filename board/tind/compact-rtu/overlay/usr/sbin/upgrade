@@ -51,7 +51,8 @@ fi
 
 if [ "$PREV_RELEASE" -lt 20150701 ]; then
 	echo "Upgrading from $PREV_RELEASE to 20150701"
-	install -D -m 0644 /usr/share/rang/cfg.json /var/lib/rang/cfg.json
+	install -d -m 0755 /var/lib/rang
+	rang install /usr/share/rang/cfg.json
 fi
 
 if [ "$PREV_RELEASE" -lt 20150708 ]; then
@@ -60,11 +61,6 @@ if [ "$PREV_RELEASE" -lt 20150708 ]; then
 		rm -f /var/www/$lnk
 	done
 	ln -sf ../../usr/share/webapps/index/ /var/www/index
-fi
-
-if [ "$PREV_RELEASE" -ne "$RELEASE" ]; then
-	echo "Force-rendering configuration because of release change"
-	rang force-render
 fi
 
 echo "Upgrade complete"
