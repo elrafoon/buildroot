@@ -3,7 +3,7 @@
 # WEBDAF
 #
 #############################################################
-WEBDAF_VERSION = fbb4b23
+WEBDAF_VERSION = 2b9ea27
 WEBDAF_SITE = http://merlin/packages/w
 WEBDAF_SOURCE = webdaf-$(WEBDAF_VERSION).tar.bz2
 WEBDAF_INSTALL_STAGING = NO
