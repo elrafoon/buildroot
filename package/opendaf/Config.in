@@ -71,6 +71,10 @@ if BR2_PACKAGE_OPENDAF
 				string "GPIO definition file"
 				depends on BR2_PACKAGE_OPENDAF_STACK_C_GPIO
 
+		config BR2_PACKAGE_OPENDAF_STACK_C_IEC_101_CONTROLLING_STATION
+			bool iec-101-controlling-station
+			default y
+
 		config BR2_PACKAGE_OPENDAF_STACK_C_IEC_104_CONTROLLING_STATION
 			bool iec-104-controlling-station
 			default y
