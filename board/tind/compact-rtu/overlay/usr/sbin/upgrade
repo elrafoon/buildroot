@@ -50,9 +50,12 @@ EOF
 fi
 
 if [ "$PREV_RELEASE" -lt 20150701 ]; then
-	echo "Upgrading from $PREV_RELEASE to 20150701"
+	echo "Installing clean rang configuration"
 	install -d -m 0755 /var/lib/rang
 	rang install /usr/share/rang/cfg.json
+elif [ "$PREV_RELEASE" -lt "$RELEASE" ]; then
+	echo "Rebasing rang configuration"
+	rang rebase /usr/share/rang/cfg.json
 fi
 
 if [ "$PREV_RELEASE" -lt 20150708 ]; then
