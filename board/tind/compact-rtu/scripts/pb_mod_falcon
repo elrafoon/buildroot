@@ -52,6 +52,7 @@ cat <<EOF >$TARGET_DIR/var/spool/cron/crontabs/astroclock
 */1 * * * * /usr/sbin/astron
 EOF
 chmod 600 $TARGET_DIR/var/spool/cron/crontabs/astroclock
+install -D -m 0755 $MOD/astro-op $TARGET_DIR/usr/libexec/cgi-bin/astro-op
 
 # support keys
 install -d -m 0700 $TARGET_DIR/etc/support
