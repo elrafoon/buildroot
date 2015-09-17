@@ -3,7 +3,7 @@
 # OPENDAF
 #
 #############################################################
-OPENDAF_VERSION = 173cb5d
+OPENDAF_VERSION = a2b85b1
 OPENDAF_SITE_METHOD = git
 OPENDAF_SITE = gitolite@merlin.swind.sk:OpenDAF.git
 OPENDAF_INSTALL_STAGING = NO
