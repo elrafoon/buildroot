@@ -5,10 +5,16 @@ set -e
 BR=$(pwd)
 MOD=$BR/board/tind/compact-rtu/mod-apollo
 
+if [ "$BRAND" == "" ]; then
+	BRAND=apollo
+fi
+
+MOD_BRAND=$MOD/brand/$BRAND
+
 mkdir -p $TARGET_DIR/usr/share/webapps
 
 # function modules
-install -D -m 0755 $MOD/apollo.exe $TARGET_DIR/usr/share/opendaf/function-modules/apollo.exe
+install -D -m 0755 $MOD_BRAND/apollo.exe $TARGET_DIR/usr/share/opendaf/function-modules/apollo.exe
 mkdir -p $TARGET_DIR/var/lib/opendaf/function-modules
 ln -sf /usr/share/opendaf/function-modules/apollo.exe $TARGET_DIR/var/lib/opendaf/function-modules/apollo.exe
 
@@ -17,7 +23,7 @@ install -D -m 0644 $MOD/index.html $TARGET_DIR/usr/share/webapps/index/index.htm
 install -D -m 0644 $MOD/style.css $TARGET_DIR/usr/share/webapps/index/css/style.css
 
 # apollo-ui
-tar -C $TARGET_DIR/usr/share/webapps -xf $MOD/apollo-ui.tgz
+tar -C $TARGET_DIR/usr/share/webapps -xf $MOD_BRAND/apollo-ui.tgz
 cd $TARGET_DIR/var/www && ln -sf ../../usr/share/webapps/apollo-ui apollo-ui
 
 # lighttpd mod-specific conf
