@@ -41,6 +41,10 @@ if [ "$PREV_RELEASE" -lt 20150625 ]; then
 	dafman render --force
 fi
 
+if [ "$PREV_RELEASE" -le 20150818 ]; then
+	install -d -m 0770 /var/spool/astron/astrotabs
+fi
+
 echo "Falcon upgrade complete"
 
 mkdir -p $(dirname $PREV_RELEASE_PATH)
