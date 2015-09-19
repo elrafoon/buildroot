@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-RTUADMIN_RANG_VERSION = db64c06
+RTUADMIN_RANG_VERSION = feeef89
 RTUADMIN_RANG_SITE_METHOD = git
 RTUADMIN_RANG_SITE = gitolite@merlin.swind.sk:rtuadmin-rang.git
 
