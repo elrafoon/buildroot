@@ -46,14 +46,8 @@ auth.require += ( "/measurements" =>
 				)
 EOF
 
-# dafman database update
-#install -D -m 0755 $MOD/update-dafman $TARGET_DIR/usr/sbin/update-dafman
-#install -D -m 0644 $MOD/update-dafman.service $TARGET_DIR/etc/systemd/system/update-dafman.service
-#mkdir -p $TARGET_DIR/etc/systemd/system/multi-user.target.wants
-#ln -fs ../update-dafman.service $TARGET_DIR/etc/systemd/system/multi-user.target.wants/update-dafman.service
-
 # mod upgrade script
-#install -D -m 0755 $MOD/upgrade $TARGET_DIR/usr/sbin/mod-upgrade
+install -D -m 0755 $MOD/upgrade $TARGET_DIR/usr/sbin/mod-upgrade
 
 # KVDS on external storage
 #cat <<EOF >$TARGET_DIR/usr/libexec/cgi-bin/kvds-ext
