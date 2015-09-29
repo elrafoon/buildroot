@@ -69,6 +69,7 @@ fi
 if [ "$PREV_RELEASE" -lt 20150929 ]; then
 	echo "Upgrading from $PREV_RELEASE to 20150929"
 	sed -i s/conn_eth0/conn_wired/ /var/etc/NetworkManager/system-connections/conn_wired*
+	[ -d /usr/share/webapps/auth ] && ln -sf /usr/share/webapps/auth /var/www/auth
 fi
 
 echo "Upgrade complete"
