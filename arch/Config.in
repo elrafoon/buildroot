@@ -370,4 +370,10 @@ if BR2_xtensa
 source "arch/Config.in.xtensa"
 endif
 
+# set machine name (more specific machine name, i.e. board name)
+config BR2_MACHINE
+	string "Machine name"
+	help
+	  Target machine name (i.e. board name)
+
 endmenu # Target options

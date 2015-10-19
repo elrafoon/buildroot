@@ -2,6 +2,10 @@ menu "Target packages"
 
 	source "package/busybox/Config.in"
 
+menu "Application mods"
+	source "package/mod/Config.in"
+endmenu
+
 menu "Audio and video applications"
 	source "package/alsa-utils/Config.in"
 	source "package/aumix/Config.in"

@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+cd /sys/class/gpio
+
+# DIO4..DIO7
+for pin in 57 69 70 21; do
+	[ -d gpio$pin ] || echo $pin >export
+	echo in > gpio$pin/direction
+done
+
+# OP1,OP2
+for pin in 48 49; do
+	[ -d gpio$pin ] || echo $pin >export
+	echo out > gpio$pin/direction
+	echo 1 >gpio$pin/active_low
+done
+

@@ -1,7 +1,0 @@
-#!/bin/sh
-
-# force user op for astroclock
-
-export REMOTE_USER=op
-exec /usr/libexec/cgi-bin/astro
-
