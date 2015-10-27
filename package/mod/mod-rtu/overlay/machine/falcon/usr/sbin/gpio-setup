@@ -1,0 +1,23 @@
+#!/bin/sh
+
+set -e
+
+cd /sys/class/gpio
+
+# inputs IN4..IN1
+for pin in 57 69 70 21; do
+	[ -d gpio$pin ] || echo $pin >export
+	echo in > gpio$pin/direction
+done
+
+# outputs OUT1,OUT2
+# modem signals PWKEY, RESET
+for pin in 48 49 55 53; do
+	[ -d gpio$pin ] || echo $pin >export
+	echo out > gpio$pin/direction
+done
+
+# OUT1, OUT2 are inverted
+echo 1 >gpio48/active_low
+echo 1 >gpio49/active_low
+
