@@ -83,11 +83,12 @@ $(BINARIES_DIR)/var.ubifs:	$(BINARIES_DIR)/var.tar
 							rm -rf $(TMPDIR)/*
 
 $(BINARIES_DIR)/var.ext2:	$(BINARIES_DIR)/var.tar
-							echo "Creating $@"
+							echo "Creating $@, $@.gz"
 							rm -rf $(TMPDIR)/*
 							$(FAKEROOT) tar -xf $< -C $(TMPDIR)
 							$(EXT2_ENV) $(FAKEROOT) $(GENEXT2FS) -d $(TMPDIR)/var/ $@
 							rm -rf $(TMPDIR)/*
+							cat $@ | gzip >$@.gz
 
 
 .PHONY: all
