@@ -3,9 +3,35 @@
 export PATH=/sbin:/bin:/usr/sbin:/usr/bin
 export HOME=/root
 
+# if init= kernel argument is supplied, execute program passed
+mount /proc
+INIT=$(cat /proc/cmdline | grep -o -E init=[^\ ]+ | cut -c 6-)
+(cat /proc/cmdline | grep systemtest >/dev/null) && INIT_SYSTEMTEST=1
+umount /proc
+[ -n "$INIT" ] && exec $INIT
+
 fsck -y /target/var
 
 mount -a
+
+# check if systemtest is installed
+mount -o ro /target/rootfs
+SYSTEMTEST=/target/rootfs/usr/sbin/systemtest
+if [ -x $SYSTEMTEST ]; then
+	# systemtest is installed, check if requested
+	if [ "$INIT_SYSTEMTEST" = "1" ] || $SYSTEMTEST is_requested; then
+		# run systemtest on regular tty, not /dev/console, if possible
+		DEF_TTY=$(cat /etc/inittab | grep GENERIC_SERIAL | awk -F : '{print "/dev/"$1}')
+		[ ! -z "$DEF_TTY" ] || DEF_TTY=/dev/console
+
+		echo "Commencing systemtest on $DEF_TTY ..."
+		setsid sh -c "$SYSTEMTEST <> $DEF_TTY >&0 2>&1"
+
+		# fallback to shell when systemtest is over
+		exec /bin/sh
+	fi
+fi
+umount /target/rootfs
 
 # find update image in target /var and /srv
 export UPDATE_IMAGE=$( (find /target/var/lib/fwupdate/ /target/srv/fwupdate/ -name rootfs.ubifs.sign; echo /target/var/lib/fwupdate/rootfs.ubifs.sign) | head -n 1 )
