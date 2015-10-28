@@ -1,0 +1,9 @@
+config BR2_PACKAGE_SYSTEMTEST
+	bool "systemtest"
+	depends on BR2_MACHINE != ""
+	help
+	  Machine-specific systemtest.
+
+comment "systemtest requires non-empty BR2_MACHINE"
+	depends on BR2_MACHINE = ""
+
