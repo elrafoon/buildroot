@@ -4,8 +4,9 @@ set -e
 
 cd /sys/class/gpio
 
-# inputs IN4..IN1
-for pin in 57 69 70 21; do
+# inputs IN1..IN4
+# gpio1_31 (63) is hardwired to gpio0_21 (21), so must be input
+for pin in 57 69 70 21 63; do
 	[ -d gpio$pin ] || echo $pin >export
 	echo in > gpio$pin/direction
 done
