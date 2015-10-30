@@ -52,7 +52,3 @@ echo "Support keys ..."
 $INSTALL -d -m 0700 $TARGET_DIR/etc/support
 tar -C $TARGET_DIR/etc/support -xzf $MOD/falcon-support-keys.tgz
 
-# machine-specific mappings
-echo "Machine-specific mappings ..."
-[ ! -z "$MACHINE" ] && $INSTALL -D -m 0644 package/mod/mod-falcon/machine/$MACHINE/opendaf-gpio $TARGET_DIR/etc/default/opendaf-gpio || true
-

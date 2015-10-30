@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -e
+
+cd /sys/class/gpio
+
+# pulse-counting inputs
+for pin in 70 21; do
+	[ -d gpio$pin ] || echo $pin >export
+	echo in > gpio$pin/direction
+done
+
+# modem signals PWKEY, RESET, SHDN
+for pin in 49 57 85; do
+	[ -d gpio$pin ] || echo $pin >export
+	echo out > gpio$pin/direction
+done
+

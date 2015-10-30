@@ -1,0 +1,28 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0; }
+#container {
+    text-align: center;
+    height: 100%; }
+span { 
+    height: 100%;
+    vertical-align: middle;
+    display: inline-block; }
+.outer {
+    width: 400px;
+    height: 230px;
+    padding: 0;
+    border: 1px solid #000;
+    vertical-align: middle;
+    display: inline-block; }
+.inner {
+    width: 350px;
+    height: 230px;    
+    vertical-align: middle;
+    display: inline-block; }
+.btn-nav{
+    margin-top: .5em;
+    margin-bottom: .5em;
+    width: 100%;
+}

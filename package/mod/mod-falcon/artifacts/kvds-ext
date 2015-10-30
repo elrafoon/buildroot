@@ -1,0 +1,3 @@
+#!/bin/sh
+KVDS_ROOT=/srv/kvds exec /usr/bin/kvds cgi
+
