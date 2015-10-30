@@ -2,13 +2,7 @@
 
 set -e
 
-BR=$(pwd)
-MOD=$BR/board/tind/compact-rtu/mod-wirt
-
 mkdir -p $TARGET_DIR/usr/share/webapps
-
-# hardware abstractions
-install -D -m 0644 $MOD/udev/90-rc232.rules $TARGET_DIR/etc/udev/rules.d/90-rc232.rules
 
 # function modules
 install -D -m 0755 $MOD/controller.exe $TARGET_DIR/usr/share/opendaf/function-modules/controller.exe
@@ -22,32 +16,6 @@ cd $TARGET_DIR/var/www && ln -sf ../../usr/share/webapps/wirt-ui wirt-ui
 # index page
 install -D -m 0644 $MOD/index.html $TARGET_DIR/usr/share/webapps/index/index.html
 install -D -m 0644 $MOD/style.css $TARGET_DIR/usr/share/webapps/index/css/style.css
-
-# lighttpd mod-specific configuration
-cat <<EOF >$TARGET_DIR/etc/lighttpd/conf.d/mod.conf
-auth.require += ( "/measurements" => 
-					(
-						"method"	=>	"basic",
-						"realm"		=>	"compactrtu",
-						"require"	=>	"valid-user"
-					),
-				  "/commands" =>
-					(
-						"method"	=>	"basic",
-						"realm"		=>	"compactrtu",
-						"require"	=>	"valid-user"
-					),
-				  "/wirt-ui" =>
-					(
-						"method"	=>	"basic",
-						"realm"		=>	"compactrtu",
-						"require"	=>	"valid-user"
-					)
-				)
-EOF
-
-# mod upgrade script
-install -D -m 0755 $MOD/upgrade $TARGET_DIR/usr/sbin/mod-upgrade
 
 # KVDS on external storage
 #cat <<EOF >$TARGET_DIR/usr/libexec/cgi-bin/kvds-ext
@@ -68,11 +36,4 @@ install -D -m 0755 $MOD/upgrade $TARGET_DIR/usr/sbin/mod-upgrade
 # support keys
 #install -d -m 0700 $TARGET_DIR/etc/support
 #cat $MOD/apollo-support-keys.tgz | tar -C $TARGET_DIR/etc/support -xz
-
-# rc232 setup
-install -D -m 0755 $MOD/init-rc232.exp $TARGET_DIR/usr/sbin/rc232-init
-install -D -m 0755 $MOD/rc232-setup $TARGET_DIR/usr/sbin/rc232-setup
-install -D -m 0644 $MOD/rc232-setup.service $TARGET_DIR/etc/systemd/system/rc232-setup.service
-install -d -m 0755 $TARGET_DIR/etc/systemd/system/sysinit.target.wants
-ln -fs ../rc232-setup.service $TARGET_DIR/etc/systemd/system/sysinit.target.wants/rc232-setup.service
 
