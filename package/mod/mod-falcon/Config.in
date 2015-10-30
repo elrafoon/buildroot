@@ -1,8 +1,8 @@
 config BR2_PACKAGE_MOD_FALCON
 	bool "mod-falcon"
-	depends on BR2_PACKAGE_ASTROCLOCK && BR2_PACKAGE_DCRON && BR2_PACKAGE_CRONTAB_CGI && BR2_PACKAGE_MOD_RTU
+	depends on BR2_PACKAGE_ASTROCLOCK && BR2_PACKAGE_CRONTAB_CGI && BR2_PACKAGE_MOD_RTU
 
 
-comment "mod-falcon depends on astroclock, dcron, crontab-cgi and mod-rtu"
-	depends on !(BR2_PACKAGE_ASTROCLOCK && BR2_PACKAGE_DCRON && BR2_PACKAGE_CRONTAB_CGI && BR2_PACKAGE_MOD_RTU)
+comment "mod-falcon depends on astroclock, crontab-cgi and mod-rtu"
+	depends on !(BR2_PACKAGE_ASTROCLOCK && BR2_PACKAGE_CRONTAB_CGI && BR2_PACKAGE_MOD_RTU)
 
