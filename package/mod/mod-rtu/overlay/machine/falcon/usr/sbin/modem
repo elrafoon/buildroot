@@ -1,0 +1,37 @@
+#!/bin/sh
+
+# modem control utility
+
+RESET=53
+POWER=55
+
+cd /sys/class/gpio
+
+modem_enable () {
+	echo 0 >gpio$POWER/value
+	usleep 100000
+	echo 0 >gpio$RESET/value
+}
+
+modem_disable () {
+	echo 1 >gpio$POWER/value
+	echo 1 >gpio$RESET/value
+}
+
+case "$1" in
+	setup)
+		modem_disable
+		;;
+	enable)
+		modem_enable
+		;;
+	disable)
+		modem_disable
+		;;
+	reset)
+		modem_disable
+		usleep 250000
+		modem_enable
+		;;
+esac
+

@@ -6,7 +6,7 @@ After=gpio-setup.service
 
 [Service]
 Type=oneshot
-ExecStart=/usr/sbin/modem-setup
+ExecStart=/usr/sbin/modem setup
 
 [Install]
 WantedBy=sysinit.target

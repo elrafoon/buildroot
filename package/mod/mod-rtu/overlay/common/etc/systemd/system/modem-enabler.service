@@ -1,0 +1,14 @@
+[Unit]
+Description=Enable integrated GSM modem when required
+StopWhenUnneeded=yes
+PartOf=ModemManager.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/sbin/modem enable
+ExecStop=/usr/sbin/modem disable
+
+[Install]
+RequiredBy=ModemManager.service
+

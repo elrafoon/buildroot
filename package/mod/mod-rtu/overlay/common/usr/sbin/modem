@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# modem control utility
+# just a placeholder, machine-specific overlay should overwrite this
+
+case "$1" in
+	setup)
+		;;
+	enable)
+		;;
+	disable)
+		;;
+	reset)
+		;;
+esac
+
