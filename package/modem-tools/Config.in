@@ -1,0 +1,26 @@
+config BR2_PACKAGE_MODEM_TOOLS
+	bool "modem-tools"
+	help
+	  Modem-related tools
+
+if BR2_PACKAGE_MODEM_TOOLS
+
+config BR2_PACKAGE_MODEM_TOOLS_MC
+	bool "modem-check"
+	depends on (BR2_PACKAGE_DCRON && BR2_PACKAGE_SYSTEMD)
+	help
+	  Check connection and restart modem manager when down
+
+if BR2_PACKAGE_MODEM_TOOLS_MC
+	config BR2_PACKAGE_MODEM_TOOLS_MC_PERIOD
+		int "check period [m]"
+		default 5
+		help
+		  Connection check period. Use 0 to disable periodic checks.
+endif
+
+comment "modem-check depends on dcron & systemd"
+		depends on !(BR2_PACKAGE_DCRON && BR2_PACKAGE_SYSTEMD)
+
+endif
+
