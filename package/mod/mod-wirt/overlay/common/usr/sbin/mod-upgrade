@@ -10,7 +10,7 @@ RELEASE_PATH=/etc/release
 PREV_RELEASE_PATH=/var/state/previous-release.falcon
 DAFMAN_DB=/var/lib/opendaf/dafman/dafman.sqlite3
 
-PREV_RELEASE=0
+PREV_RELEASE=999999999		# no release is newer than this
 
 [ -e $PREV_RELEASE_PATH ] && PREV_RELEASE=$(cat $PREV_RELEASE_PATH)
 
