@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# enable RS485
+
+EN_U8=137	# GPIO 4_9
+
+cd /sys/class/gpio
+echo $EN_U8 >export
+echo out >gpio$EN_U8/direction
+echo 1 >gpio$EN_U8/value
+
+
