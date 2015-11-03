@@ -3,6 +3,6 @@ config BR2_PACKAGE_MOD_WIRT
 	depends on BR2_PACKAGE_MOD_RTU && BR2_PACKAGE_EXPECT
 
 
-comment "mod-falcon depends on expect & mod-rtu"
+comment "mod-wirt depends on expect & mod-rtu"
 	depends on !(BR2_PACKAGE_MOD_RTU && BR2_PACKAGE_EXPECT)
 
