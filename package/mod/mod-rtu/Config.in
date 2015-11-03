@@ -1,8 +1,8 @@
 config BR2_PACKAGE_MOD_RTU
 	bool "mod-rtu"
-	depends on BR2_PACKAGE_LIGHTTPD && BR2_PACKAGE_DCRON && BR2_PACKAGE_SYSTEMD && BR2_PACKAGE_OPENDAF && BR2_PACKAGE_OPENDAF_APPCONF && BR2_PACKAGE_LIGHTTPD
+	depends on BR2_PACKAGE_LIGHTTPD && BR2_PACKAGE_DCRON && BR2_PACKAGE_SYSTEMD && BR2_PACKAGE_OPENDAF
 
 
-comment "mod-rtu depends on lighttpd, dcron, systemd, opendaf, opendaf-appconf and lighttpd"
-	depends on !(BR2_PACKAGE_LIGHTTPD && BR2_PACKAGE_DCRON && BR2_PACKAGE_SYSTEMD && BR2_PACKAGE_OPENDAF && BR2_PACKAGE_OPENDAF_APPCONF && BR2_PACKAGE_LIGHTTPD)
+comment "mod-rtu depends on lighttpd, dcron, systemd, opendaf"
+	depends on !(BR2_PACKAGE_LIGHTTPD && BR2_PACKAGE_DCRON && BR2_PACKAGE_SYSTEMD && BR2_PACKAGE_OPENDAF)
 

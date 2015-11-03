@@ -8,7 +8,7 @@ MOD_RTU_SITE_METHOD = local
 MOD_RTU_VERSION = 1
 MOD_RTU_INSTALL_STAGING = NO
 MOD_RTU_INSTALL_TARGET = YES
-MOD_RTU_DEPENDENCIES = lighttpd dcron opendaf opendaf-appconf lighttpd network-manager
+MOD_RTU_DEPENDENCIES = lighttpd dcron opendaf network-manager
 
 define MOD_RTU_INSTALL_TARGET_CMDS
 	rsync -a --force --ignore-times --chmod=Du+w --exclude .empty --exclude '*~' $(@D)/overlay/common/ $(TARGET_DIR)/
