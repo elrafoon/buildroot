@@ -115,6 +115,10 @@ if BR2_PACKAGE_OPENDAF
 		config BR2_PACKAGE_OPENDAF_STACK_C_SWTN_CONTROLLING_STATION
 			bool swtn-controlling-station
 
+		config BR2_PACKAGE_OPENDAF_STACK_C_SNMP
+			bool snmp
+			default y
+
 	endmenu
 
 	menu "Provider stacks"
