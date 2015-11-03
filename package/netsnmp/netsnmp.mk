@@ -87,6 +87,11 @@ define NETSNMP_STAGING_NETSNMP_CONFIG_FIXUP
 		$(STAGING_DIR)/usr/bin/net-snmp-config
 endef
 
+# configurable mibdirs
+ifneq ($(BR2_PACKAGE_NETSNMP_MIBDIRS),)
+NETSNMP_CONF_OPT += --with-mibdirs=$(BR2_PACKAGE_NETSNMP_MIBDIRS)
+endif
+
 NETSNMP_POST_INSTALL_STAGING_HOOKS += NETSNMP_STAGING_NETSNMP_CONFIG_FIXUP
 
 $(eval $(autotools-package))

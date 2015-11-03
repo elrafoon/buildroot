@@ -37,4 +37,10 @@ config BR2_PACKAGE_NETSNMP_ENABLE_DEBUGGING
 	  support, including the ability to log with DEBUGMSG(),
 	  DEBUGMSGTL() and companion macros.
 
+config BR2_PACKAGE_NETSNMP_MIBDIRS
+	string "MIB directories"
+	help
+	  Enter MIB directories separated by : . Leave empty to
+	  use defaults ($HOME/.snmp/mibs:DATADIR/snmp/mibs).
+
 endif
