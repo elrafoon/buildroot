@@ -4,21 +4,25 @@ set -e
 
 cd /sys/class/gpio
 
-# inputs IN1..IN4
+# inverted inputs IN1..IN4
 # gpio1_31 (63) is hardwired to gpio0_21 (21), so must be input
 for pin in 57 69 70 21 63; do
 	[ -d gpio$pin ] || echo $pin >export
+	echo 1 > gpio$pin/active_low
 	echo in > gpio$pin/direction
 done
 
 # outputs OUT1,OUT2
 # modem signals PWKEY, RESET
-for pin in 48 49 55 53; do
+for pin in 55 53; do
 	[ -d gpio$pin ] || echo $pin >export
 	echo out > gpio$pin/direction
 done
 
-# OUT1, OUT2 are inverted
-echo 1 >gpio48/active_low
-echo 1 >gpio49/active_low
+# OUT1, OUT2 are inverted and must not be tripped during init
+for pin in 48 49; do
+	[ -d gpio$pin ] || echo $pin >export
+	echo 1 >gpio$pin/active_low
+	echo high > gpio$pin/direction
+done
 
