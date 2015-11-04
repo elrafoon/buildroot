@@ -15,8 +15,7 @@ fsck -y /target/var
 mount -a
 
 # check if systemtest is installed
-mount -o ro /target/rootfs
-SYSTEMTEST=/target/rootfs/usr/sbin/systemtest
+SYSTEMTEST=/usr/sbin/systemtest
 if [ -x $SYSTEMTEST ]; then
 	# systemtest is installed, check if requested
 	if [ "$INIT_SYSTEMTEST" = "1" ] || $SYSTEMTEST is_requested; then
@@ -31,7 +30,6 @@ if [ -x $SYSTEMTEST ]; then
 		exec /bin/sh
 	fi
 fi
-umount /target/rootfs
 
 # find update image in target /var and /srv
 export UPDATE_IMAGE=$( (find /target/var/lib/fwupdate/ /target/srv/fwupdate/ -name rootfs.ubifs.sign; echo /target/var/lib/fwupdate/rootfs.ubifs.sign) | head -n 1 )
