@@ -1,0 +1,14 @@
+config BR2_PACKAGE_MOD_DAVE
+	bool "mod-dave"
+	depends on BR2_PACKAGE_MOD_RTU
+
+
+config BR2_PACKAGE_MOD_DAVE_BRAND
+	string "brand"
+	default "dave"
+	depends on BR2_PACKAGE_MOD_DAVE
+
+
+comment "mod-dave depends on mod-rtu"
+	depends on !BR2_PACKAGE_MOD_RTU
+

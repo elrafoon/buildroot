@@ -2,17 +2,16 @@
 
 set -e
 
-BR=$(pwd)
-MOD=$BR/board/tind/compact-rtu/mod-dave
-
-mkdir -p $TARGET_DIR/usr/share/webapps
+$INSTALL -d -m 0755 $TARGET_DIR/usr/share/webapps
 
 # function modules
-install -D -m 0755 $MOD/controller.exe $TARGET_DIR/usr/share/opendaf/function-modules/controller.exe
-install -d -m 0755 $TARGET_DIR/var/lib/opendaf/function-modules/
-ln -sf ../../../../usr/share/opendaf/function-modules/controller.exe $TARGET_DIR/var/lib/opendaf/function-modules/controller.exe
+echo "Function modules ..."
+$INSTALL -D -m 0755 $MOD/controller.exe $TARGET_DIR/usr/share/opendaf/function-modules/controller.exe
+$INSTALL -d -m 0755 $TARGET_DIR/var/lib/opendaf/function-modules
+ln -sf /usr/share/opendaf/function-modules/controller.exe $TARGET_DIR/var/lib/opendaf/function-modules/controller.exe
 
 # index page
+echo "Index page ..."
 
 exists() { [[ -f $1 ]]; }
 
@@ -30,7 +29,10 @@ exists *.png && install -m 0644 *.png $TARGET_DIR/usr/share/webapps/index/img
 exists *.jpg && install -m 0644 *.jpg $TARGET_DIR/usr/share/webapps/index/img
 popd
 
+
 # dave-ui
+echo "UI ..."
+
 if [[ -n "$BRAND" && -e $MOD/dave-ui-$BRAND.tgz ]]; then
 	tar -C $TARGET_DIR/usr/share/webapps -xf $MOD/dave-ui-$BRAND.tgz
 else
@@ -38,13 +40,8 @@ else
 fi
 cd $TARGET_DIR/var/www && ln -sf ../../usr/share/webapps/dave-ui dave-ui
 
-# lighttpd mod-specific conf
-install -D -m 0644 $MOD/lighttpd-mod.conf $TARGET_DIR/etc/lighttpd/conf.d/mod.conf
-
-# mod upgrade script
-install -D -m 0755 $MOD/mod-upgrade $TARGET_DIR/usr/sbin/mod-upgrade
-
 # support keys
-install -d -m 0700 $TARGET_DIR/etc/support
-cat $MOD/dave-support-keys.tgz | tar -C $TARGET_DIR/etc/support -xz
+echo "Support keys ..."
+$INSTALL -d -m 0700 $TARGET_DIR/etc/support
+tar -C $TARGET_DIR/etc/support -xzf $MOD/dave-support-keys.tgz
 

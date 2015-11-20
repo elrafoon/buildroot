@@ -1,4 +1,5 @@
 source "package/mod/mod-rtu/Config.in"
+source "package/mod/mod-dave/Config.in"
 source "package/mod/mod-falcon/Config.in"
 source "package/mod/mod-wirt/Config.in"
 source "package/mod/mod-bios/Config.in"
