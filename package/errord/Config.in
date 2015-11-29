@@ -1,0 +1,5 @@
+config BR2_PACKAGE_ERRORD
+	bool "errord"
+	help
+	  Turn on error led when conditions are met
+
