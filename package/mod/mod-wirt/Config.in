@@ -1,8 +1,20 @@
 config BR2_PACKAGE_MOD_WIRT
 	bool "mod-wirt"
-	depends on BR2_PACKAGE_MOD_RTU && BR2_PACKAGE_EXPECT
+	depends on BR2_PACKAGE_SYSTEMD
+	help
+	  Support for RF hardware
 
 
-comment "mod-wirt depends on expect & mod-rtu"
-	depends on !(BR2_PACKAGE_MOD_RTU && BR2_PACKAGE_EXPECT)
+if BR2_PACKAGE_MOD_WIRT
+	config BR2_PACKAGE_MOD_WIRT_FULL
+		bool "install application software"
+		default y
+		depends on BR2_PACKAGE_MOD_RTU && BR2_PACKAGE_EXPECT
+		help
+		  Install full application software
+
+
+	comment "mod-wirt application software depends on expect & mod-rtu"
+		depends on !(BR2_PACKAGE_MOD_RTU && BR2_PACKAGE_EXPECT)
+endif
 
