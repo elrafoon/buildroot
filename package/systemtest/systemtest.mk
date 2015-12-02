@@ -6,7 +6,7 @@
 
 SYSTEMTEST_SITE = gitolite@merlin.swind.sk:embedded-tools.git
 SYSTEMTEST_SITE_METHOD = git
-SYSTEMTEST_VERSION = 9b3834e
+SYSTEMTEST_VERSION = 290c395
 
 define SYSTEMTEST_INSTALL_TARGET_CMDS
 	$(MAKE) -C $(@D)/systemtest			\
