@@ -1,0 +1,9 @@
+config BR2_PACKAGE_RC232_RESPONDER
+	bool "rc232-responder"
+	depends on BR2_PACKAGE_PYTHON && BR2_PACKAGE_PYTHON_SERIAL
+	help
+	  RC232 systemtest responder
+
+comment "rc232-responder depends on python & python-serial"
+	depends on !(BR2_PACKAGE_PYTHON && BR2_PACKAGE_PYTHON_SERIAL)
+
