@@ -1,0 +1,17 @@
+diff -rupN Python-2.7.8-a/setup.py Python-2.7.8-b/setup.py
+--- Python-2.7.8-a/setup.py	2014-06-30 04:05:48.000000000 +0200
++++ Python-2.7.8-b/setup.py	2015-12-02 13:10:53.010162952 +0100
+@@ -1602,13 +1602,6 @@ class PyBuildExt(build_ext):
+         else:
+             missing.append('linuxaudiodev')
+ 
+-        if (host_platform in ('linux2', 'freebsd4', 'freebsd5', 'freebsd6',
+-                        'freebsd7', 'freebsd8')
+-            or host_platform.startswith("gnukfreebsd")):
+-            exts.append( Extension('ossaudiodev', ['ossaudiodev.c']) )
+-        else:
+-            missing.append('ossaudiodev')
+-
+         if host_platform == 'sunos5':
+             # SunOS specific modules
+             exts.append( Extension('sunaudiodev', ['sunaudiodev.c']) )
