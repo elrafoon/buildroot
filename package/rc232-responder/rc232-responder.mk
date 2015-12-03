@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-RC232_RESPONDER_VERSION = a5afb1e
+RC232_RESPONDER_VERSION = bfc5b17
 RC232_RESPONDER_SITE_METHOD = git
 RC232_RESPONDER_SITE = gitolite@merlin.swind.sk:embedded-tools.git
 RC232_RESPONDER_LICENSE = BSD-3c
