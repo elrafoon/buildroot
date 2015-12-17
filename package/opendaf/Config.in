@@ -121,6 +121,9 @@ if BR2_PACKAGE_OPENDAF
 			bool snmp
 			default y
 
+		config BR2_PACKAGE_OPENDAF_STACK_C_ONEWIRE
+			bool onewire
+			default y
 	endmenu
 
 	menu "Provider stacks"
