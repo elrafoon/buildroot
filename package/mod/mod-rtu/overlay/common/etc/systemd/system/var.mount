@@ -8,7 +8,7 @@ After = systemd-fsck@dev-mtdblock7.service
 What = /dev/mtdblock7
 Where = /var
 Type = ext4
-Options = noatime
+Options = noatime,commit=1,nodelalloc
 
 [Install]
 WantedBy = local-fs.target
