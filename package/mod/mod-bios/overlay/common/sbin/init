@@ -3,41 +3,122 @@
 export PATH=/sbin:/bin:/usr/sbin:/usr/bin
 export HOME=/root
 
+FWUPDATE_COMMAND=update-recover
+
 # if init= kernel argument is supplied, execute program passed
 mount /proc
+
 INIT=$(cat /proc/cmdline | grep -o -E init=[^\ ]+ | cut -c 6-)
 (cat /proc/cmdline | grep systemtest >/dev/null) && INIT_SYSTEMTEST=1
+(cat /proc/cmdline | grep recover >/dev/null) && FWUPDATE_COMMAND=recover
 umount /proc
 [ -n "$INIT" ] && exec $INIT
 
-fsck -y /target/var
+mount /proc
+mount /sys
+mount /tmp
 
-mount -a
+# find partition $1
+# set MTD, MTDBLOCK
+find_partition () {
+	PART_MTD=$(grep -l $1 /dev/null `find -L /sys/class/mtd -maxdepth 2 -path *name` | awk -F / '{print $5}')  
+	PART_BLOCK=$(grep -l $1 /dev/null `find -L /sys/block -maxdepth 3 -path *device/name` | awk -F / '{print $4}')
+}
 
-# check if systemtest is installed
-SYSTEMTEST=/usr/sbin/systemtest
-if [ -x $SYSTEMTEST ]; then
-	# systemtest is installed, check if requested
-	if [ "$INIT_SYSTEMTEST" = "1" ] || $SYSTEMTEST is_requested; then
-		# run systemtest on regular tty, not /dev/console, if possible
-		DEF_TTY=$(cat /etc/inittab | grep GENERIC_SERIAL | awk -F : '{print "/dev/"$1}')
-		[ ! -z "$DEF_TTY" ] || DEF_TTY=/dev/console
+if [ "$FWUPDATE_COMMAND" = "recover" ]; then
+	mount -o ro /target/srv 
 
-		echo "Commencing systemtest on $DEF_TTY ..."
-		setsid sh -c "$SYSTEMTEST <> $DEF_TTY >&0 2>&1"
+	find_partition var
+	export ROOTFS_UBI=ubi0_0
+	export VAR_MTD=$PART_MTD
+	export VAR_BLOCK=$PART_BLOCK
+	export VAR_UBI=ubi0_1
 
-		# fallback to shell when systemtest is over
-		exec /bin/sh
+	export ROOTFS_IMAGE=$(find /target/srv/fwupdate/ -name rootfs.*.sign | head -n 1)
+	export VARFS_IMAGE=$(find /target/srv/fwupdate/ -name varfs.*.sign | head -n 1)
+	[ -n "$ROOTFS_IMAGE" -o -n "$VARFS_IMAGE" ] && /sbin/fwrecover || echo "No recovery image could be found"
+
+	umount /target/srv
+else
+	# check if systemtest is installed
+	SYSTEMTEST=/usr/sbin/systemtest
+	if [ -x $SYSTEMTEST ]; then
+		# systemtest is installed, check if requested
+		if [ "$INIT_SYSTEMTEST" = "1" ] || $SYSTEMTEST is_requested; then
+			# run systemtest on regular tty, not /dev/console, if possible
+			DEF_TTY=$(cat /etc/inittab | grep GENERIC_SERIAL | awk -F : '{print "/dev/"$1}')
+			[ ! -z "$DEF_TTY" ] || DEF_TTY=/dev/console
+
+			echo "Commencing systemtest on $DEF_TTY ..."
+			setsid sh -c "$SYSTEMTEST <> $DEF_TTY >&0 2>&1"
+
+			# fallback to shell when systemtest is over
+			exec /bin/sh
+		fi
+	fi
+
+	echo
+	echo "** Press <ENTER> to abort automatic update/recovery **"
+	read -t 2 && exec busybox init
+	echo "Continuing with automatic update/recovery"
+
+	fsck -y /target/var
+	mount /target/var
+
+	# 1. update rootfs
+
+	# find update image in target /var
+	export IMAGE=$(find /target/var/lib/fwupdate/ -name rootfs.ubifs.sign | head -n 1)
+	export TARGET=/target/rootfs
+	if [ -n "$IMAGE" ] && ! /sbin/fsupdate is-fs-ready; then	
+		# run update/recovery of rootfs
+		find_partition rootfs
+		export PART_UBI=ubi0_0
+		export PART_MTD
+		export PART_BLOCK
+		/sbin/fsupdate $FWUPDATE_COMMAND || echo "Update/recovery of root fs failed with error code $?"
+	fi
+
+	# 2. update varfs
+
+	# find varfs image in target /var
+	IMAGE=$(find /target/var/lib/fwupdate -name varfs.*.sign | head -n 1)
+	export TARGET=/target/var
+	if [ -n "$IMAGE" ] && ! /sbin/fsupdate is-fs-ready; then
+		# var image can't be read from /var, when it is going to be rewritten!
+		# copy it to /tmp first
+
+		echo "Copy $IMAGE to /tmp"
+		mount -o remount,size=90% /tmp
+		cp -f $IMAGE /tmp/var-image
+		umount /target/var
+
+		export IMAGE=/tmp/var-image
+
+		find_partition var
+		export PART_UBI=ubi0_1
+		export PART_MTD
+		export PART_BLOCK
+
+		/sbin/fsupdate $FWUPDATE_COMMAND || echo "Update/recovery of var fs failed with error code $?"
+		rm /tmp/var-image
 	fi
 fi
 
-# find update image in target /var and /srv
-export UPDATE_IMAGE=$( (find /target/var/lib/fwupdate/ /target/srv/fwupdate/ -name rootfs.ubifs.sign; echo /target/var/lib/fwupdate/rootfs.ubifs.sign) | head -n 1 )
+# boot the system
 
-DELETE_IMAGE=0 DELETE_INVALID_IMAGE=1 TARGET=/target/rootfs UMOUNT_LIST="/target/var /target/srv /proc /sys" FALLBACK="busybox init" exec /sbin/fwupdate update-recover
+# mount rootfs if not mounted
+grep /target/rootfs </proc/mounts || mount /target/rootfs
+
+# umount unneeded filesystems
+for mp in /target/srv /target/var /tmp /sys /proc; do
+	grep $mp </proc/mounts && umount $mp
+done
+
+# switch to new root
+exec switch_root -c /dev/console /target/rootfs /sbin/init 
 
 # fallback
 echo 1 > /sys/class/leds/error/brightness
-
 exec busybox init
 

@@ -6,7 +6,7 @@ FAKEROOT = $(HOST_DIR)/usr/bin/fakeroot
 # UBIFS setup
 ################################################################################
 ifeq ($(BR2_TARGET_ROOTFS_UBIFS),y)
-UBIFS_DEP = $(BINARIES_DIR)/var.ubifs
+UBIFS_DEP = $(BINARIES_DIR)/var.ubifs.sign
 endif
 
 MKFS.UBIFS = $(HOST_DIR)/usr/sbin/mkfs.ubifs
@@ -29,7 +29,7 @@ UBIFS_OPTS += $(call qstrip,$(BR2_TARGET_ROOTFS_UBIFS_OPTS))
 # EXT2,3,4 setup
 ################################################################################
 ifeq ($(BR2_TARGET_ROOTFS_EXT2),y)
-EXT2_DEP = $(BINARIES_DIR)/var.ext2
+EXT2_DEP = $(BINARIES_DIR)/var.ext2.gz.sign
 endif
 
 GENEXT2FS = $(TOPDIR)/fs/ext2/genext2fs.sh
@@ -65,15 +65,10 @@ $(BINARIES_DIR)/rootfs-only.ubifs:	$(BINARIES_DIR)/rootfs-only.tar
 									$(FAKEROOT) $(MKFS.UBIFS) -d $(TMPDIR) $(UBIFS_OPTS) -c $(FS_ROOT_SIZE_LEBS) -o $@
 									rm -rf $(TMPDIR)/*
 
-$(BINARIES_DIR)/rootfs-only.ubifs.sign:	$(BINARIES_DIR)/rootfs-only.ubifs
-										echo "Signing $@"
-										$(call SIGN,$<,$@)
-
 $(BINARIES_DIR)/var.tar:	$(BINARIES_DIR)/rootfs.tar $(BINARIES_DIR)/rootfs-only.ubifs.sign
 							echo "Creating $@"
 							cp $< $@
 							tar --delete -f $@ $$(tar -tf $@ | grep -v ^./var | egrep ^./[[:alnum:]]+/*$$)
-							tar --append -f $@ -C $(BINARIES_DIR) --transform 's,^,/var/lib/fwupdate/,S' --transform 's,rootfs-only,rootfs,' rootfs-only.ubifs.sign
 
 $(BINARIES_DIR)/var.ubifs:	$(BINARIES_DIR)/var.tar
 							echo "Creating $@"
@@ -83,13 +78,20 @@ $(BINARIES_DIR)/var.ubifs:	$(BINARIES_DIR)/var.tar
 							rm -rf $(TMPDIR)/*
 
 $(BINARIES_DIR)/var.ext2:	$(BINARIES_DIR)/var.tar
-							echo "Creating $@, $@.gz"
+							echo "Creating $@"
 							rm -rf $(TMPDIR)/*
 							$(FAKEROOT) tar -xf $< -C $(TMPDIR)
 							$(EXT2_ENV) $(FAKEROOT) $(GENEXT2FS) -d $(TMPDIR)/var/ $@
 							rm -rf $(TMPDIR)/*
-							cat $@ | gzip >$@.gz
 
+$(BINARIES_DIR)/var.ext2.gz:	$(BINARIES_DIR)/var.ext2
+								echo "Creating $@"
+								gzip <$< >$@
+
+# generic signing rule
+%.sign:	%
+		echo "Signing $@"
+		$(call SIGN,$<,$@)
 
 .PHONY: all
 
