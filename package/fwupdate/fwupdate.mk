@@ -3,7 +3,7 @@
 # FWUPDATE
 #
 #############################################################
-FWUPDATE_VERSION = master
+FWUPDATE_VERSION = 5007f2b
 FWUPDATE_SITE_METHOD = git
 FWUPDATE_SITE = gitolite@merlin.swind.sk:embedded-tools
 FWUPDATE_SUBDIR = fwupdate
