@@ -3,7 +3,7 @@
 # RTUADMIN_CLIENT
 #
 #############################################################
-RTUADMIN_CLIENT_VERSION = $(BR2_PACKAGE_RTUADMIN_VERSION)
+RTUADMIN_CLIENT_VERSION = 1581bcd
 RTUADMIN_CLIENT_SITE = http://merlin/packages/r
 RTUADMIN_CLIENT_SOURCE = rtuadmin-client-$(RTUADMIN_CLIENT_VERSION).tar.bz2
 RTUADMIN_CLIENT_INSTALL_STAGING = NO

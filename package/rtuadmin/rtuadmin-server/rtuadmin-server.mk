@@ -3,7 +3,7 @@
 # RTUADMIN_SERVER
 #
 #############################################################
-RTUADMIN_SERVER_VERSION = $(BR2_PACKAGE_RTUADMIN_VERSION)
+RTUADMIN_SERVER_VERSION = 8b5a011
 RTUADMIN_SERVER_SITE_METHOD = git
 RTUADMIN_SERVER_SITE = ssh://gitolite@merlin/rtuadmin-server
 RTUADMIN_SERVER_INSTALL_STAGING = NO
