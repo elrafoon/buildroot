@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# these environment variables are already set:
+# BR2_CONFIG
+# TARGET_DIR
+# STAGING_DIR
+# HOST_DIR
+# BINARIES_DIR
+# BASE_DIR
+
+IMAGES=$1
+TOPDIR=`pwd`
+
+sign () {
+    echo "Signing $1 to $2";
+	rm -f $2
+    gpg --homedir $TOPDIR/board/tind/compact-rtu/gpg-keys -s -o $2 $1
+}
+
+sign $IMAGES/uImage $IMAGES/uImage.sign
+

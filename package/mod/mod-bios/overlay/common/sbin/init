@@ -110,6 +110,11 @@ fi
 # mount rootfs if not mounted
 grep /target/rootfs </proc/mounts || mount /target/rootfs
 
+# bind kernel modules
+echo "Updating rootfs image kernel modules"
+rsync -a --delete /lib/modules/ /target/rootfs/lib/modules/
+sync
+
 # umount unneeded filesystems
 for mp in /target/srv /target/var /tmp /sys /proc; do
 	grep $mp </proc/mounts && umount $mp
