@@ -5,7 +5,7 @@
 #############################################################
 MOD_BIOS_SITE = package/mod/mod-bios
 MOD_BIOS_SITE_METHOD = local
-MOD_BIOS_VERSION = 1
+MOD_BIOS_VERSION = 2
 MOD_BIOS_INSTALL_STAGING = NO
 MOD_BIOS_INSTALL_TARGET = YES
 MOD_BIOS_DEPENDENCIES = busybox
