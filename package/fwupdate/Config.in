@@ -1,5 +1,6 @@
 config BR2_PACKAGE_FWUPDATE
 	bool "fwupdate"
+	depends on BR2_PACKAGE_E2FSPROGS && BR2_PACKAGE_E2FSPROGS_RESIZE2FS && BR2_PACKAGE_FILE && BR2_PACKAGE_GNUPG && BR2_PACKAGE_GNUPG_RSA && BR2_PACKAGE_UTIL_LINUX_BINARIES && BR2_PACKAGE_MTD_NANDWRITE
 	help
 	  Safe firmware update / recovery tool
 
@@ -11,4 +12,7 @@ if BR2_PACKAGE_FWUPDATE
 		  filesystem as ready when boot completes.
 
 endif
+
+comment "fwupdate depends on e2fsprogs with resize2fss, file, gnupg with rsa, util-linux with binaries installed and mtd with nandwrite"
+	depends on !(BR2_PACKAGE_E2FSPROGS && BR2_PACKAGE_E2FSPROGS_RESIZE2FS && BR2_PACKAGE_FILE && BR2_PACKAGE_GNUPG && BR2_PACKAGE_GNUPG_RSA && BR2_PACKAGE_UTIL_LINUX_BINARIES && BR2_PACKAGE_MTD_NANDWRITE)
 
