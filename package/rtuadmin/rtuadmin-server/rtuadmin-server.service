@@ -6,6 +6,7 @@ After=syslog.target network.target
 ExecStart=/usr/bin/rtuadmin-server
 Restart=always
 RestartSec=10s
+TimeoutStopSec=15s
 
 [Install]
 WantedBy=multi-user.target
