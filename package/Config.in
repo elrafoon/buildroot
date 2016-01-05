@@ -1027,6 +1027,7 @@ endif
 	source "package/ipsec-tools/Config.in"
 	source "package/ipset/Config.in"
 	source "package/iptables/Config.in"
+	source "package/iptables-firewall/Config.in"
 	source "package/iptraf-ng/Config.in"
 	source "package/iputils/Config.in"
 	source "package/iw/Config.in"

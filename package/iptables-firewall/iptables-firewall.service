@@ -1,0 +1,15 @@
+[Unit]
+Description=iptables firewall
+DefaultDependencies=false
+RequiresMountsFor=/var
+ConditionPathExists=/var/lib/iptables-firewall/rules-save
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/sbin/iptables-restore -T filter /var/lib/iptables-firewall/rules-save
+ExecStop=/usr/sbin/iptables-restore /usr/share/iptables-firewall/default-rules
+
+[Install]
+WantedBy=sysinit.target
+

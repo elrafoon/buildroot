@@ -1,0 +1,9 @@
+config BR2_PACKAGE_IPTABLES_FIREWALL
+	bool "iptables-firewall"
+	depends on BR2_PACKAGE_SYSTEMD && BR2_PACKAGE_IPTABLES
+	help
+	  Setup iptables firewall rules on bootup
+
+comment "iptables-firewall requires systemd and iptables"
+	depends on !(BR2_PACKAGE_SYSTEMD && BR2_PACKAGE_IPTABLES)
+
