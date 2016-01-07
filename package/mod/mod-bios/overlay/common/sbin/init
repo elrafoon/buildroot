@@ -25,6 +25,11 @@ find_partition () {
 	PART_BLOCK=$(grep -l $1 /dev/null `find -L /sys/block -maxdepth 3 -path *device/name` | awk -F / '{print $4}')
 }
 
+# echo fs type of partition $1
+fstype () {
+	blkid -o export $1 | grep TYPE= | cut -c 6-
+}
+
 if [ "$FWUPDATE_COMMAND" = "recover" ]; then
 	mount -o ro /target/srv 
 
@@ -62,50 +67,106 @@ else
 	read -t 2 && exec busybox init
 	echo "Continuing with automatic update/recovery"
 
-	fsck -y /target/var
-	mount /target/var
+	######################################################
+	# 1. check/setup /target/var mountpoint in fstab
+	######################################################
+	if target_var=$(grep /target/var /etc/fstab); then
+		# if the fstab contains /target/var entry, use it
+		VAR_FSTYPE=$(echo $target_var | cut -f 1)
+	else
+		# else locate var partition and add /target/var record to fstab
 
-	# 1. update rootfs
-
-	# find update image in target /var
-	export IMAGE=$(find /target/var/lib/fwupdate/ -name rootfs.ubifs.sign | head -n 1)
-	export TARGET=/target/rootfs
-	if [ -n "$IMAGE" ] && ! /sbin/fsupdate is-fs-ready; then	
-		# run update/recovery of rootfs
-		find_partition rootfs
-		export PART_UBI=ubi0_0
-		export PART_MTD
-		export PART_BLOCK
-		/sbin/fsupdate $FWUPDATE_COMMAND || echo "Update/recovery of root fs failed with error code $?"
+		# try ubifs first
+		VAR_FSTYPE=$(fstype /dev/ubi0_1)
+		case "$VAR_FSTYPE" in
+			ubifs)
+				# is ubi0_1 ubifs? if yes, mount it as var
+				echo "/dev/ubi0_1	/target/var	ubifs	noatime	0	0" >> /etc/fstab
+				;;
+			*)
+				find_partition var
+				VAR_FSTYPE=$(fstype /dev/$PART_BLOCK)
+				if [ -n "$VAR_FSTYPE" ]; then
+					echo "/dev/$PART_BLOCK	/target/var	$VAR_FSTYPE	noatime	0	0" >> /etc/fstab
+				else
+					echo "Can't detect filesystem type on $PART_BLOCK, will try automount"
+					echo "/dev/$PART_BLOCK	/target/var	auto	defaults	0	0" >> /etc/fstab
+				fi
+				;;
+		esac
 	fi
 
-	# 2. update varfs
+	echo "/target/var is:"
+	grep /target/var /etc/fstab
 
-	# find varfs image in target /var
-	IMAGE=$(find /target/var/lib/fwupdate -name varfs.*.sign | head -n 1)
-	export TARGET=/target/var
-	if [ -n "$IMAGE" ] && ! /sbin/fsupdate is-fs-ready; then
-		# var image can't be read from /var, when it is going to be rewritten!
-		# copy it to /tmp first
+	######################################################
+	# 2. fsck the /target/var partition
+	######################################################
+	case "$VAR_FSTYPE" in
+		ubifs)	# don't fsck ubifs
+				;;
+		"")		# don't fsck unknown fs
+				echo "/var filesystem type not detected, skip fsck"
+				;;
+		*)		# fsck other cases
+				fsck -y /target/var
+				;;
+	esac		
 
-		echo "Copy $IMAGE to /tmp"
-		mount -o remount,size=90% /tmp
-		cp -f $IMAGE /tmp/var-image
-		umount /target/var
+	######################################################
+	# 3. mount /target/var
+	######################################################
+	if mount /target/var; then
+		######################################################
+		# 4. update rootfs
+		######################################################
 
-		export IMAGE=/tmp/var-image
+		# find update image in target /var
+		export IMAGE=$(find /target/var/lib/fwupdate/ -name rootfs.ubifs.sign | head -n 1)
+		export TARGET=/target/rootfs
+		if [ -n "$IMAGE" ] && ! /sbin/fsupdate is-fs-ready; then	
+			# run update/recovery of rootfs
+			find_partition rootfs
+			export PART_UBI=ubi0_0
+			export PART_MTD
+			export PART_BLOCK
+			/sbin/fsupdate $FWUPDATE_COMMAND || echo "Update/recovery of root fs failed with error code $?"
+		fi
 
-		find_partition var
-		export PART_UBI=ubi0_1
-		export PART_MTD
-		export PART_BLOCK
+		######################################################
+		# 5. update varfs
+		######################################################
 
-		/sbin/fsupdate $FWUPDATE_COMMAND || echo "Update/recovery of var fs failed with error code $?"
-		rm /tmp/var-image
+		# find varfs image in target /var
+		IMAGE=$(find /target/var/lib/fwupdate -name varfs.*.sign | head -n 1)
+		export TARGET=/target/var
+		if [ -n "$IMAGE" ] && ! /sbin/fsupdate is-fs-ready; then
+			# var image can't be read from /var, when it is going to be rewritten!
+			# copy it to /tmp first
+
+			echo "Copy $IMAGE to /tmp"
+			mount -o remount,size=90% /tmp
+			cp -f $IMAGE /tmp/var-image
+			umount /target/var
+
+			export IMAGE=/tmp/var-image
+
+			find_partition var
+			export PART_UBI=ubi0_1
+			export PART_MTD
+			export PART_BLOCK
+
+			/sbin/fsupdate $FWUPDATE_COMMAND || echo "Update/recovery of var fs failed with error code $?"
+			rm /tmp/var-image
+		fi
+	else
+		echo "Can't mount /var, firmware update not possible"
 	fi
 fi
 
-# boot the system
+######################################################
+# 6. boot the system
+######################################################
 
 # mount rootfs if not mounted
 grep /target/rootfs </proc/mounts || mount /target/rootfs
@@ -123,7 +184,9 @@ done
 # switch to new root
 exec switch_root -c /dev/console /target/rootfs /sbin/init 
 
-# fallback
+######################################################
+# 7. fallback
+######################################################
 echo 1 > /sys/class/leds/error/brightness
 exec busybox init
 
