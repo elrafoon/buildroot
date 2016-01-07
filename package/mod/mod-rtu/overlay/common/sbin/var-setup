@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# setup var.mount according to detected var fs type
+
+fstype () {
+	blkid -o export $1 | grep TYPE= | cut -c 6-
+}
+
+UBI0_1_FSTYPE=$(fstype /dev/ubi0_1)
+
+cd /etc/systemd/system
+if [ "$UBI0_1_FSTYPE" = ubifs ]; then
+	if ! diff -q var.mount var.mount.ubifs; then
+		cp -vf var.mount.ubifs var.mount
+	fi
+else
+	if ! diff -q var.mount var.mount.ext4; then
+		cp -vf var.mount.ext4 var.mount
+	fi
+fi
+
+systemctl enable var.mount
+

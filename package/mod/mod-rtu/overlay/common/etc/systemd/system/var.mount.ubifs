@@ -1,0 +1,11 @@
+[Unit]
+Description = /var on separate partition
+
+[Mount]
+What = ubi0:var
+Where = /var
+Type = ubifs
+Options = noatime
+
+[Install]
+WantedBy = local-fs.target
